@@ -2,7 +2,7 @@
 CXX = g++
 CXXFLAGS = -Wall -Wextra -Iinclude
 LDFLAGS = 
-SRC_DIR = src
+SRC_DIR = .
 BUILD_DIR = build
 TARGET = $(BUILD_DIR)/main
 
