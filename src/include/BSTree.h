@@ -17,15 +17,18 @@ namespace EDA{
         protected:
             Node<T>* _root = nullptr;
 
-            virtual bool _Insert(Node<T>* root, T value);
-            void _Clear(Node<T>* root);
+            Node<T>* _Clear(Node<T>* root);
             void _Print(Node<T>* root)const;
+
+            virtual Node<T>* _Insert(Node<T>* root, T value);
         public:
             ~BSTree();
             bool IsEmpty() const;
-            virtual bool Insert(T item);
             void Print()const;
+            void Clear();
 
+
+            virtual void Insert(T item);
 
     };
 
@@ -44,38 +47,47 @@ namespace EDA{
     }
 
     template<typename T>
-    bool BSTree<T>::Insert(T value) {
-        return this->_Insert(_node, value);
+    void BSTree<T>::Insert(T value) {
+        _root = this->_Insert(_root, value);
     }
 
     template<typename T>
-    bool BSTree<T>::_Insert(Node<T>* root, T value){
+    Node<T>* BSTree<T>::_Insert(Node<T>* root, T value){
         if(root != nullptr){
-            if(root->key ==value) return false;
-            else if(value < root->key){
-                return _Insert(root->left, value);
+            // if(root->key ==value) return root;
+            if(value < root->key){
+                root->left = _Insert(root->left, value);
             }else{
-                return _Insert(root->right, value);
+                root->right = _Insert(root->right, value);
             }
+            return root;
         }else{
             Node<T>* newNode = new Node<T>(value);
-            root = newNode;
-            return true;
+            return newNode;
         }
     }
 
     template<typename T>
-    void BSTree<T>::_Clear(Node<T>* root){
+    void BSTree<T>::Clear(){
+        _root = _Clear(_root);
+    }
+
+
+    template<typename T>
+    Node<T>* BSTree<T>::_Clear(Node<T>* root){
         if(root != nullptr){
-            _Clear(root->left);
-            _Clear(root->right);
+            root->left = _Clear(root->left);
+            root->right = _Clear(root->right);
             delete root;
         }
+        return nullptr;
     }
 
     template<typename T>
-    void BSTree<T>::Print()const{
-        std::cout << "Print" << std::endl;
+    void BSTree<T>::Print() const {
+        if(_root == nullptr){
+            std::cout << "\nNull" <<std::endl;
+        }
         this->_Print(_root);
     }
 
@@ -85,8 +97,6 @@ namespace EDA{
             std::cout << std::to_string(root->key) << " ";
             _Print(root->left);
             _Print(root->right);
-        }else{
-            std::cout << "Null ";
         }
     }
 

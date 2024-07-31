@@ -11,5 +11,8 @@ int main(){
 
 
     tree.Print();
+    tree.Clear();
+    tree.Print();
+
     return 0;
 }
