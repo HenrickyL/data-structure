@@ -1,12 +1,15 @@
 #include <iostream>
-#include "Node.h"
-#include "Tree.h"
-
+#include "BSTree.h"
 using namespace std;
 
 int main(){
-    EDA::Node<int> n;
-    n.value = 10;
-    std::cout << "Hello, World! " << std::endl;
+    EDA::BSTree<int> tree;
+    
+    tree.Insert(5);
+    tree.Insert(6);
+    tree.Insert(1);
+
+
+    tree.Print();
     return 0;
 }

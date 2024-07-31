@@ -3,12 +3,12 @@
 namespace EDA{
     template<typename T>
     struct Node{
-        T value;
+        T key;
         Node<T>* left;
         Node<T>* right;
 
         Node(T _value_, Node<T>* _left = nullptr, Node<T>* _right = nullptr){
-            value = _value_;
+            key = _value_;
             left = _left;
             right = _right; 
         }
