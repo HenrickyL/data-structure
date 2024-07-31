@@ -14,8 +14,6 @@ namespace EDA{
     //Binary Search Tree
     template<typename T>
     class BSTree{
-        private:
-            Node<T>* _node = nullptr;
         protected:
             Node<T>* _root = nullptr;
 
@@ -47,7 +45,6 @@ namespace EDA{
 
     template<typename T>
     bool BSTree<T>::Insert(T value) {
-        _node = _root;
         return this->_Insert(_node, value);
     }
 
