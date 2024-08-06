@@ -98,6 +98,7 @@ namespace EDA{
             _Print(root->left);
             _Print(root->right);
         }
+        else std::cout << "#" << " ";
     }
 
 
