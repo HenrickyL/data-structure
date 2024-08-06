@@ -6,11 +6,13 @@ namespace EDA{
         T key;
         Node<T>* left;
         Node<T>* right;
+        Node<T>* feather;
 
-        Node(T _value_, Node<T>* _left = nullptr, Node<T>* _right = nullptr){
+        Node(T _value_, Node<T>* _left = nullptr, Node<T>* _right = nullptr, Node<T>* _father = nullptr){
             key = _value_;
             left = _left;
             right = _right; 
+            feather = _father;
         }
     };
 }
