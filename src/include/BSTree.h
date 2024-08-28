@@ -24,6 +24,7 @@ namespace EDA{
 
 
             virtual Node<T>* _Insert(Node<T>* root, T value);
+            virtual void _Remove(Node<T>* root, T value);
             // Breadth First Search
             Node<T>* _BFS(Node<T>* root, T value) const;
             Node<T>* _DFS(Node<T>* root, T value) const;
@@ -40,6 +41,7 @@ namespace EDA{
 
 
             void Insert(T item);
+            void Remove(T value);
     };
 
     //--------------------------------------------------------------------------
@@ -67,11 +69,9 @@ namespace EDA{
             // if(root->key ==value) return root;
             if(value < root->key){
                 root->left = _Insert(root->left, value);
-                root->left->feather = root;
                 
             }else{
                 root->right = _Insert(root->right, value);
-                root->right->feather = root;
             }
             return root;
         }else{
@@ -117,7 +117,6 @@ namespace EDA{
     template<typename T>
     Node<T>* BSTree<T>::_BFS(Node<T>* root, T value) const{
         Node<T>* node  = root;
-        Node<T>* father  = nullptr;
 
         std::queue<Node<T>*> frontier;
         frontier.push(node);
@@ -176,6 +175,20 @@ namespace EDA{
         return _Search(_root, value);
     }
 
+    template<typename T>
+    void BSTree<T>::_Remove(Node<T>* root, T value){
+        Node<T>* node = this->_Search(root, value);
+        if(node == nullptr){
+            return;
+        }else if(node->left != nullptr && node->right != nullptr) {
+            
+        }
+    }
+
+    template<typename T>
+    void BSTree<T>::Remove(T value){
+        _Remove(_root, value);
+    }
 
 }
 #endif
