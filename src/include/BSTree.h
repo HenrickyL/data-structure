@@ -2,16 +2,15 @@
 #define UT_BS_TREE_H
 
 
+#include "Node.h"
 #include <iostream>
 #include <string>
-#include "Node.h"
-
 #include <queue>
+#include <stdexcept>
 
 namespace EDA{
     // template<typename T>
     // struct Node;
-
 
     //Binary Search Tree
     template<typename T>
@@ -21,8 +20,6 @@ namespace EDA{
 
             Node<T>* _Clear(Node<T>* root);
             void _Print(Node<T>* root)const;
-
-
             virtual Node<T>* _Insert(Node<T>* root, T value);
             virtual void _Remove(Node<T>* root, T value);
             // Breadth First Search
@@ -177,12 +174,7 @@ namespace EDA{
 
     template<typename T>
     void BSTree<T>::_Remove(Node<T>* root, T value){
-        Node<T>* node = this->_Search(root, value);
-        if(node == nullptr){
-            return;
-        }else if(node->left != nullptr && node->right != nullptr) {
-            
-        }
+        throw std::logic_error("Função não implementada");
     }
 
     template<typename T>
