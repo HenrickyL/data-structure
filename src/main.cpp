@@ -13,6 +13,9 @@ int main(){
     tree.Insert(7);
     tree.Print();
 
+    tree.Test(); // rotação a Esquerda
+    tree.Print();
+
 
     const EDA::Node<int>* res = tree.Search(3);
 
