@@ -9,9 +9,6 @@
 #include <stdexcept>
 
 namespace EDA{
-    // template<typename T>
-    // struct Node;
-
     //Binary Search Tree
     template<typename T>
     class BSTree{
@@ -27,21 +24,22 @@ namespace EDA{
             // Depth First Search
             Node<T>* _DFS(Node<T>* root, T value) const;
             Node<T>* _Search(Node<T>* root, T value) const;
-            Node<T>* _RotateRight(Node<T>* p);
-            Node<T>* _RotateLeft(Node<T>* p);
+            Node<T>* _RightRotate(Node<T>* p);
+            Node<T>* _LeftRotate(Node<T>* p);
 
+            Node<T>* _DoubleRotateRight(Node<T>* p);
+            Node<T>* _DoubleRotateLeft(Node<T>* p);
 
         public:
             ~BSTree();
             bool IsEmpty() const;
             void Print()const;
             const Node<T>* Search(T value) const;
-
+            int Height(Node<T>* node) const;
             void Clear();
 
-
-            virtual void Insert(T item);
-            virtual void Remove(T value);
+            void Insert(T item);
+            void Remove(T value);
             void Test();
     };
 
@@ -76,8 +74,7 @@ namespace EDA{
             }
             return root;
         }else{
-            Node<T>* newNode = new Node<T>(value);
-            return newNode;
+            return new Node<T>(value, 1);
         }
     }
 
@@ -99,8 +96,9 @@ namespace EDA{
 
     template<typename T>
     void BSTree<T>::Print() const {
+        std::cout << std::endl;
         if(_root == nullptr){
-            std::cout << "\nNull" <<std::endl;
+            std::cout << "Null" <<std::endl;
         }
         this->_Print(_root);
         std::cout << "\n";
@@ -176,6 +174,10 @@ namespace EDA{
     const Node<T>* BSTree<T>::Search(T value) const{
         return _Search(_root, value);
     }
+    template<typename T> 
+    int BSTree<T>::Height(Node<T>* node) const{
+        return node == nullptr ? 0 : node->height;
+    }
 
     template<typename T>
     void BSTree<T>::_Remove(Node<T>* root, T value){
@@ -187,24 +189,39 @@ namespace EDA{
         _Remove(_root, value);
     }
     template<typename T>
-    Node<T>* BSTree<T>::_RotateRight(Node<T>* p){
+    Node<T>* BSTree<T>::_RightRotate(Node<T>* p){
         Node<T>* u = p->left;
         p->left = u->right;
         u->right = p;
+        p->height = 1 + std::max(this->Height(p->left), this->Height(p->right));
+        u->height = 1 + std::max(this->Height(u->left), this->Height(u->right));
         return u;
     }
 
     template<typename T>
-    Node<T>* BSTree<T>::_RotateLeft(Node<T>* p){
+    Node<T>* BSTree<T>::_LeftRotate(Node<T>* p){
         Node<T>* u = p->right;
         p->right = u->left;
         u->left = p;
+        p->height = 1 + std::max(Height(p->left), Height(p->right));
+        u->height = 1 + std::max(Height(u->left), Height(u->right));
         return u;
     }
 
     template<typename T>
     void BSTree<T>::Test(){
-        _root = _RotateLeft(_root);
+        _root = _DoubleRotateRight(_root);
+    }
+
+    template<typename T>
+    Node<T>* BSTree<T>::_DoubleRotateRight(Node<T>* p){
+        p->left = this->_LeftRotate(p->left);
+        return _RightRotate(p);
+    }
+    template<typename T>
+    Node<T>* BSTree<T>::_DoubleRotateLeft(Node<T>* p){
+        p->right = this->_RightRotate(p->right);
+        return _LeftRotate(p);
     }
 
 
