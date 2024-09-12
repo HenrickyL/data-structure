@@ -7,11 +7,12 @@ namespace EDA{
 template<typename T>
 class PriorityQueue{
 protected:
-    int* _array;
+    T* _array;
     int _length = 20;
     int _heapSize = 0;
 
     void _alloc(int value);
+    T _getMax()const;
 public:
     PriorityQueue();
     ~PriorityQueue();
@@ -34,16 +35,31 @@ PriorityQueue<T>::~PriorityQueue(){
 
 
 template<typename T>
-void PriorityQueue<T>::_alloc(int value){
+void PriorityQueue<T>::_alloc(int size){
     try
     {
-        _array = new int[value];
+        _array = new T[size];
     }
     catch(const std::bad_alloc&)
     {
         throw std::runtime_error("Falha na alocação de memória");
     }
 }
+
+template<typename T>
+T PriorityQueue<T>::_getMax() const{
+    if(this->_heapSize > 0)
+        return _array[1];
+    else
+        throw std::runtime_error("Underflow error!");
+}
+
+template<typename T>
+T PriorityQueue<T>::First() const{
+    return _getMax();
+}
+
+
 
 }
 
