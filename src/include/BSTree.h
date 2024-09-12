@@ -18,7 +18,7 @@ namespace EDA{
             Node<T>* _Clear(Node<T>* root);
             void _Print(Node<T>* root)const;
             virtual Node<T>* _Insert(Node<T>* root, T value);
-            virtual void _Remove(Node<T>* root, T value);
+            virtual Node<T>* _Remove(Node<T>* root, T value);
             // Breadth First Search
             Node<T>* _BFS(Node<T>* root, T value) const;
             // Depth First Search
@@ -29,6 +29,8 @@ namespace EDA{
 
             Node<T>* _DoubleRotateRight(Node<T>* p);
             Node<T>* _DoubleRotateLeft(Node<T>* p);
+
+            
 
         public:
             ~BSTree();
@@ -180,13 +182,13 @@ namespace EDA{
     }
 
     template<typename T>
-    void BSTree<T>::_Remove(Node<T>* root, T value){
+    Node<T>* BSTree<T>::_Remove(Node<T>* root, T value){
         throw std::logic_error("Função não implementada");
     }
 
     template<typename T>
     void BSTree<T>::Remove(T value){
-        _Remove(_root, value);
+        _root = _Remove(_root, value);
     }
     template<typename T>
     Node<T>* BSTree<T>::_RightRotate(Node<T>* p){
@@ -223,7 +225,6 @@ namespace EDA{
         p->right = this->_RightRotate(p->right);
         return _LeftRotate(p);
     }
-
 
 }
 #endif
