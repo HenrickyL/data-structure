@@ -3,10 +3,16 @@
 
 namespace Perikan{
 namespace TREE{
-    class BinarySearchTree{
-        public:
-            static int Get(){return 1;}
-    };
-}
-}
+
+struct Node;
+
+class BinarySearchTree{
+private:
+    Node* _root;
+public:
+    BinarySearchTree();
+    bool isEmpty() const;
+};
+
+}}
 #endif

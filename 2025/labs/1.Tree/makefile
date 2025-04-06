@@ -1,36 +1,61 @@
-# Nome do executável
-TARGET = build/meu_programa
+# Configurações para Windows
+CXX := g++
+CXXFLAGS := -std=c++17 -Wall -Wextra -Iincludes
+EXTENSION := .exe
+OBJ_EXT := .o
 
 # Diretórios
-SRC_DIR = src
-INC_DIR = include
-BUILD_DIR = build
+SRC_DIR := src
+INC_DIR := includes
+BUILD_DIR := build
+OBJ_DIR := $(BUILD_DIR)/obj
+BIN_DIR := $(BUILD_DIR)/bin
+LIB_DIR := lib
 
-# Compilador e flags
-CXX = g++
-CXXFLAGS = -Wall -Wextra -I$(INC_DIR) -std=c++17
-LDFLAGS = 
+# Nome do executável
+TARGET := $(BIN_DIR)/seu_programa$(EXTENSION)
 
-# Encontra todos os .cpp em src e adiciona main.cpp
-SRC_FILES := $(wildcard $(SRC_DIR)/*.cpp) main.cpp
-OBJ_FILES := $(patsubst %.cpp, $(BUILD_DIR)/%.o, $(SRC_FILES))
+# Fontes e objetos
+SRCS := $(wildcard $(SRC_DIR)/*.cpp)
+OBJS := $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%$(OBJ_EXT),$(SRCS))
+DEPS := $(wildcard $(INC_DIR)/*.h)
 
-# Regra padrão: compilar tudo
-$(TARGET): $(OBJ_FILES) | $(BUILD_DIR)
-	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
+# Se tiver main.cpp na raiz
+ifneq ("$(wildcard main.cpp)","")
+	OBJS += $(OBJ_DIR)/main$(OBJ_EXT)
+endif
 
-# Regra para compilar .cpp para .o
-$(BUILD_DIR)/%.o: %.cpp | $(BUILD_DIR)
+# Regras principais
+all: $(TARGET)
+
+$(TARGET): $(OBJS) | $(BIN_DIR)
+	$(CXX) $(CXXFLAGS) $^ -o $@
+
+# Regra para arquivos em src/
+$(OBJ_DIR)/%$(OBJ_EXT): $(SRC_DIR)/%.cpp $(DEPS) | $(OBJ_DIR)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# Cria a pasta build se não existir
-$(BUILD_DIR):
-	mkdir -p $(BUILD_DIR)
+# Regra para main.cpp se existir
+ifneq ("$(wildcard main.cpp)","")
+$(OBJ_DIR)/main$(OBJ_EXT): main.cpp $(DEPS) | $(OBJ_DIR)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+endif
 
-# Regra para rodar o programa após a compilação
-run: $(TARGET)
-	./$(TARGET)
+# Cria diretórios
+$(BIN_DIR) $(OBJ_DIR) $(LIB_DIR):
+	@if not exist "$@" mkdir "$@"
+
+# Empacota os objetos para compartilhar (cria um zip)
+package_objs:
+	@if not exist "$(LIB_DIR)" mkdir "$(LIB_DIR)"
+	powershell Compress-Archive -Path "$(OBJ_DIR)\*" -DestinationPath "$(LIB_DIR)\objs.zip" -Force
 
 # Limpeza
 clean:
-	rm -rf $(BUILD_DIR)/* $(TARGET)
+	rmdir /s /q "$(BUILD_DIR)"
+	if exist "$(LIB_DIR)\objs.zip" del "$(LIB_DIR)\objs.zip"
+
+run: $(TARGET)
+	$(TARGET)
+
+.PHONY: all clean run package_objs
