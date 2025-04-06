@@ -12,6 +12,24 @@ struct Node{
 };
 
 BinarySearchTree::BinarySearchTree(): _root(nullptr){}
+BinarySearchTree::~BinarySearchTree(){
+    clear();
+}
+
+void BinarySearchTree::clear(){
+    _root = _clear(_root);
+}
+
+Node* BinarySearchTree::_clear(Node* node){
+    if(node == nullptr) return nullptr;
+    else{
+        node->left = _clear(node->left);
+        node->right = _clear(node->right);
+        delete node;
+        return nullptr;
+    }
+}
+
 
 bool BinarySearchTree::isEmpty() const{
     return this->_root == nullptr;
@@ -57,6 +75,35 @@ int BinarySearchTree::_countNodes(Node* node) const{
     }
 }
 
+
+int BinarySearchTree::countLeafs() const{
+    return _countLeafs(_root);
+}
+int BinarySearchTree::_countLeafs(Node* node) const{
+    if(node == nullptr) return 0;
+    else if(node->left == nullptr && node->right == nullptr){
+        return 1;
+    }else{
+        return _countLeafs(node->left) + _countLeafs(node->right);
+    }
+}
+
+void BinarySearchTree::removeLeafs(){
+     _root = _removeLeafs(_root);
+}
+
+
+Node* BinarySearchTree::_removeLeafs(Node* node){
+    if(node == nullptr) return nullptr;
+    else if(node->left == nullptr && node->right == nullptr){
+        delete node;
+        return nullptr;
+    }else{
+        node->left =_removeLeafs(node->left);
+        node->right = _removeLeafs(node->right);
+        return node;
+    }
+}
 
 
 ////////////////////////////

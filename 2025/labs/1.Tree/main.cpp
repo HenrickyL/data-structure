@@ -9,12 +9,18 @@ int main(){
     t.add(1);
     t.add(3);
 
-    t.add(7);
+    t.add(8);
     t.add(6);
     t.add(9);
+    t.add(7);
+
     std::cout << t.to_string()<<std::endl;
-
-    std::cout << t.countNodes() <<std::endl;
-
+    std::cout << "Count: " <<t.countNodes() <<std::endl;
+    std::cout << "Count Leafs: " <<t.countLeafs() <<std::endl;
+    t.removeLeafs();
+    std::cout << t.to_string()<<std::endl;
+    std::cout << "Count Leafs: " <<t.countLeafs() <<std::endl;
+    t.clear();
+    std::cout << "Count: " <<t.countNodes() <<std::endl;
     return 0;
 }
