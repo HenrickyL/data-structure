@@ -1,4 +1,4 @@
-#include "../includes/BinarySearchTree.h"
+#include "../include/BinarySearchTree.h"
 #include<iostream>
 #include<vector>
 namespace Perikan{
@@ -79,7 +79,9 @@ int BinarySearchTree::_countNodes(Node* node) const{
 int BinarySearchTree::countLeafs() const{
     return _countLeafs(_root);
 }
-int BinarySearchTree::_countLeafs(Node* node) const{
+
+
+int BinarySearchTree::_countLeafs(const Node* node) const{
     if(node == nullptr) return 0;
     else if(node->left == nullptr && node->right == nullptr){
         return 1;
@@ -102,6 +104,34 @@ Node* BinarySearchTree::_removeLeafs(Node* node){
         node->left =_removeLeafs(node->left);
         node->right = _removeLeafs(node->right);
         return node;
+    }
+}
+
+void BinarySearchTree::print() const{
+    _print(_root);
+    std::cout << std::endl;
+}
+void BinarySearchTree::_print(const Node* node) const{
+    if(node != nullptr){
+        std::cout <<node->key << " " ;
+        _print(node->left);
+        _print(node->right);
+    }else{
+        std::cout<< " #";
+    }
+}
+
+bool BinarySearchTree::find(int key) const{
+    const Node* node = _find(key, _root);
+    return node != nullptr;
+}
+
+const Node* BinarySearchTree::_find(int key, const Node* node) const{
+    if(node == nullptr) return nullptr;
+    else if(node->key == key) return node;
+    else{
+        if(key < node->key) return _find(key, node->left);
+        else return _find(key, node->right);
     }
 }
 

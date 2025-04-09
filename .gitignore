@@ -2,3 +2,64 @@
 /**/.vs
 /**/.vscode
 /**/*.exe
+
+# Arquivos de build
+/**/*.obj
+/**/*.o
+/**/*.exe
+/**/*.dll
+/**/*.lib
+/**/*.pdb
+
+# Diretórios de build do Visual Studio
+/**/[Bb]uild*/
+/**/x64/
+/**/x86/
+/**/Release/
+/**/Debug/
+/**/ipch/
+/**/*.VC.db
+/**/*.VC.opendb
+
+# Arquivos de usuário do Visual Studio (configurações locais)
+/**/*.user
+/**/*.suo
+/**/*.sdf
+/**/*.cache
+/**/*.opensdf
+/**/*.log
+
+# Arquivos de backup temporários
+/**/*~
+/**/*.tmp
+/**/*.bak
+
+# CMake (caso use)
+# CMakeFiles/
+# CMakeCache.txt
+# cmake_install.cmake
+# Makefile
+
+# Diretório oculto de configuração do VS Code
+/**/.vscode/
+
+# Diretório do Git
+#.git/
+
+# Arquivos gerados por ferramentas
+/**/*.ilk
+/**/*.idb
+/**/*.tlog
+/**/*.lastbuildstate
+
+# Pasta de resultados de testes
+/**/TestResults/
+
+# Arquivos de lock do NuGet
+/**/packages/
+/**/*.nupkg
+/**/project.lock.json
+/**/project.fragment.lock.json
+
+# Cache do Visual Studio
+/**/.vs/
