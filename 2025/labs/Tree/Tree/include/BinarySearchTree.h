@@ -23,7 +23,8 @@ public:
     void removeLeafs();
     void print() const;
     bool find(int key) const;
-
+    int countInterNodes() const;
+    int max() const;
 private:
     Node* _clear(Node* node);
     std::string _to_string(Node* node) const;
@@ -33,6 +34,9 @@ private:
     Node* _removeLeafs(Node* node);
     void _print(const Node* node) const;
     const Node* _find(int key, const Node* node) const;
+    int _countInterNodes(Node* node) const;
+    Node* _max(Node* node) const;
+    bool _isLeaf(const Node* node) const;
 };
 
 }}

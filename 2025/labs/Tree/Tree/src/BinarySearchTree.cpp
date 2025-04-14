@@ -1,6 +1,8 @@
 #include "../include/BinarySearchTree.h"
 #include<iostream>
 #include<vector>
+#include <stdexcept>
+
 namespace Perikan{
     namespace TREE{
 
@@ -107,6 +109,11 @@ Node* BinarySearchTree::_removeLeafs(Node* node){
     }
 }
 
+bool BinarySearchTree::_isLeaf(const Node* node) const {
+    return node == nullptr ? false : node->left == nullptr && node->right == nullptr;
+}
+
+
 void BinarySearchTree::print() const{
     _print(_root);
     std::cout << std::endl;
@@ -134,6 +141,39 @@ const Node* BinarySearchTree::_find(int key, const Node* node) const{
         else return _find(key, node->right);
     }
 }
+
+
+int BinarySearchTree::countInterNodes() const {
+    return _countInterNodes(_root);
+}
+
+
+int BinarySearchTree::_countInterNodes(Node* node) const {
+    if ( node == nullptr || (node->left == nullptr && node->right ==nullptr) ) return 0;
+    else {
+        return _countInterNodes(node->left) + _countInterNodes(node->right) + 1;
+    }
+}
+
+int BinarySearchTree::max() const { 
+   Node* nodeMax = _max(_root);
+   if(nodeMax == nullptr) throw std::runtime_error("Max Key NotFound");
+   return nodeMax->key;
+}
+
+Node* BinarySearchTree::_max(Node* node) const {
+    if (node == nullptr) return node;
+    else if (_isLeaf(node)) return node;
+    else {
+        Node* left = _max(node->left);
+        Node* right = _max(node->right);
+        
+        if (left == nullptr) return right;
+        if (right == nullptr) return left;
+        return left->key > right->key ? left : right;
+    }
+}
+
 
 
 ////////////////////////////

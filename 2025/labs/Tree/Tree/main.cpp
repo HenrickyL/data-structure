@@ -4,6 +4,14 @@ using namespace std;
 
 int main() {
     Perikan::TREE::BinarySearchTree t;
+
+    try {
+        std::cout << "Max key: " << t.max() << std::endl;
+    }
+    catch (const std::runtime_error& e) {
+        std::cerr << "Erro: " << e.what() << std::endl;
+    }
+
     t.add(5);
     t.add(2);
     t.add(1);
@@ -18,6 +26,9 @@ int main() {
     t.print();
     std::cout << "Count: " << t.countNodes() << std::endl;
     std::cout << "Count Leafs: " << t.countLeafs() << std::endl;
+    std::cout << "Count Intern Leafs: " << t.countInterNodes() << std::endl;
+    std::cout << "Max key: " << t.max() << std::endl;
+
 
     int key = 3;
     std::cout << "Finding key [" << key << "] ..." << std::endl;
