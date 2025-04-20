@@ -1,16 +1,12 @@
 #include <iostream>
 #include "include/BinarySearchTree.h"
 using namespace std;
-
-int main() {
+#include<vector>
+#include<sstream>
+void Test() {
     Perikan::TREE::BinarySearchTree t;
 
-    try {
-        std::cout << "Max key: " << t.max() << std::endl;
-    }
-    catch (const std::runtime_error& e) {
-        std::cerr << "Erro: " << e.what() << std::endl;
-    }
+    //std::cout << "Max key: " << t.max() << std::endl;
 
     t.add(5);
     t.add(2);
@@ -42,6 +38,48 @@ int main() {
     std::cout << "Count Leafs: " << t.countLeafs() << std::endl;
     t.clear();
     std::cout << "Count: " << t.countNodes() << std::endl;
+}
+
+void test1(){
+    int nLines;
+    std::cin >> nLines;
+    std::cin.ignore();
+
+    std::vector<Perikan::TREE::BinarySearchTree*> trees;
+
+    for (int i=0; i < nLines; i++) {
+        int qtd;
+        std::cin >> qtd;
+        Perikan::TREE::BinarySearchTree* t = new Perikan::TREE::BinarySearchTree();
+
+        for (int j = 0; j < qtd; j++) {
+            int x;
+            std::cin >> x;
+            t->add(x);
+        }
+
+        trees.push_back(t);
+    }
+
+    for (int i = 0; i < trees.size(); i++) {
+        Perikan::TREE::BinarySearchTree* t = trees[i];
+        std::cout << "Case " << i+1 << ":" << std::endl;
+        t->printPreOrder();
+        t->printInOrder();
+        t->printPosOrder();
+        delete t;
+    }
+}
+
+
+int main() {
+    try {
+        //Test();
+        test1();
+    }
+    catch (const std::runtime_error& e) {
+        std::cerr << "Erro: " << e.what() << std::endl;
+    }
 
     return 0;
 }

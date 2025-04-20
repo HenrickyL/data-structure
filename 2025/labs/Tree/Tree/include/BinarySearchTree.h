@@ -25,6 +25,11 @@ public:
     bool find(int key) const;
     int countInterNodes() const;
     int max() const;
+
+    void printInOrder() const;
+    void printPreOrder() const;
+    void printPosOrder() const;
+
 private:
     Node* _clear(Node* node);
     std::string _to_string(Node* node) const;
@@ -37,6 +42,10 @@ private:
     int _countInterNodes(Node* node) const;
     Node* _max(Node* node) const;
     bool _isLeaf(const Node* node) const;
+
+    void _printInOrder(const Node* node) const;
+    void _printPreOrder(const Node* node) const;
+    void _printPosOrder(const Node* node) const;
 };
 
 }}

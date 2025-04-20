@@ -174,6 +174,46 @@ Node* BinarySearchTree::_max(Node* node) const {
     }
 }
 
+/////////////////////////////
+
+void BinarySearchTree::printInOrder() const {
+    std::cout << "In..: ";
+    this->_printInOrder(_root);
+    std::cout << std::endl;
+
+}
+void BinarySearchTree::printPreOrder() const {
+    std::cout << "Pre.: ";
+    this->_printPreOrder(_root);
+    std::cout << std::endl;
+}
+void BinarySearchTree::printPosOrder() const {
+    std::cout << "Post: ";
+    this->_printPosOrder(_root);
+    std::cout << std::endl;
+}
+
+void BinarySearchTree::_printInOrder(const Node* node) const {
+    if (node != nullptr) {
+        _printInOrder(node->left);
+        std::cout << node->key << " ";
+        _printInOrder(node->right);
+    }
+}
+void BinarySearchTree::_printPreOrder(const Node* node) const{
+    if (node != nullptr) {
+        std::cout << node->key << " ";
+        _printPreOrder(node->left);
+        _printPreOrder(node->right);
+    }
+}
+void BinarySearchTree::_printPosOrder(const Node* node) const{
+    if (node != nullptr) {
+        _printPosOrder(node->left);
+        _printPosOrder(node->right);
+        std::cout << node->key << " ";
+    }
+}
 
 
 ////////////////////////////
