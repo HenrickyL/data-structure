@@ -14,11 +14,14 @@ public:
     BinarySearchTree();
     ~BinarySearchTree();
 
+    virtual void add(int key);
+    virtual void remove(int key);
+
     void clear();
-    void add(int key);
     bool isEmpty() const;
     std::string to_string() const;
-    int countNodes() const;
+    int size() const;
+    int height()const;
     int countLeafs() const;
     void removeLeafs();
     void print() const;
@@ -30,11 +33,18 @@ public:
     void printPreOrder() const;
     void printPosOrder() const;
 
-private:
+    void printBFS() const;
+
+
+protected:
+    virtual Node* _add(int key, Node* node);
+    virtual Node* _remove(int key, Node* node);
+
+
     Node* _clear(Node* node);
     std::string _to_string(Node* node) const;
-    Node* _add(int key, Node* node);
-    int _countNodes(Node* node) const;
+    int _size(Node* node) const;
+    int _height(const Node* node)const;
     int _countLeafs(const Node* node) const;
     Node* _removeLeafs(Node* node);
     void _print(const Node* node) const;
@@ -46,6 +56,9 @@ private:
     void _printInOrder(const Node* node) const;
     void _printPreOrder(const Node* node) const;
     void _printPosOrder(const Node* node) const;
+private:
+    Node* _removeRoot(Node* node);
+
 };
 
 }}

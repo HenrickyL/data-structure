@@ -2,6 +2,7 @@
 #include<iostream>
 #include<vector>
 #include <stdexcept>
+#include<queue>
 
 namespace Perikan{
     namespace TREE{
@@ -67,16 +68,15 @@ Node* BinarySearchTree::_add(int key, Node* node){
     return node;
 }
 
-int BinarySearchTree::countNodes() const{
-    return _countNodes(_root);
+int BinarySearchTree::size() const{
+    return _size(_root);
 }
-int BinarySearchTree::_countNodes(Node* node) const{
+int BinarySearchTree::_size(Node* node) const{
     if(node == nullptr) return 0;
     else{
-        return _countNodes(node->left) + _countNodes(node->right) + 1;
+        return _size(node->left) + _size(node->right) + 1;
     }
 }
-
 
 int BinarySearchTree::countLeafs() const{
     return _countLeafs(_root);
@@ -214,6 +214,81 @@ void BinarySearchTree::_printPosOrder(const Node* node) const{
         std::cout << node->key << " ";
     }
 }
+
+void BinarySearchTree::printBFS() const {
+    std::queue<Node*> frontier;
+    Node* node = _root;
+    frontier.push(node);
+
+    while (!frontier.empty()) {
+        node = frontier.front();
+        frontier.pop();
+        if(node->left)frontier.push(node->left);
+        if (node->right)frontier.push(node->right);
+        std::cout << node->key << " ";
+    }
+    std::cout << std::endl;
+}
+
+
+int BinarySearchTree::height()const {
+    return _height(_root);
+}
+
+int BinarySearchTree::_height(const Node* node)const {
+    if (node == nullptr) return 0;
+    else if (_isLeaf(node)) return 1;
+    else {
+        int left = _height(node->left);
+        int right = _height(node->right);
+        return (left > right ? left : right) + 1;
+    }
+}
+
+void BinarySearchTree::remove(int key) {
+    _root = _remove(key, _root);
+}
+
+
+Node* BinarySearchTree::_remove(int key, Node* node) {
+    if (node == nullptr) return node;
+    else {
+        if (node->key == key) {
+            return _removeRoot(node);
+        }
+        else if (node->key > key) {
+            node->left = _remove(key, node->left);
+        }
+        else {
+            node->right = _remove(key, node->right);
+        }
+        return node;
+    }
+}
+
+
+Node* BinarySearchTree::_removeRoot(Node* node) {
+    Node *father, *aux;
+    if (node->right == nullptr) {
+        aux = node->left;
+    }
+    else {
+        father = node;
+        aux = node->right;
+        while (aux->left != nullptr) {
+            father = aux;
+            aux = aux->left;
+        }
+        if (father != node) {
+            father->left = aux->right;
+            aux->right = node->right;
+        }
+        aux->left = node->left;
+    }
+    delete node;
+    return aux;
+}
+
 
 
 ////////////////////////////
