@@ -16,7 +16,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="src\BinarySearchTree.cpp">
+    <ClCompile Include="src\BinarySearchTree.imp.h">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\AVLTree.cpp">

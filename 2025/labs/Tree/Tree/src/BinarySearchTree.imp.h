@@ -1,29 +1,46 @@
+#ifndef QXD_BST_IMPL
+#define QXD_BST_IMPL
+
 #include "../include/BinarySearchTree.h"
 #include<iostream>
 #include<vector>
 #include <stdexcept>
 #include<queue>
+#include <sstream>
 
 namespace Perikan{
     namespace TREE{
 
+template <typename T>
 struct Node{
     int key;
-    Node* left;
-    Node* right;
-    Node(int val) : key(val), left(nullptr), right(nullptr) {}
+    T value;
+    Node<T>* left;
+    Node<T>* right;
+    Node(int k, T v = T(), Node<T>* l = nullptr, Node<T>* r = nullptr) : key(k), value(v), left(l), right(r) {}
+
+    std::string to_string() const {
+        std::ostringstream oss;
+        oss << "(" << key << ", " << value << ")";
+        return oss.str();
+    }
 };
 
-BinarySearchTree::BinarySearchTree(): _root(nullptr){}
-BinarySearchTree::~BinarySearchTree(){
+template <typename T>
+BinarySearchTree<T>::BinarySearchTree(): _root(nullptr){}
+template <typename T>
+BinarySearchTree<T>::~BinarySearchTree(){
     clear();
 }
 
-void BinarySearchTree::clear(){
+template <typename T>
+
+void BinarySearchTree<T>::clear(){
     _root = _clear(_root);
 }
 
-Node* BinarySearchTree::_clear(Node* node){
+template <typename T>
+Node<T>* BinarySearchTree<T>::_clear(Node<T>* node){
     if(node == nullptr) return nullptr;
     else{
         node->left = _clear(node->left);
@@ -34,56 +51,70 @@ Node* BinarySearchTree::_clear(Node* node){
 }
 
 
-bool BinarySearchTree::isEmpty() const{
+template <typename T>
+bool BinarySearchTree<T>::isEmpty() const{
     return this->_root == nullptr;
 }
 
-std::string BinarySearchTree::to_string() const{
+template <typename T>
+std::string BinarySearchTree<T>::to_string() const{
     return _to_string(this->_root);
 }
 
 
-std::string BinarySearchTree::_to_string(Node* node) const{
+template <typename T>
+std::string BinarySearchTree<T>::_to_string(Node<T>* node) const{
     //caso base:
     if(node == nullptr) return "#";
     //recursao:
     else{
         std::string left = _to_string(node->left);
         std::string right = _to_string(node->right);
-        return std::to_string(node->key)+" " + left + " " + right;
+        std::string value_str = "";
+       
+        return node->to_string() + left + " " + right;
     }
 }
 
-void BinarySearchTree::add(int key){
-    _root = _add(key, _root);
+template <typename T>
+void BinarySearchTree<T>::add(int key, T value){
+    _root = _add(key, value, _root);
 }
 
-Node* BinarySearchTree::_add(int key, Node* node){
-    if(node == nullptr) return new Node(key);
+template <typename T>
+Node<T>* BinarySearchTree<T>::_add(int key, T value, Node<T>* node){
+    if(node == nullptr) return new Node<T>(key, value);
     if(key < node->key){
-        node->left = _add(key, node->left);
+        node->left = _add(key, value, node->left);
     }else if(key > node->key){
-        node->right = _add(key, node->right);
+        node->right = _add(key,value, node->right);
     }
     return node;
 }
 
-int BinarySearchTree::size() const{
+template <typename T>
+int BinarySearchTree<T>::size() const{
     return _size(_root);
 }
-int BinarySearchTree::_size(Node* node) const{
+
+template <typename T>
+int BinarySearchTree<T>::_size(Node<T>* node) const{
     if(node == nullptr) return 0;
     else{
         return _size(node->left) + _size(node->right) + 1;
     }
 }
 
-int BinarySearchTree::countLeafs() const{
+
+template <typename T>
+int BinarySearchTree<T>::countLeafs() const{
     return _countLeafs(_root);
 }
 
 
-int BinarySearchTree::_countLeafs(const Node* node) const{
+
+template <typename T>
+int BinarySearchTree<T>::_countLeafs(const Node<T>* node) const{
     if(node == nullptr) return 0;
     else if(node->left == nullptr && node->right == nullptr){
         return 1;
@@ -92,12 +123,15 @@ int BinarySearchTree::_countLeafs(const Node* node) const{
     }
 }
 
-void BinarySearchTree::removeLeafs(){
+
+template <typename T>
+void BinarySearchTree<T>::removeLeafs(){
      _root = _removeLeafs(_root);
 }
 
 
-Node* BinarySearchTree::_removeLeafs(Node* node){
+template <typename T>
+Node<T>* BinarySearchTree<T>::_removeLeafs(Node<T>* node){
     if(node == nullptr) return nullptr;
     else if(node->left == nullptr && node->right == nullptr){
         delete node;
@@ -109,16 +143,20 @@ Node* BinarySearchTree::_removeLeafs(Node* node){
     }
 }
 
-bool BinarySearchTree::_isLeaf(const Node* node) const {
+template <typename T>
+bool BinarySearchTree<T>::_isLeaf(const Node<T>* node) const {
     return node == nullptr ? false : node->left == nullptr && node->right == nullptr;
 }
 
 
-void BinarySearchTree::print() const{
+template <typename T>
+void BinarySearchTree<T>::print() const{
     _print(_root);
     std::cout << std::endl;
 }
-void BinarySearchTree::_print(const Node* node) const{
+
+template <typename T>
+void BinarySearchTree<T>::_print(const Node<T>* node) const{
     if(node != nullptr){
         std::cout <<node->key << " " ;
         _print(node->left);
@@ -128,12 +166,14 @@ void BinarySearchTree::_print(const Node* node) const{
     }
 }
 
-bool BinarySearchTree::find(int key) const{
-    const Node* node = _find(key, _root);
+template <typename T>
+bool BinarySearchTree<T>::find(int key) const{
+    const Node<T>* node = _find(key, _root);
     return node != nullptr;
 }
 
-const Node* BinarySearchTree::_find(int key, const Node* node) const{
+template <typename T>
+const Node<T>* BinarySearchTree<T>::_find(int key, const Node<T>* node) const{
     if(node == nullptr) return nullptr;
     else if(node->key == key) return node;
     else{
@@ -143,30 +183,34 @@ const Node* BinarySearchTree::_find(int key, const Node* node) const{
 }
 
 
-int BinarySearchTree::countInterNodes() const {
+template <typename T>
+int BinarySearchTree<T>::countInterNodes() const {
     return _countInterNodes(_root);
 }
 
 
-int BinarySearchTree::_countInterNodes(Node* node) const {
+template <typename T>
+int BinarySearchTree<T>::_countInterNodes(Node<T>* node) const {
     if ( node == nullptr || (node->left == nullptr && node->right ==nullptr) ) return 0;
     else {
         return _countInterNodes(node->left) + _countInterNodes(node->right) + 1;
     }
 }
 
-int BinarySearchTree::max() const { 
-   Node* nodeMax = _max(_root);
+template <typename T>
+int BinarySearchTree<T>::max() const { 
+   Node<T>* nodeMax = _max(_root);
    if(nodeMax == nullptr) throw std::runtime_error("Max Key NotFound");
    return nodeMax->key;
 }
 
-Node* BinarySearchTree::_max(Node* node) const {
+template <typename T>
+Node<T>* BinarySearchTree<T>::_max(Node<T>* node) const {
     if (node == nullptr) return node;
     else if (_isLeaf(node)) return node;
     else {
-        Node* left = _max(node->left);
-        Node* right = _max(node->right);
+        Node<T>* left = _max(node->left);
+        Node<T>* right = _max(node->right);
         
         if (left == nullptr) return right;
         if (right == nullptr) return left;
@@ -175,39 +219,44 @@ Node* BinarySearchTree::_max(Node* node) const {
 }
 
 /////////////////////////////
-
-void BinarySearchTree::printInOrder() const {
+template <typename T>
+void BinarySearchTree<T>::printInOrder() const {
     std::cout << "In..: ";
     this->_printInOrder(_root);
     std::cout << std::endl;
 
 }
-void BinarySearchTree::printPreOrder() const {
+template <typename T>
+void BinarySearchTree<T>::printPreOrder() const {
     std::cout << "Pre.: ";
     this->_printPreOrder(_root);
     std::cout << std::endl;
 }
-void BinarySearchTree::printPosOrder() const {
+template <typename T>
+void BinarySearchTree<T>::printPosOrder() const {
     std::cout << "Post: ";
     this->_printPosOrder(_root);
     std::cout << std::endl;
 }
 
-void BinarySearchTree::_printInOrder(const Node* node) const {
+template <typename T>
+void BinarySearchTree<T>::_printInOrder(const Node<T>* node) const {
     if (node != nullptr) {
         _printInOrder(node->left);
         std::cout << node->key << " ";
         _printInOrder(node->right);
     }
 }
-void BinarySearchTree::_printPreOrder(const Node* node) const{
+template <typename T>
+void BinarySearchTree<T>::_printPreOrder(const Node<T>* node) const{
     if (node != nullptr) {
         std::cout << node->key << " ";
         _printPreOrder(node->left);
         _printPreOrder(node->right);
     }
 }
-void BinarySearchTree::_printPosOrder(const Node* node) const{
+template <typename T>
+void BinarySearchTree<T>::_printPosOrder(const Node<T>* node) const{
     if (node != nullptr) {
         _printPosOrder(node->left);
         _printPosOrder(node->right);
@@ -215,9 +264,10 @@ void BinarySearchTree::_printPosOrder(const Node* node) const{
     }
 }
 
-void BinarySearchTree::printBFS() const {
-    std::queue<Node*> frontier;
-    Node* node = _root;
+template <typename T>
+void BinarySearchTree<T>::printBFS() const {
+    std::queue<Node<T>*> frontier;
+    Node<T>* node = _root;
     frontier.push(node);
 
     while (!frontier.empty()) {
@@ -231,11 +281,13 @@ void BinarySearchTree::printBFS() const {
 }
 
 
-int BinarySearchTree::height()const {
+template <typename T>
+int BinarySearchTree<T>::height()const {
     return _height(_root);
 }
 
-int BinarySearchTree::_height(const Node* node)const {
+template <typename T>
+int BinarySearchTree<T>::_height(const Node<T>* node)const {
     if (node == nullptr) return 0;
     else if (_isLeaf(node)) return 1;
     else {
@@ -245,12 +297,14 @@ int BinarySearchTree::_height(const Node* node)const {
     }
 }
 
-void BinarySearchTree::remove(int key) {
+template <typename T>
+void BinarySearchTree<T>::remove(int key) {
     _root = _remove(key, _root);
 }
 
 
-Node* BinarySearchTree::_remove(int key, Node* node) {
+template <typename T>
+Node<T>* BinarySearchTree<T>::_remove(int key, Node<T>* node) {
     if (node == nullptr) return node;
     else {
         if (node->key == key) {
@@ -267,8 +321,9 @@ Node* BinarySearchTree::_remove(int key, Node* node) {
 }
 
 
-Node* BinarySearchTree::_removeRoot(Node* node) {
-    Node *father, *aux;
+template <typename T>
+Node<T>* BinarySearchTree<T>::_removeRoot(Node<T>* node) {
+    Node<T> *father, *aux;
     if (node->right == nullptr) {
         aux = node->left;
     }
@@ -293,3 +348,5 @@ Node* BinarySearchTree::_removeRoot(Node* node) {
 
 ////////////////////////////
 }}
+
+#endif
