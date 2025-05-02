@@ -160,7 +160,7 @@ Node<T>* AVLTree<T>::_remove(int key, Node<T>* node) {
         }
     }
 
-    // Atualiza a altura do nó e regula o nó
+    // Atualiza a altura
     node = _fixup_deletion(node);
     return node;
 }
