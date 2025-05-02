@@ -22,7 +22,7 @@
     <ClCompile Include="src\AVLTree.impl.h">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Set.impl.h">
+    <ClCompile Include="src\Set.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

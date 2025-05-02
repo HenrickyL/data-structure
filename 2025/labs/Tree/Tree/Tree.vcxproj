@@ -130,7 +130,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\AVLTree.impl.h" />
     <ClCompile Include="src\BinarySearchTree.impl.h" />
-    <ClCompile Include="src\Set.impl.h" />
+    <ClCompile Include="src\Set.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\AVLTree.h" />

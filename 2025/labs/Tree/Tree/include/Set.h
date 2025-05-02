@@ -2,45 +2,42 @@
 #define QXD_SET
 
 #include "../include/AVLTree.h"
+using namespace Perikan::TREE;
 
-namespace Perikan {namespace TREE {
 
-template <typename T>
 class Set {
 private:
-    AVLTree<T> _tree;
+    AVLTree<int>* _tree;
 
 public:
     Set();
     ~Set();
 
     // Basic operations
-    void insert(const T& value);
-    void erase(const T& value);
-    bool contains(const T& value) const;
+    void insert(int value);
+    void erase(int value);
+    bool contains(int value) const;
     void clear();
-    void swap(Set<T>& other);
+    void swap(Set& other);
 
     // Query operations
-    T minimum() const;
-    T maximum() const;
-    T successor(const T& value) const;
-    T predecessor(const T& value) const;
+    int minimum() const;
+    int maximum() const;
+    int successor(int value) const;
+    int predecessor(int value) const;
     bool empty() const;
     size_t size() const;
 
     // Binary operations
-    static Set<T> unionSet(const Set<T>& set1, const Set<T>& set2);
-    static Set<T> intersection(const Set<T>& set1, const Set<T>& set2);
-    static Set<T> difference(const Set<T>& set1, const Set<T>& set2);
+    static Set unionSet(const Set& set1, const Set& set2);
+    static Set intersection(const Set& set1, const Set& set2);
+    static Set difference(const Set& set1, const Set& set2);
 
 private:
     // Helper methods for binary operations
-    void unionHelper(Node<T>* node);
-    void intersectionHelper(Node<T>* node, const Set<T>& other);
-    void differenceHelper(Node<T>* node, const Set<T>& other);
+    void unionHelper(Node<int>* node);
+    void intersectionHelper(Node<int>* node, const Set& other);
+    void differenceHelper(Node<int>* node, const Set& other);
 };
 
-}}
-#include "../src/Set.impl.h"
 #endif
