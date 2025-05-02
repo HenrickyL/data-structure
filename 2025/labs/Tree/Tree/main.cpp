@@ -14,6 +14,9 @@ void TestAVL() {
     }
     
     std::cout << t.to_string() << std::endl;
+
+    t.remove(4);
+    std::cout << t.to_string() << std::endl;
 }
 
 //void TestRemove() {

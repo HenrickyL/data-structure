@@ -86,6 +86,35 @@ Node<T>* AVLTree<T>::_fixup_node(Node<T>* node, int key) {
 
     return node;
 }
+template <typename T>
+Node<T>* AVLTree<T>::_fixup_deletion(Node<T>* node) {
+    int bal = _balance(node);
+    // O nó pode estar desregulado, há 4 casos a considerar
+    if (bal > 1) {
+        if (_balance(node->right) >= 0) {
+            return _leftRotation(node);
+        }
+        else {
+            node->right = _rightRotation(node->right);
+            return _leftRotation(node);
+        }
+    }
+    else if (bal < -1) {
+        if (_balance(node->left) <= 0) {
+            return _rightRotation(node);
+        }
+        else {
+            node->left = _leftRotation(node->left);
+            return _rightRotation(node);
+        }
+    }
+
+    // Atualiza altura do nó
+    node->height = 1 + std::max(_height(node->left), _height(node->right));
+
+    return node;
+
+}
 
 
 /* --------------------------------------------------------------- */
@@ -111,8 +140,48 @@ Node<T>* AVLTree<T>::_add(int key, T value, Node<T>* node){
 
 template <typename T>
 Node<T>* AVLTree<T>::_remove(int key, Node<T>* node) {
-    return nullptr;
+    if (node == nullptr) // Nó não encontrado
+        return nullptr;
+
+    if (key < node->key) {
+        node->left = _remove(key, node->left);
+    }
+    else if (key > node->key) {
+        node->right = _remove(key, node->right);
+    }
+    else { // Encontramos o nó
+        if (node->right == nullptr) { // Sem filho direito
+            Node<T>* child = node->left;
+            delete node;
+            return child;
+        }
+        else { // Tem filho direito: troca pelo sucessor
+            node->right = _remove_successor(node, node->right);
+        }
+    }
+
+    // Atualiza a altura do nó e regula o nó
+    node = _fixup_deletion(node);
+    return node;
 }
+
+template <typename T>
+Node<T>* AVLTree<T>::_remove_successor(Node<T>* root, Node<T>* node) {
+    if (node->left != nullptr) {
+        node->left = _remove_successor(root, node->left);
+    }
+    else {
+        root->key = node->key;
+        Node<T>* aux = node->right;
+        delete node;
+        return aux;
+    }
+
+    // Atualiza a altura do nó e regula o nó
+    node = _fixup_deletion(node);
+    return node;
+}
+
 
 
 
