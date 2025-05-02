@@ -32,5 +32,5 @@ protected:
 // ---
 }};
 
-#include "../src/AVLTree.imp.h"
+#include "../src/AVLTree.impl.h"
 #endif

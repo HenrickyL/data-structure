@@ -16,13 +16,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="src\BinarySearchTree.imp.h">
+    <ClCompile Include="src\BinarySearchTree.impl.h">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\AVLTree.imp.h">
+    <ClCompile Include="src\AVLTree.impl.h">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Set.cpp">
+    <ClCompile Include="src\Set.impl.h">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

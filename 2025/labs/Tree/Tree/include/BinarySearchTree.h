@@ -65,5 +65,5 @@ private:
 
 }}
 
-#include "../src/BinarySearchTree.imp.h"
+#include "../src/BinarySearchTree.impl.h"
 #endif
