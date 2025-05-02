@@ -16,8 +16,8 @@ public:
     BinarySearchTree();
     ~BinarySearchTree();
 
-    virtual void add(int key, T value = T());
-    virtual void remove(int key);
+    void add(int key, T value = T());
+    void remove(int key);
 
     void clear();
     bool isEmpty() const;

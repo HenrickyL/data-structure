@@ -3,14 +3,33 @@
 
 #include"../include/BinarySearchTree.h"
 
-namespace Perikan {namespace TREE {
+namespace Perikan {
+	namespace TREE {
 
-//struct Node;
-//
-//class AVLTree : public BinarySearchTree {
-//	
-//
-//};
+template <typename T>
+struct Node;
+
+
+template <typename T>
+class AVLTree : public BinarySearchTree<T> {
+public:
+	AVLTree();
+	~AVLTree();
+
+	int height() const;
+protected:
+	Node<T>* _add(int key, T value, Node<T>* node) override;
+	Node<T>* _remove(int key, Node<T>* node) override;
+
+	int _height(const Node<T>* node) const;
+	int _balance(const Node<T>* node) const;
+	Node<T>* _rightRotation(Node<T>* node);
+	Node<T>* _leftRotation(Node<T>* node);
+	Node<T>* _fixup_node(Node<T>* node, int key);
+};
+
 
 }};
+
+#include "../src/AVLTree.imp.h"
 #endif

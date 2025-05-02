@@ -17,7 +17,9 @@ struct Node{
     T value;
     Node<T>* left;
     Node<T>* right;
-    Node(int k, T v = T(), Node<T>* l = nullptr, Node<T>* r = nullptr) : key(k), value(v), left(l), right(r) {}
+    int height;
+
+    Node(int k, T v = T(), int h = 1, Node<T>* l = nullptr, Node<T>* r = nullptr) : key(k), value(v), height(h), left(l), right(r) {}
 
     std::string to_string() const {
         std::ostringstream oss;
@@ -83,7 +85,7 @@ void BinarySearchTree<T>::add(int key, T value){
 
 template <typename T>
 Node<T>* BinarySearchTree<T>::_add(int key, T value, Node<T>* node){
-    if(node == nullptr) return new Node<T>(key, value);
+    if(node == nullptr) return new Node<T>(key, value, 1);
     if(key < node->key){
         node->left = _add(key, value, node->left);
     }else if(key > node->key){

@@ -128,7 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="src\AVLTree.cpp" />
+    <ClCompile Include="src\AVLTree.imp.h" />
     <ClCompile Include="src\BinarySearchTree.imp.h" />
     <ClCompile Include="src\Set.cpp" />
   </ItemGroup>
