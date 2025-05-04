@@ -7,6 +7,7 @@
 #include <stdexcept>
 #include<queue>
 #include <sstream>
+#include <climits>
 
 namespace Perikan{
     namespace TREE{
@@ -405,10 +406,33 @@ std::string BinarySearchTree<T>::_keyOrderedString(const Node<T>* node) const {
         return "";
     }
 }
+template <typename T>
+int BinarySearchTree<T>::keyMinimum() const {
+    if (_root == nullptr) throw std::runtime_error("Tree empty");
+    return _keyMinimum(_root);
+}
+template <typename T>
+int BinarySearchTree<T>::keyMaximum() const {
+    if (_root == nullptr) throw std::runtime_error("Tree empty");
+    return _keyMaximum(_root);
+}
 
-
-
-
+template <typename T>
+int BinarySearchTree<T>::_keyMinimum(const Node<T>* node) const {
+    if (node == nullptr) return INT_MAX;
+    else {
+        int left = _keyMinimum(node->left);
+        return left < node->key  ? left : node->key ;
+    }
+}
+template <typename T>
+int BinarySearchTree<T>::_keyMaximum(const Node<T>* node) const {
+    if (node == nullptr) return INT_MIN;
+    else {
+        int right = _keyMaximum(node->right);
+        return right > node->key  ? right : node->key ;
+    }
+}
 
 ////////////////////////////
 }}

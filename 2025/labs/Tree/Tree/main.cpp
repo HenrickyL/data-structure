@@ -54,6 +54,10 @@ void Test() {
     t.add(7);
 
     t.printOrdered();
+
+    std::cout << "KeyMin: " << t.keyMinimum() << std::endl;
+    std::cout << "KeyMax: " << t.keyMaximum() << std::endl;
+
     t.print();
     std::cout << "Count:  " << t.size() << std::endl;
     std::cout << "Count Leafs: " << t.countLeafs() << std::endl;

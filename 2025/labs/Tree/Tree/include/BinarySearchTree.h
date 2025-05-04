@@ -44,7 +44,8 @@ public:
     void printOrdered() const;
     std::string keyOrderedString() const;
 
-
+    int keyMinimum() const;
+    int keyMaximum() const;
 
 protected:
     virtual Node<T>* _add(int key, T value, Node<T>* node);
@@ -70,6 +71,8 @@ protected:
     void _printOrdered(const Node<T>* node) const;
     std::string _keyOrderedString(const Node<T>* node) const;
 
+    int _keyMinimum(const Node<T>* node) const;
+    int _keyMaximum(const Node<T>* node) const;
 
 
 private:
