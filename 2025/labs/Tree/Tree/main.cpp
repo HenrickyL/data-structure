@@ -58,6 +58,13 @@ void Test() {
     std::cout << "KeyMin: " << t.keyMinimum() << std::endl;
     std::cout << "KeyMax: " << t.keyMaximum() << std::endl;
 
+    int keyBase = 6;
+    std::cout << "BaseKey: " << keyBase << std::endl;
+    std::cout << "Successor: " << t.keySuccessor(6) << std::endl;
+    std::cout << "Predecessor: " << t.keyPredecessor(6) << std::endl;
+
+
+
     t.print();
     std::cout << "Count:  " << t.size() << std::endl;
     std::cout << "Count Leafs: " << t.countLeafs() << std::endl;

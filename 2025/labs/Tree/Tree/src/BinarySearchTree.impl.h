@@ -409,28 +409,82 @@ std::string BinarySearchTree<T>::_keyOrderedString(const Node<T>* node) const {
 template <typename T>
 int BinarySearchTree<T>::keyMinimum() const {
     if (_root == nullptr) throw std::runtime_error("Tree empty");
-    return _keyMinimum(_root);
+    return _minimum(_root)->key;
 }
 template <typename T>
 int BinarySearchTree<T>::keyMaximum() const {
     if (_root == nullptr) throw std::runtime_error("Tree empty");
-    return _keyMaximum(_root);
+    return _maximum(_root)->key;
 }
 
 template <typename T>
-int BinarySearchTree<T>::_keyMinimum(const Node<T>* node) const {
-    if (node == nullptr) return INT_MAX;
+const Node<T>* BinarySearchTree<T>::_minimum(const Node<T>* node) const {
+    if (node == nullptr) return nullptr;
     else {
-        int left = _keyMinimum(node->left);
-        return left < node->key  ? left : node->key ;
+        if (node->left == nullptr) return node;
+        const Node<T>* left = _minimum(node->left);
+        return left->key < node->key  ? left : node;
     }
 }
 template <typename T>
-int BinarySearchTree<T>::_keyMaximum(const Node<T>* node) const {
-    if (node == nullptr) return INT_MIN;
+const Node<T>* BinarySearchTree<T>::_maximum(const Node<T>* node) const {
+    if (node == nullptr) return nullptr;
     else {
-        int right = _keyMaximum(node->right);
-        return right > node->key  ? right : node->key ;
+        if (node->right == nullptr) return node;
+        const Node<T>* right = _maximum(node->right);
+        return right->key > node->key  ? right : node ;
+    }
+}
+
+template <typename T>
+int BinarySearchTree<T>::keySuccessor(int key) const {
+    if(_root == nullptr) throw std::runtime_error("Tree Empty");
+    const Node<T>* node = _successor(key, _root, _root);
+    if (node == nullptr) throw std::runtime_error("Successor not found");
+    return node->key;
+}
+template <typename T>
+int BinarySearchTree<T>::keyPredecessor(int key) const{
+    if (_root == nullptr) throw std::runtime_error("Tree Empty");
+    const Node<T>* node = _predecessor(key, _root, _root);
+    if (node == nullptr) throw std::runtime_error("Predecessor not found");
+    return node->key;
+}
+
+template <typename T>
+const Node<T>* BinarySearchTree<T>::_successor(int key, const Node<T>* node, const Node<T>* parent) const{
+    if (node == nullptr) return nullptr;
+    else if (key < node->key) return _successor(key, node->left, node);
+    else if (key > node->key) return _successor(key, node->right, parent);
+    else {
+        if (node->right != nullptr) {
+            const Node<T>* current = node->right;
+            while (current->left != nullptr) {
+                current = current->left;
+            }
+            return current;
+        }
+        else {
+            return parent;
+        }
+    }
+}
+template <typename T>
+const Node<T>* BinarySearchTree<T>::_predecessor(int key, const Node<T>* node, const Node<T>* parent) const{
+    if (node == nullptr) return nullptr;
+    else if (key < node->key) return _predecessor(key, node->left, parent);
+    else if (key > node->key) return _predecessor(key, node->right, node);
+    else {
+        if (node->left != nullptr) {
+            const Node<T>* current = node->left;
+            while (current->right != nullptr) {
+                current = current->right;
+            }
+            return current;
+        }
+        else {
+            return parent;
+        }
     }
 }
 

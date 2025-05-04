@@ -47,6 +47,9 @@ public:
     int keyMinimum() const;
     int keyMaximum() const;
 
+    int keySuccessor(int key) const;
+    int keyPredecessor(int key) const;
+
 protected:
     virtual Node<T>* _add(int key, T value, Node<T>* node);
     virtual Node<T>* _remove(int key, Node<T>* node);
@@ -71,9 +74,11 @@ protected:
     void _printOrdered(const Node<T>* node) const;
     std::string _keyOrderedString(const Node<T>* node) const;
 
-    int _keyMinimum(const Node<T>* node) const;
-    int _keyMaximum(const Node<T>* node) const;
-
+    const Node<T>* _minimum(const Node<T>* node) const;
+    const Node<T>* _maximum(const Node<T>* node) const;
+    
+    const Node<T>* _successor(int key, const Node<T>* node, const Node<T>* parent) const;
+    const Node<T>* _predecessor(int key, const Node<T>* node, const Node<T>* parent) const;
 
 private:
     Node<T>* _removeRoot(Node<T>* node);
