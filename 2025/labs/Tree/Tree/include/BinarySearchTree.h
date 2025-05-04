@@ -41,6 +41,10 @@ public:
 
     void printBFS() const;
 
+    void printOrdered() const;
+    std::string keyOrderedString() const;
+
+
 
 protected:
     virtual Node<T>* _add(int key, T value, Node<T>* node);
@@ -62,6 +66,12 @@ protected:
     void _printInOrder(const Node<T>* node) const;
     void _printPreOrder(const Node<T>* node) const;
     void _printPosOrder(const Node<T>* node) const;
+
+    void _printOrdered(const Node<T>* node) const;
+    std::string _keyOrderedString(const Node<T>* node) const;
+
+
+
 private:
     Node<T>* _removeRoot(Node<T>* node);
 

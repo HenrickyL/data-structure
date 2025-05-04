@@ -53,7 +53,7 @@ void Test() {
     t.add(9);
     t.add(7);
 
-    std::cout << t.to_string() << std::endl;
+    t.printOrdered();
     t.print();
     std::cout << "Count:  " << t.size() << std::endl;
     std::cout << "Count Leafs: " << t.countLeafs() << std::endl;

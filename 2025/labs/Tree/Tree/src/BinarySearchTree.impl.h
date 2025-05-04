@@ -374,6 +374,40 @@ Node<T>* BinarySearchTree<T>::_removeRoot(Node<T>* node) {
     return aux;
 }
 
+template <typename T>
+void BinarySearchTree<T>::printOrdered() const {
+    //this->_printOrdered(_root);
+    std::cout << _keyOrderedString(_root) << std::endl;
+}
+
+
+template <typename T>
+void BinarySearchTree<T>::_printOrdered(const Node<T>* node) const {
+    if(node != nullptr) {
+        _printOrdered(node->left);
+        std::cout << node->key << " ";
+        _printOrdered(node->right);
+    }
+}
+
+template <typename T>
+std::string BinarySearchTree<T>::keyOrderedString() const {
+    return _keyOrderedString(_root);
+}
+
+
+template <typename T>
+std::string BinarySearchTree<T>::_keyOrderedString(const Node<T>* node) const {
+    if (node != nullptr) {
+        return _keyOrderedString(node->left) + " " + std::to_string(node->key) + " " + _keyOrderedString(node->right);
+    }
+    else {
+        return "";
+    }
+}
+
+
+
 
 
 ////////////////////////////
