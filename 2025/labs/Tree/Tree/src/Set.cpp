@@ -36,3 +36,10 @@ int Set::minimum() const {
 int Set::maximum() const {
     return _tree->keyMaximum();
 }
+
+int Set::successor(int value) const {
+    return _tree->keySuccessor(value);
+}
+int Set::predecessor(int value) const {
+    return _tree->keyPredecessor(value);
+}
