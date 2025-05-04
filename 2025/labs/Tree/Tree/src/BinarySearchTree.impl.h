@@ -3,7 +3,6 @@
 
 #include "../include/BinarySearchTree.h"
 #include<iostream>
-#include<vector>
 #include <stdexcept>
 #include<queue>
 #include <sstream>
@@ -400,7 +399,8 @@ std::string BinarySearchTree<T>::keyOrderedString() const {
 template <typename T>
 std::string BinarySearchTree<T>::_keyOrderedString(const Node<T>* node) const {
     if (node != nullptr) {
-        return _keyOrderedString(node->left) + " " + std::to_string(node->key) + " " + _keyOrderedString(node->right);
+        std::string s = std::to_string(node->key);
+        return _keyOrderedString(node->left) + " " + s + " " + _keyOrderedString(node->right);
     }
     else {
         return "";
@@ -487,6 +487,24 @@ const Node<T>* BinarySearchTree<T>::_predecessor(int key, const Node<T>* node, c
         }
     }
 }
+
+
+template <typename T>
+std::vector<int> BinarySearchTree<T>::getKeys() const {
+    std::vector<int> ls;
+    _auxGetKeys(_root, ls);
+    return ls;
+}
+
+template <typename T>
+void BinarySearchTree<T>::_auxGetKeys(const Node<T>* node, std::vector<int>& ls) const {
+    if (node != nullptr) {
+        _auxGetKeys(node->left, ls);
+        ls.push_back(node->key);
+        _auxGetKeys(node->right, ls);
+    }
+}
+
 
 ////////////////////////////
 }}

@@ -2,6 +2,7 @@
 #define QXD_BST
 
 #include<string>
+#include<vector>
 
 namespace Perikan{namespace TREE{
 
@@ -50,6 +51,9 @@ public:
     int keySuccessor(int key) const;
     int keyPredecessor(int key) const;
 
+
+    std::vector<int> getKeys() const;
+
 protected:
     virtual Node<T>* _add(int key, T value, Node<T>* node);
     virtual Node<T>* _remove(int key, Node<T>* node);
@@ -82,7 +86,7 @@ protected:
 
 private:
     Node<T>* _removeRoot(Node<T>* node);
-
+    void _auxGetKeys(const Node<T>* node, std::vector<int>& ls) const;
 };
 
 }}

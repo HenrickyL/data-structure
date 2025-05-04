@@ -33,11 +33,13 @@ public:
     static Set intersection(const Set& set1, const Set& set2);
     static Set difference(const Set& set1, const Set& set2);
 
+    void print(std::string title) const;
+
 private:
     // Helper methods for binary operations
-    void unionHelper(Node<int>* node);
+    /*void unionHelper(Node<int>* node);
     void intersectionHelper(Node<int>* node, const Set& other);
-    void differenceHelper(Node<int>* node, const Set& other);
+    void differenceHelper(Node<int>* node, const Set& other);*/
 };
 
 #endif
