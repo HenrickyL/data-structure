@@ -7,51 +7,238 @@
 using namespace std;
 #include<vector>
 #include<sstream>
+#include <cstdlib>
+#include <limits>
 
+class SetDisplay {
+private:
+    std::vector<Set*> sets;
+
+    void displayMenu() {
+        std::cout << "\n=== MENU PRINCIPAL ===" << std::endl;
+        std::cout << "1. Criar novo conjunto" << std::endl;
+        std::cout << "2. Inserir elemento em um conjunto" << std::endl;
+        std::cout << "3. Remover elemento de um conjunto" << std::endl;
+        std::cout << "4. Verificar se elemento existe" << std::endl;
+        std::cout << "5. Mostrar conjunto" << std::endl;
+        std::cout << "6. Operacoes binarias" << std::endl;
+        std::cout << "7. Informacoes do conjunto" << std::endl;
+        std::cout << "8. Limpar conjunto" << std::endl;
+        std::cout << "9. Limpar Console" << std::endl;
+        std::cout << "10. Trocar dois conjuntos" << std::endl;
+        std::cout << "0. Sair" << std::endl;
+        std::cout << "Escolha uma opcao: ";
+    }
+
+    void displayBinaryOperationsMenu() {
+        std::cout << "\n=== OPERACOES BINARIAS ===" << std::endl;
+        std::cout << "1. Uniao (A U B)" << std::endl;
+        std::cout << "2. Interseccao (A ^ B)" << std::endl;
+        std::cout << "3. Diferenca (A - B)" << std::endl;
+        std::cout << "0. Voltar ao menu principal" << std::endl;
+        std::cout << "Escolha uma opcao: ";
+    }
+
+    void displayInfoMenu() {
+        std::cout << "\n=== INFORMACOES DO CONJUNTO ===" << std::endl;
+        std::cout << "1. Menor elemento" << std::endl;
+        std::cout << "2. Maior elemento" << std::endl;
+        std::cout << "3. Tamanho do conjunto" << std::endl;
+        std::cout << "4. Verificar se esta vazio" << std::endl;
+        std::cout << "0. Voltar ao menu principal" << std::endl;
+        std::cout << "Escolha uma opcao: ";
+    }
+
+    int escolherSet(const std::string& prompt = "Escolha o indice do conjunto") {
+        std::cout << prompt << " (0 ate " << sets.size() - 1 << "): ";
+        int idx;
+        std::cin >> idx;
+        return (idx >= 0 && idx < sets.size()) ? idx : -1;
+    }
+
+
+    void waitClick() {
+        std::cout << "\nPressione Enter para continuar...";
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cin.get();  // Espera o Enter
+    }
+
+    void clearConsole() {
+        std::system("cls");
+    }
+
+public:
+
+    ~SetDisplay() {
+        for (Set* s : sets) {
+            delete s;
+        }
+    }
+
+    void run() {
+        int opcao;
+        do {
+            displayMenu();
+            std::cin >> opcao;
+            clearConsole();
+
+            try {
+                switch (opcao) {
+                case 1: // Criar novo conjunto
+                    sets.push_back(new Set());
+                    std::cout << "Conjunto criado com indice " << sets.size() - 1 << std::endl;
+                    break;
+                case 2: { // Inserir
+                    int idx = escolherSet();
+                    if (idx != -1) {
+                        int escolha;
+                        std::cout << "1. Inserir um valor\n2. Inserir varios valores\nEscolha: ";
+                        std::cin >> escolha;
+
+                        if (escolha == 1) {
+                            int val;
+                            std::cout << "Elemento a inserir: ";
+                            std::cin >> val;
+                            sets[idx]->insert(val);
+                        }
+                        else if (escolha == 2) {
+                            std::cout << "Digite os valores separados por espaco (fim com -999): ";
+                            int val;
+                            while (std::cin >> val && val != -999) {
+                                try {
+                                    sets[idx]->insert(val);
+                                }
+                                catch (const std::exception& e) {
+                                    std::cout << "Erro ao inserir " << val << ": " << e.what() << std::endl;
+                                }
+                            }
+                            std::cin.clear(); // limpa estado de erro
+                            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                        }
+                        else {
+                            std::cout << "Opcao invalida." << std::endl;
+                        }
+                    }
+                    break;
+                }
+                case 3: { // Remover
+                    int idx = escolherSet();
+                    if (idx != -1) {
+                        int val;
+                        std::cout << "Elemento a remover: ";
+                        std::cin >> val;
+                        sets[idx]->erase(val);
+                    }
+                    break;
+                }
+                case 4: { // Verificar existencia
+                    int idx = escolherSet();
+                    if (idx != -1) {
+                        int val;
+                        std::cout << "Elemento a verificar: ";
+                        std::cin >> val;
+                        std::cout << (sets[idx]->contains(val) ? "Existe" : "Nao existe") << std::endl;
+                    }
+                    break;
+                }
+                case 5: { // Mostrar
+                    int idx = escolherSet();
+                    if (idx != -1)
+                        sets[idx]->print("Conjunto " + std::to_string(idx));
+                    break;
+                }
+                case 6: { // Operações binárias
+                    int op;
+                    do {
+                        displayBinaryOperationsMenu();
+                        std::cin >> op;
+                        clearConsole();
+
+                        if (op == 0) break;
+
+                        int a = escolherSet("Escolha o conjunto A");
+                        int b = escolherSet("Escolha o conjunto B");
+
+                        if (a != -1 && b != -1) {
+                            Set result;
+                            switch (op) {
+                            case 1: Set::unionSet(*sets[a], *sets[b], result); break;
+                            case 2: Set::intersection(*sets[a], *sets[b], result); break;
+                            case 3: Set::difference(*sets[a], *sets[b], result); break;
+                            default: std::cout << "Opcao invalida!" << std::endl; continue;
+                            }
+                            result.print("Resultado");
+                        }
+                    } while (op != 0);
+                    break;
+                }
+                case 7: { // Informações
+                    int op;
+                    do {
+                        displayInfoMenu();
+                        std::cin >> op;
+                        if (op == 0) break;
+
+                        int idx = escolherSet();
+                        if (idx != -1) {
+                            switch (op) {
+                            case 1: std::cout << "Menor: " << sets[idx]->minimum() << std::endl; break;
+                            case 2: std::cout << "Maior: " << sets[idx]->maximum() << std::endl; break;
+                            case 3: std::cout << "Tamanho: " << sets[idx]->size() << std::endl; break;
+                            case 4: std::cout << (sets[idx]->empty() ? "Vazio" : "Nao vazio") << std::endl; break;
+                            default: std::cout << "Opcao invalida!" << std::endl; break;
+                            }
+                        }
+                    } while (op != 0);
+                    break;
+                }
+                case 8: { // Limpar
+                    int idx = escolherSet();
+                    if (idx != -1) {
+                        sets[idx]->clear();
+                        std::cout << "Conjunto limpo." << std::endl;
+                    }
+                    break;
+                }
+                case 9: {
+                    clearConsole();
+                    break;
+                }
+                case 10: { // Trocar dois conjuntos
+                    int a = escolherSet("Escolha o indice do primeiro conjunto");
+                    int b = escolherSet("Escolha o indice do segundo conjunto");
+
+                    if (a != -1 && b != -1) {
+                        sets[a]->swap(*sets[b]);
+                        std::cout << "Conjuntos " << a << " e " << b << " foram trocados com sucesso." << std::endl;
+                    }
+                    else {
+                        std::cout << "Indices invalidos." << std::endl;
+                    }
+                    break;
+                }
+                case 0:
+                    std::cout << "Saindo..." << std::endl;
+                    break;
+                default:
+                    std::cout << "Opcao invalida!" << std::endl;
+                    break;
+                }
+            }catch (const std::exception& e) {
+                std::cout << "Erro: " << e.what() << std::endl;
+                waitClick();
+                continue;
+            }
+        } while (opcao != 0);
+    }
+};
 
 void TestSet() {
-    std::cout << "=== TESTING SET OPERATIONS ===" << std::endl;
-
-    // Criando conjuntos de teste
-    Set setA, setB;
-
-    // Inserindo elementos
-    for (int i = 1; i <= 5; i++) setA.insert(i);
-    for (int i = 3; i <= 7; i++) setB.insert(i);
-
-    setA.print("Set A");
-    setB.print("Set B");
-
-    // Testando Union
-    Set unionAB = Set::unionSet(setA, setB);
-    unionAB.print("A union B");
-
-    // Testando Intersection
-    Set intersectAB = Set::intersection(setA, setB);
-    intersectAB.print("A intersect B");
-
-    // Testando Difference
-    Set diffAB = Set::difference(setA, setB);
-    diffAB.print("A - B");
-
-    Set diffBA = Set::difference(setB, setA);
-    diffBA.print("B - A");
-
-    // Testando outras operações
-    std::cout << "\nAdditional tests:" << std::endl;
-    std::cout << "Minimum of A: " << setA.minimum() << std::endl;
-    std::cout << "Maximum of B: " << setB.maximum() << std::endl;
-    std::cout << "Size of A: " << setA.size() << std::endl;
-    std::cout << "Is 4 in A? " << (setA.contains(4) ? "Yes" : "No") << std::endl;
-
-    // Testando clear
-    Set setC = setA;
-    setC.print("Set C (copy of A)");
-    setC.clear();
-    std::cout << "After clear, size of C: " << setC.size() << std::endl;
-
-    std::cout << "=== TESTING COMPLETED ===" << std::endl;
+    SetDisplay display;
+    display.run();
 }
+
+
 
 //void TestAVL() {
 //    Perikan::TREE::AVLTree<int> t;

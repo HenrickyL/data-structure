@@ -4,11 +4,13 @@
     
 Set::Set() {
     _tree = new AVLTree<int>();
+    std::cout << "Set constroy\n";
 }
 
 Set::~Set() {
     //_tree->clear();
     delete _tree;
+    std::cout << "[" << _name<< "]:" << "Set Destroy\n";
 }
 
 void Set::insert(int value) {
@@ -28,6 +30,13 @@ bool Set::contains(int value) const {
 void Set::clear() {
     _tree->clear();
 }
+
+void Set::swap(Set& other) {
+    AVLTree<int>* aux = _tree;
+    _tree = other._tree;
+    other._tree = aux;
+}
+
 
 
 int Set::minimum() const {
@@ -53,11 +62,10 @@ size_t Set::size() const {
 }
 
 
-Set Set::unionSet(const Set& set1, const Set& set2) {
+void Set::unionSet(const Set& set1, const Set& set2, Set& response) {
     const Set& larger = (set1.size() > set2.size()) ? set1 : set2;
     const Set& smaller = (set1.size() > set2.size()) ? set2 : set1;
 
-    Set response;
     //add small in large
     for (int elem : larger._tree->getKeys()) {
         response.insert(elem);
@@ -65,26 +73,22 @@ Set Set::unionSet(const Set& set1, const Set& set2) {
     for (int elem : smaller._tree->getKeys()) {
         response.insert(elem);
     }
-    return response;
 }
-Set Set::intersection(const Set& set1, const Set& set2){
+void Set::intersection(const Set& set1, const Set& set2, Set& response){
     const Set& larger = (set1.size() > set2.size()) ? set1 : set2;
     const Set& smaller = (set1.size() > set2.size()) ? set2 : set1;
 
-    Set response;
     //add small in large
     for (int elem : smaller._tree->getKeys()) {
         if (larger.contains(elem)) {
             response.insert(elem);
         }
     }
-    return response;
 }
-Set Set::difference(const Set& set1, const Set& set2){
+void Set::difference(const Set& set1, const Set& set2, Set& response){
     const Set& larger = (set1.size() > set2.size()) ? set1 : set2;
     const Set& smaller = (set1.size() > set2.size()) ? set2 : set1;
 
-    Set response;
     //add small in large
     for (int elem : larger._tree->getKeys()) {
         response.insert(elem);
@@ -92,11 +96,11 @@ Set Set::difference(const Set& set1, const Set& set2){
     for (int elem : smaller._tree->getKeys()) {
         response.erase(elem);
     }
-    return response;
 }
 
 
-void Set::print(std::string title) const {
+void Set::print(std::string title) {
+    _name = title;
     std::cout << title << ": ";
     _tree->printOrdered();
 }

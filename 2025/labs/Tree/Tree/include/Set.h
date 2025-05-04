@@ -8,6 +8,7 @@ using namespace Perikan::TREE;
 class Set {
 private:
     AVLTree<int>* _tree;
+    std::string _name ;
 
 public:
     Set();
@@ -29,11 +30,11 @@ public:
     size_t size() const;
 
     // Binary operations
-    static Set unionSet(const Set& set1, const Set& set2);
-    static Set intersection(const Set& set1, const Set& set2);
-    static Set difference(const Set& set1, const Set& set2);
+    static void unionSet(const Set& set1, const Set& set2, Set& response);
+    static void intersection(const Set& set1, const Set& set2, Set& response);
+    static void difference(const Set& set1, const Set& set2, Set& response);
 
-    void print(std::string title) const;
+    void print(std::string title);
 
 private:
     // Helper methods for binary operations
