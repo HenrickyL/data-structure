@@ -47,7 +47,7 @@ void TestSet() {
     // Testando clear
     Set setC = setA;
     setC.print("Set C (copy of A)");
-    //setC.clear();
+    setC.clear();
     std::cout << "After clear, size of C: " << setC.size() << std::endl;
 
     std::cout << "=== TESTING COMPLETED ===" << std::endl;

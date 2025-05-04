@@ -73,11 +73,8 @@ Set Set::intersection(const Set& set1, const Set& set2){
 
     Set response;
     //add small in large
-    for (int elem : larger._tree->getKeys()) {
-        response.insert(elem);
-    }
     for (int elem : smaller._tree->getKeys()) {
-        if (response.contains(elem)) {
+        if (larger.contains(elem)) {
             response.insert(elem);
         }
     }
@@ -93,9 +90,7 @@ Set Set::difference(const Set& set1, const Set& set2){
         response.insert(elem);
     }
     for (int elem : smaller._tree->getKeys()) {
-        if (!response.contains(elem)) {
-            response.insert(elem);
-        }
+        response.erase(elem);
     }
     return response;
 }
