@@ -34,3 +34,11 @@ int Set::minimum() const {
     return 0;
 }
     
+
+
+int Set::minimum() const {
+    return _tree->keyMinimum();
+}
+int Set::maximum() const {
+    return _tree->keyMaximum();
+}
