@@ -51,10 +51,25 @@ private:
     }
 
     int escolherSet(const std::string& prompt = "Escolha o indice do conjunto") {
+        if (sets.empty()) {
+            std::cout << "Nenhum conjunto disponivel!" << std::endl;
+            return -1;
+        }
+
         std::cout << prompt << " (0 ate " << sets.size() - 1 << "): ";
-        int idx;
+
+        int idx;  // Mantemos como int para retornar -1 em caso de erro
         std::cin >> idx;
-        return (idx >= 0 && idx < sets.size()) ? idx : -1;
+
+        // Verificação segura considerando a diferença de signed/unsigned
+        if (std::cin.fail() || idx < 0 || static_cast<size_t>(idx) >= sets.size()) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Indice invalido!" << std::endl;
+            return -1;
+        }
+
+        return idx;
     }
 
 
