@@ -19,7 +19,7 @@ struct Node{
     Node<T>* right;
     int height;
 
-    Node(int k, T v = T(), int h = 1, Node<T>* l = nullptr, Node<T>* r = nullptr) : key(k), value(v), height(h), left(l), right(r) {}
+    Node(int k, T v = T(), int h = 1, Node<T>* l = nullptr, Node<T>* r = nullptr) :key(k), value(v), left(l), right(r), height(h) {}
 
     std::string to_string() const {
         std::ostringstream oss;
