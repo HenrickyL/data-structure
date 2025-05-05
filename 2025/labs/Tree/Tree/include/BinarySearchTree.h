@@ -15,7 +15,7 @@ protected:
     Node<T>* _root;
 public:
     BinarySearchTree();
-    ~BinarySearchTree();
+    virtual ~BinarySearchTree();
 
     void add(int key, T value = T());
     void remove(int key);
