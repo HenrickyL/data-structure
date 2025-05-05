@@ -9,6 +9,7 @@ using namespace std;
 #include<sstream>
 #include <cstdlib>
 #include <limits>
+#include<string>
 
 class SetDisplay {
 private:
@@ -84,10 +85,12 @@ public:
 
             try {
                 switch (opcao) {
-                case 1: // Criar novo conjunto
-                    sets.push_back(new Set());
+                case 1: { // Criar novo conjunto
+                    std::string name = "Set " + std::to_string(sets.size());
+                    sets.push_back(new Set(name));
                     std::cout << "Conjunto criado com indice " << sets.size() - 1 << std::endl;
                     break;
+                }
                 case 2: { // Inserir
                     int idx = escolherSet();
                     if (idx != -1) {
@@ -144,7 +147,7 @@ public:
                 case 5: { // Mostrar
                     int idx = escolherSet();
                     if (idx != -1)
-                        sets[idx]->print("Conjunto " + std::to_string(idx));
+                        sets[idx]->print();
                     break;
                 }
                 case 6: { // Operações binárias
@@ -160,14 +163,14 @@ public:
                         int b = escolherSet("Escolha o conjunto B");
 
                         if (a != -1 && b != -1) {
-                            Set result;
+                            Set result("Result");
                             switch (op) {
                             case 1: Set::unionSet(*sets[a], *sets[b], result); break;
                             case 2: Set::intersection(*sets[a], *sets[b], result); break;
                             case 3: Set::difference(*sets[a], *sets[b], result); break;
                             default: std::cout << "Opcao invalida!" << std::endl; continue;
                             }
-                            result.print("Resultado");
+                            result.print();
                         }
                     } while (op != 0);
                     break;

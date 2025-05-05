@@ -2,8 +2,9 @@
 #include "../include/Set.h"
 
     
-Set::Set() {
+Set::Set(std::string name) {
     _tree = new AVLTree<int>();
+    _name = name;
     std::cout << "Set constroy\n";
 }
 
@@ -99,8 +100,7 @@ void Set::difference(const Set& set1, const Set& set2, Set& response){
 }
 
 
-void Set::print(std::string title) {
-    _name = title;
-    std::cout << title << ": ";
+void Set::print() const {
+    std::cout << _name << ": ";
     _tree->printOrdered();
 }

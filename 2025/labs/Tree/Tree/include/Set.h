@@ -11,7 +11,7 @@ private:
     std::string _name ;
 
 public:
-    Set();
+    Set(std::string name);
     ~Set();
 
     // Basic operations
@@ -34,7 +34,7 @@ public:
     static void intersection(const Set& set1, const Set& set2, Set& response);
     static void difference(const Set& set1, const Set& set2, Set& response);
 
-    void print(std::string title);
+    void print() const;
 
 private:
     // Helper methods for binary operations
