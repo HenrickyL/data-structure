@@ -1,5 +1,9 @@
 # Binary Search Tree
 
+## project
+```bash
+cd Tree
+```
 ## Compile
 ```bash
 make
