@@ -39,7 +39,7 @@
     <ClInclude Include="include\RBTree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\RBTree.impl.h">
+    <ClInclude Include="src\RBTree.cpp">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
