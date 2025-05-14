@@ -1,9 +1,9 @@
 
 #include "../include/Set.h"
-
+#include <iostream>
     
 Set::Set(std::string name) {
-    _tree = new AVLTree<int>();
+    _tree = new AVLTree();
     _name = name;
     std::cout << "Set constroy\n";
 }
@@ -33,7 +33,7 @@ void Set::clear() {
 }
 
 void Set::swap(Set& other) {
-    AVLTree<int>* aux = _tree;
+    AVLTree* aux = _tree;
     _tree = other._tree;
     other._tree = aux;
 }

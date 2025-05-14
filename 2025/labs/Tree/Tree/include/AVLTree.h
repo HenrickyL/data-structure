@@ -6,31 +6,28 @@
 namespace Perikan {
 	namespace TREE {
 
-template <typename T>
 struct Node;
 
 
-template <typename T>
-class AVLTree : public BinarySearchTree<T> {
+class AVLTree : public BinarySearchTree {
 public:
 	AVLTree();
 	~AVLTree();
 
 	int height() const;
 protected:
-	Node<T>* _add(int key, T value, Node<T>* node) override;
-	Node<T>* _remove(int key, Node<T>* node) override;
+	Node* _add(int key, Node* node) override;
+	Node* _remove(int key, Node* node) override;
 
-	int _height(const Node<T>* node) const;
-	int _balance(const Node<T>* node) const;
-	Node<T>* _rightRotation(Node<T>* node);
-	Node<T>* _leftRotation(Node<T>* node);
-	Node<T>* _fixup_node(Node<T>* node, int key);
-	Node<T>* _fixup_deletion(Node<T>* node);
-	Node<T>* _remove_successor(Node<T>* root, Node<T>* node);
+	int _height(const Node* node) const;
+	int _balance(const Node* node) const;
+	Node* _rightRotation(Node* node);
+	Node* _leftRotation(Node* node);
+	Node* _fixup_node(Node* node, int key);
+	Node* _fixup_deletion(Node* node);
+	Node* _remove_successor(Node* root, Node* node);
 };
 // ---
 }};
 
-#include "../src/AVLTree.impl.h"
 #endif

@@ -1,42 +1,54 @@
-#ifndef QXD_AVL_IMPL
-#define QXD_AVL_IMPL
-
-#include <algorithm>
 #include "../include/AVLTree.h"
+#include <stdexcept>
+#include <algorithm>
+#include <sstream>
 
-namespace Perikan {
-    namespace TREE {
+
+namespace Perikan {namespace TREE {
+
+struct Node {
+    int key;
+    int height;
+    Node* left;
+    Node* right;
+
+    Node(int k, int h = 1, Node* l = nullptr, Node* r = nullptr) :key(k), left(l), right(r), height(h) {}
+
+    std::string to_string() const {
+        std::ostringstream oss;
+        oss << "(" << key << ")";
+        return oss.str();
+    }
+};
+
+AVLTree::AVLTree() : BinarySearchTree(){}
 
 
-template <typename T>
-AVLTree<T>::AVLTree() : BinarySearchTree<T>(){}
-
-template <typename T>
-AVLTree<T>::~AVLTree() {
+AVLTree::~AVLTree() {
     this->clear();
 }
 
 
-template <typename T>
-int AVLTree<T>::height()const {
+
+int AVLTree::height()const {
     return _height(this->_root);
 }
 
-template <typename T>
-int AVLTree<T>::_height(const Node<T>* node) const {
+
+int AVLTree::_height(const Node* node) const {
     return (node == nullptr) ? 0 : node->height;
 }
-template <typename T>
-int AVLTree<T>::_balance(const Node<T>* node) const {
+
+int AVLTree::_balance(const Node* node) const {
     if (node == nullptr) {
         throw std::runtime_error("[balance] node not be null!");
     }
     return _height(node->right) - _height(node->left);
 }
 
-template <typename T>
-Node<T>* AVLTree<T>::_rightRotation(Node<T>* node) {
-    Node<T>* aux = node->left;
+
+Node* AVLTree::_rightRotation(Node* node) {
+    Node* aux = node->left;
     node->left = aux->right;
     aux->right = node;
     //fix
@@ -45,9 +57,9 @@ Node<T>* AVLTree<T>::_rightRotation(Node<T>* node) {
     return aux;
 }
 
-template <typename T>
-Node<T>* AVLTree<T>::_leftRotation(Node<T>* node) {
-    Node<T>* aux = node->right;
+
+Node* AVLTree::_leftRotation(Node* node) {
+    Node* aux = node->right;
     node->right = aux->left;
     aux->left = node;
     //fix
@@ -56,8 +68,8 @@ Node<T>* AVLTree<T>::_leftRotation(Node<T>* node) {
     return aux;
 }
 
-template <typename T>
-Node<T>* AVLTree<T>::_fixup_node(Node<T>* node, int key) {
+
+Node* AVLTree::_fixup_node(Node* node, int key) {
     // Obtém balanço de p
     int bal = _balance(node);
 
@@ -86,8 +98,8 @@ Node<T>* AVLTree<T>::_fixup_node(Node<T>* node, int key) {
 
     return node;
 }
-template <typename T>
-Node<T>* AVLTree<T>::_fixup_deletion(Node<T>* node) {
+
+Node* AVLTree::_fixup_deletion(Node* node) {
     int bal = _balance(node);
     // O nó pode estar desregulado, há 4 casos a considerar
     if (bal > 1) {
@@ -118,18 +130,18 @@ Node<T>* AVLTree<T>::_fixup_deletion(Node<T>* node) {
 
 
 /* --------------------------------------------------------------- */
-template <typename T>
-Node<T>* AVLTree<T>::_add(int key, T value, Node<T>* node){
+
+Node* AVLTree::_add(int key, Node* node){
     if (node == nullptr) {
-        return new Node<T>(key, value, 1);
+        return new Node(key, 1);
     }
     else {
         if (key == node->key) return node;
         else if (key < node->key) {
-            node->left = _add(key, value, node->left);
+            node->left = _add(key, node->left);
         }
         else {
-            node->right = _add(key, value, node->right);
+            node->right = _add(key, node->right);
         }
 
         //fix
@@ -138,8 +150,8 @@ Node<T>* AVLTree<T>::_add(int key, T value, Node<T>* node){
     }
 }
 
-template <typename T>
-Node<T>* AVLTree<T>::_remove(int key, Node<T>* node) {
+
+Node* AVLTree::_remove(int key, Node* node) {
     if (node == nullptr) // Nó não encontrado
         return nullptr;
 
@@ -151,7 +163,7 @@ Node<T>* AVLTree<T>::_remove(int key, Node<T>* node) {
     }
     else { // Encontramos o nó
         if (node->right == nullptr) { // Sem filho direito
-            Node<T>* child = node->left;
+            Node* child = node->left;
             delete node;
             return child;
         }
@@ -165,14 +177,14 @@ Node<T>* AVLTree<T>::_remove(int key, Node<T>* node) {
     return node;
 }
 
-template <typename T>
-Node<T>* AVLTree<T>::_remove_successor(Node<T>* root, Node<T>* node) {
+
+Node* AVLTree::_remove_successor(Node* root, Node* node) {
     if (node->left != nullptr) {
         node->left = _remove_successor(root, node->left);
     }
     else {
         root->key = node->key;
-        Node<T>* aux = node->right;
+        Node* aux = node->right;
         delete node;
         return aux;
     }
@@ -187,4 +199,3 @@ Node<T>* AVLTree<T>::_remove_successor(Node<T>* root, Node<T>* node) {
 
 }}
 
-#endif
