@@ -3,19 +3,19 @@
 
 #include<string>
 #include<vector>
+#include "Node.h"
 
 namespace Perikan{namespace TREE{
 
-struct Node;
-
+template <typename VALUE, typename KEY=int>
 class BinarySearchTree{
 protected:
-    Node* _root;
+    Node<VALUE,KEY>* _root;
 public:
     BinarySearchTree();
     virtual ~BinarySearchTree();
 
-    void add(int key);
+    void add(const KEY& key, const VALUE& value);
     void remove(int key);
 
     void clear();
@@ -53,41 +53,44 @@ public:
     std::vector<int> getKeys() const;
 
 protected:
-    virtual Node* _add(int key, Node* node);
-    virtual Node* _remove(int key, Node* node);
-    virtual bool _isNull(const Node*) const;
+    virtual Node<VALUE, KEY>* _add(const KEY& key, const VALUE& value, Node<VALUE, KEY>* node);
+    virtual Node<VALUE, KEY>* _remove(int key, Node<VALUE, KEY>* node);
+    virtual bool _isNull(const Node<VALUE, KEY>*) const;
 
-    Node* _clear(Node* node);
-    std::string _to_string(Node* node) const;
-    int _size(Node* node) const;
-    int _height(const Node* node)const;
-    int _countLeafs(const Node* node) const;
-    Node* _removeLeafs(Node* node);
-    void _print(const Node* node) const;
-    const Node* _find(int key, const Node* node) const;
-    //const Node* _findByValue(T value, const Node* node) const;
-    int _countInterNodes(Node* node) const;
-    Node* _max(Node* node) const;
-    bool _isLeaf(const Node* node) const;
-    void _printInOrder(const Node* node) const;
-    void _printPreOrder(const Node* node) const;
-    void _printPosOrder(const Node* node) const;
+    Node<VALUE, KEY>* _clear(Node<VALUE, KEY>* node);
+    std::string _to_string(Node<VALUE, KEY>* node) const;
+    int _size(Node<VALUE, KEY>* node) const;
+    int _height(const Node<VALUE, KEY>* node)const;
+    int _countLeafs(const Node<VALUE, KEY>* node) const;
+    Node<VALUE, KEY>* _removeLeafs(Node<VALUE, KEY>* node);
+    void _print(const Node<VALUE, KEY>* node) const;
+    const Node<VALUE, KEY>* _find(int key, const Node<VALUE, KEY>* node) const;
+    //const Node<VALUE, KEY>* _findByValue(T value, const Node<VALUE, KEY>* node) const;
+    int _countInterNodes(Node<VALUE, KEY>* node) const;
+    Node<VALUE, KEY>* _max(Node<VALUE, KEY>* node) const;
+    bool _isLeaf(const Node<VALUE, KEY>* node) const;
+    void _printInOrder(const Node<VALUE, KEY>* node) const;
+    void _printPreOrder(const Node<VALUE, KEY>* node) const;
+    void _printPosOrder(const Node<VALUE, KEY>* node) const;
 
-    void _printOrdered(const Node* node) const;
-    std::string _keyOrderedString(const Node* node) const;
+    void _printOrdered(const Node<VALUE, KEY>* node) const;
+    std::string _keyOrderedString(const Node<VALUE, KEY>* node) const;
 
-    const Node* _minimum(const Node* node) const;
-    const Node* _maximum(const Node* node) const;
+    const Node<VALUE, KEY>* _minimum(const Node<VALUE, KEY>* node) const;
+    const Node<VALUE, KEY>* _maximum(const Node<VALUE, KEY>* node) const;
     
-    const Node* _successor(int key, const Node* node, const Node* parent) const;
-    const Node* _predecessor(int key, const Node* node, const Node* parent) const;
+    const Node<VALUE, KEY>* _successor(int key, const Node<VALUE, KEY>* node, const Node<VALUE, KEY>* parent) const;
+    const Node<VALUE, KEY>* _predecessor(int key, const Node<VALUE, KEY>* node, const Node<VALUE, KEY>* parent) const;
 
 
 private:
-    Node* _removeRoot(Node* node);
-    void _auxGetKeys(const Node* node, std::vector<int>& ls) const;
+    Node<VALUE, KEY>* _removeRoot(Node<VALUE, KEY>* node);
+    void _auxGetKeys(const Node<VALUE, KEY>* node, std::vector<int>& ls) const;
+
 };
 
 }}
+
+#include "../src/BinarySearchTree.impl.h"
 
 #endif
