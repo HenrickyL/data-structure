@@ -13,10 +13,13 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Develop">
+      <UniqueIdentifier>{db5be3b3-c93c-41cf-b558-f43e28e607f6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="src\BinarySearchTree.cpp">
+    <ClCompile Include="src\BinarySearchTree.impl.h">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\AVLTree.cpp">
@@ -41,6 +44,15 @@
     </ClInclude>
     <ClInclude Include="src\RBTree.cpp">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Node.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="develop\SetDisplay.h">
+      <Filter>Develop</Filter>
+    </ClInclude>
+    <ClInclude Include="develop\TestTree.h">
+      <Filter>Develop</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
