@@ -20,8 +20,19 @@ BinarySearchTree<VALUE, KEY>::~BinarySearchTree(){
 }
 
 template <typename VALUE, typename KEY>
+Node<VALUE, KEY>* BinarySearchTree<VALUE, KEY>::_getRoot()const {
+    return this->_root;
+}
+
+template <typename VALUE, typename KEY>
+void BinarySearchTree<VALUE, KEY>::_setRoot(Node<VALUE, KEY>* root) {
+    this->_root = root;
+}
+
+template <typename VALUE, typename KEY>
 void BinarySearchTree<VALUE, KEY>::clear(){
-    _root = _clear(_root);
+    Node<VALUE, KEY>* node = _clear(_getRoot());
+    _setRoot(node);
 }
 
 template <typename VALUE, typename KEY>
@@ -44,13 +55,13 @@ Node<VALUE,KEY>* BinarySearchTree<VALUE, KEY>::_clear(Node<VALUE,KEY>* node) {
 
 template <typename VALUE, typename KEY>
 bool BinarySearchTree<VALUE, KEY>::isEmpty() const {
-    return _isNull(this->_root);
+    return _isNull(_getRoot());
 }
 
 
 template <typename VALUE, typename KEY>
 std::string BinarySearchTree<VALUE, KEY>::to_string() const {
-    return _to_string(this->_root);
+    return _to_string(_getRoot());
 }
 
 
@@ -68,12 +79,13 @@ std::string BinarySearchTree<VALUE, KEY>::_to_string(Node<VALUE,KEY>* node) cons
 
 template <typename VALUE, typename KEY>
 void BinarySearchTree<VALUE, KEY>::add(const KEY& key, const VALUE& value) {
-    _root = _add(key, value, _root);
+    Node<VALUE, KEY>* node = _add(key, value, _getRoot());
+    _setRoot(node);
 }
 
 template <typename VALUE, typename KEY>
 Node<VALUE,KEY>* BinarySearchTree<VALUE, KEY>::_add(const KEY& key, const VALUE& value, Node<VALUE,KEY>* node) {
-    if (_isNull(node)) return new Node<VALUE, KEY>(key, value, 1);
+    if (_isNull(node)) return _createNode(key, value);
     if (key < node->key) {
         node->left = _add(key, value, node->left);
     }
@@ -83,9 +95,16 @@ Node<VALUE,KEY>* BinarySearchTree<VALUE, KEY>::_add(const KEY& key, const VALUE&
     return node;
 }
 
+
+template <typename VALUE, typename KEY>
+Node<VALUE, KEY>* BinarySearchTree<VALUE, KEY>::_createNode(const KEY& key, const VALUE& value) {
+    return new Node<VALUE, KEY>(key, value);
+}
+
+
 template <typename VALUE, typename KEY>
 int BinarySearchTree<VALUE, KEY>::size() const {
-    return _size(_root);
+    return _size(_getRoot());
 }
 
 template <typename VALUE, typename KEY>
@@ -99,7 +118,7 @@ int BinarySearchTree<VALUE, KEY>::_size(Node<VALUE,KEY>* node) const {
 
 template <typename VALUE, typename KEY>
 int BinarySearchTree<VALUE, KEY>::countLeafs() const {
-    return _countLeafs(_root);
+    return _countLeafs(_getRoot());
 }
 
 
@@ -118,7 +137,8 @@ int BinarySearchTree<VALUE, KEY>::_countLeafs(const Node<VALUE,KEY>* node) const
 
 template <typename VALUE, typename KEY>
 void BinarySearchTree<VALUE, KEY>::removeLeafs() {
-    _root = _removeLeafs(_root);
+    Node<VALUE, KEY>* node = _removeLeafs(_getRoot());
+    _setRoot(node);
 }
 
 
@@ -144,7 +164,7 @@ bool BinarySearchTree<VALUE, KEY>::_isLeaf(const Node<VALUE,KEY>* node) const {
 
 template <typename VALUE, typename KEY>
 void BinarySearchTree<VALUE, KEY>::print() const {
-    _print(_root);
+    _print(_getRoot());
     std::cout << std::endl;
 }
 
@@ -169,7 +189,7 @@ void BinarySearchTree<VALUE, KEY>::_print(const Node<VALUE,KEY>* node) const {
 
 template <typename VALUE, typename KEY>
 bool BinarySearchTree<VALUE, KEY>::contain(int key) const {
-    const Node<VALUE,KEY>* node = _find(key, _root);
+    const Node<VALUE,KEY>* node = _find(key, _getRoot());
     return !_isNull(node);
 }
 
@@ -207,7 +227,7 @@ const Node<VALUE,KEY>* BinarySearchTree<VALUE, KEY>::_find(int key, const Node<V
 
 template <typename VALUE, typename KEY>
 int BinarySearchTree<VALUE, KEY>::countInterNodes() const {
-    return _countInterNodes(_root);
+    return _countInterNodes(_getRoot());
 }
 
 
@@ -221,7 +241,7 @@ int BinarySearchTree<VALUE, KEY>::_countInterNodes(Node<VALUE,KEY>* node) const 
 
 template <typename VALUE, typename KEY>
 int BinarySearchTree<VALUE, KEY>::max() const {
-    Node<VALUE,KEY>* nodeMax = _max(_root);
+    Node<VALUE,KEY>* nodeMax = _max(_getRoot());
     if (_isNull(nodeMax)) throw std::runtime_error("Max Key NotFound");
     return nodeMax->key;
 }
@@ -244,21 +264,21 @@ Node<VALUE,KEY>* BinarySearchTree<VALUE, KEY>::_max(Node<VALUE,KEY>* node) const
 template <typename VALUE, typename KEY>
 void BinarySearchTree<VALUE, KEY>::printInOrder() const {
     std::cout << "In..: ";
-    this->_printInOrder(_root);
+    this->_printInOrder(_getRoot());
     std::cout << std::endl;
 
 }
 template <typename VALUE, typename KEY>
 void BinarySearchTree<VALUE, KEY>::printPreOrder() const {
     std::cout << "Pre.: ";
-    this->_printPreOrder(_root);
+    this->_printPreOrder(_getRoot());
     std::cout << std::endl;
 }
 
 template <typename VALUE, typename KEY>
 void BinarySearchTree<VALUE, KEY>::printPosOrder() const {
     std::cout << "Post: ";
-    this->_printPosOrder(_root);
+    this->_printPosOrder(_getRoot());
     std::cout << std::endl;
 }
 
@@ -292,7 +312,7 @@ void BinarySearchTree<VALUE, KEY>::_printPosOrder(const Node<VALUE,KEY>* node) c
 template <typename VALUE, typename KEY>
 void BinarySearchTree<VALUE, KEY>::printBFS() const {
     std::queue<Node<VALUE,KEY>*> frontier;
-    Node<VALUE,KEY>* node = _root;
+    Node<VALUE,KEY>* node = _getRoot();
     frontier.push(node);
 
     while (!frontier.empty()) {
@@ -308,7 +328,7 @@ void BinarySearchTree<VALUE, KEY>::printBFS() const {
 
 template <typename VALUE, typename KEY>
 int BinarySearchTree<VALUE, KEY>::height()const {
-    return _height(_root);
+    return _height(_getRoot());
 }
 
 template <typename VALUE, typename KEY>
@@ -324,7 +344,8 @@ int BinarySearchTree<VALUE, KEY>::_height(const Node<VALUE,KEY>* node)const {
 
 template <typename VALUE, typename KEY>
 void BinarySearchTree<VALUE, KEY>::remove(int key) {
-    _root = _remove(key, _root);
+    Node<VALUE, KEY>* node = _remove(key, _getRoot());
+    _setRoot(node);
 }
 
 
@@ -372,7 +393,7 @@ Node<VALUE,KEY>* BinarySearchTree<VALUE, KEY>::_removeRoot(Node<VALUE,KEY>* node
 template <typename VALUE, typename KEY>
 void BinarySearchTree<VALUE, KEY>::printOrdered() const {
     //this->_printOrdered(_root);
-    std::cout << _keyOrderedString(_root) << std::endl;
+    std::cout << _keyOrderedString(_getRoot()) << std::endl;
 }
 
 
@@ -387,7 +408,7 @@ void BinarySearchTree<VALUE, KEY>::_printOrdered(const Node<VALUE,KEY>* node) co
 
 template <typename VALUE, typename KEY>
 std::string BinarySearchTree<VALUE, KEY>::keyOrderedString() const {
-    return _keyOrderedString(_root);
+    return _keyOrderedString(_getRoot());
 }
 
 
@@ -404,14 +425,14 @@ std::string BinarySearchTree<VALUE, KEY>::_keyOrderedString(const Node<VALUE,KEY
 
 template <typename VALUE, typename KEY>
 int BinarySearchTree<VALUE, KEY>::keyMinimum() const {
-    if (_isNull(_root)) throw std::runtime_error("Tree empty");
-    return _minimum(_root)->key;
+    if (_isNull(_getRoot())) throw std::runtime_error("Tree empty");
+    return _minimum(_getRoot())->key;
 }
 
 template <typename VALUE, typename KEY>
 int BinarySearchTree<VALUE, KEY>::keyMaximum() const {
-    if (_isNull(_root)) throw std::runtime_error("Tree empty");
-    return _maximum(_root)->key;
+    if (_isNull(_getRoot())) throw std::runtime_error("Tree empty");
+    return _maximum(_getRoot())->key;
 }
 
 
@@ -438,16 +459,16 @@ const Node<VALUE,KEY>* BinarySearchTree<VALUE, KEY>::_maximum(const Node<VALUE,K
 
 template <typename VALUE, typename KEY>
 int BinarySearchTree<VALUE, KEY>::keySuccessor(int key) const {
-    if (_isNull(_root)) throw std::runtime_error("Tree Empty");
-    const Node<VALUE,KEY>* node = _successor(key, _root, _root);
+    if (_isNull(_getRoot())) throw std::runtime_error("Tree Empty");
+    const Node<VALUE,KEY>* node = _successor(key, _getRoot(), _getRoot());
     if (_isNull(node)) throw std::runtime_error("Successor not found");
     return node->key;
 }
 
 template <typename VALUE, typename KEY>
 int BinarySearchTree<VALUE, KEY>::keyPredecessor(int key) const {
-    if (_isNull(_root)) throw std::runtime_error("Tree Empty");
-    const Node<VALUE,KEY>* node = _predecessor(key, _root, _root);
+    if (_isNull(_getRoot())) throw std::runtime_error("Tree Empty");
+    const Node<VALUE,KEY>* node = _predecessor(key, _getRoot(), _getRoot());
     if (_isNull(node)) throw std::runtime_error("Predecessor not found");
     return node->key;
 }
@@ -494,7 +515,7 @@ const Node<VALUE,KEY>* BinarySearchTree<VALUE, KEY>::_predecessor(int key, const
 template <typename VALUE, typename KEY>
 std::vector<int> BinarySearchTree<VALUE, KEY>::getKeys() const {
     std::vector<int> ls;
-    _auxGetKeys(_root, ls);
+    _auxGetKeys(_getRoot(), ls);
     return ls;
 }
 
