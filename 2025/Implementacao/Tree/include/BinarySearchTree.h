@@ -9,7 +9,7 @@ namespace Perikan{namespace TREE{
 
 template <typename VALUE, typename KEY=int>
 class BinarySearchTree{
-private:
+protected:
     Node<VALUE,KEY>* _root;
 public:
     BinarySearchTree();
@@ -54,7 +54,7 @@ public:
 
 protected:
     virtual Node<VALUE, KEY>* _add(const KEY& key, const VALUE& value, Node<VALUE, KEY>* node);
-    virtual Node<VALUE, KEY>* _remove(int key, Node<VALUE, KEY>* node);
+    virtual Node<VALUE, KEY>* _remove(const KEY& key, Node<VALUE, KEY>* node);
     virtual bool _isNull(const Node<VALUE, KEY>*) const;
     virtual Node<VALUE, KEY>* _createNode(const KEY& key, const VALUE& value);
     virtual int _height(const Node<VALUE, KEY>* node)const;

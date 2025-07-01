@@ -350,7 +350,7 @@ void BinarySearchTree<VALUE, KEY>::remove(int key) {
 
 
 template <typename VALUE, typename KEY>
-Node<VALUE,KEY>* BinarySearchTree<VALUE, KEY>::_remove(int key, Node<VALUE,KEY>* node) {
+Node<VALUE,KEY>* BinarySearchTree<VALUE, KEY>::_remove(const KEY& key, Node<VALUE,KEY>* node) {
     if (_isNull(node)) return node;
     else {
         if (node->key == key) {

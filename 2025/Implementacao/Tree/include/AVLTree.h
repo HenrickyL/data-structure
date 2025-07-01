@@ -3,31 +3,38 @@
 
 #include"../include/BinarySearchTree.h"
 
-namespace Perikan {
-	namespace TREE {
+namespace Perikan {namespace TREE {
 
-struct Node;
-
-
-class AVLTree : public BinarySearchTree {
+template <typename VALUE, typename KEY = int>
+class AVLTree : public BinarySearchTree<VALUE,KEY> {
 public:
 	AVLTree();
 	~AVLTree();
 
-	int height() const;
-protected:
-	Node* _add(int key, Node* node) override;
-	Node* _remove(int key, Node* node) override;
 
-	int _height(const Node* node) const;
-	int _balance(const Node* node) const;
-	Node* _rightRotation(Node* node);
-	Node* _leftRotation(Node* node);
-	Node* _fixup_node(Node* node, int key);
-	Node* _fixup_deletion(Node* node);
-	Node* _remove_successor(Node* root, Node* node);
+    int balance() const;
+
+protected:
+    using NodeBase = Node<VALUE, KEY>;
+    using NodeType = AVLNode<VALUE, KEY>;
+
+    NodeBase* _add(const KEY& key, const VALUE& value, NodeBase* node) override;
+    NodeBase* _remove(const KEY& key, NodeBase* node) override;
+    NodeBase* _createNode(const KEY& key, const VALUE& value) override;
+    int _height(const NodeBase* node) const override;
+    //NodeBase* _getRoot() const override;
+    //void _setRoot(NodeBase* root) override;
+
+    int _balance(const NodeType* node) const;
+    NodeType* _rightRotation(NodeType* node);
+    NodeType* _leftRotation(NodeType* node);
+    NodeType* _fixup_node(NodeType* node, int key);
+    NodeType* _fixup_deletion(NodeType* node);
+    NodeType* _remove_successor(NodeBase* root, NodeBase* node);
 };
 // ---
 }};
+
+#include "../src/AVLTree.impl.h"
 
 #endif

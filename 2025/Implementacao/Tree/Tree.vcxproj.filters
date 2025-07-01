@@ -22,7 +22,7 @@
     <ClCompile Include="src\BinarySearchTree.impl.h">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\AVLTree.cpp">
+    <ClCompile Include="src\AVLTree.impl.h">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Set.cpp">

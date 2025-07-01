@@ -5,7 +5,9 @@
 
 int main() {
     try {
+        TestTree::Node_();
         TestTree::BST();
+        TestTree::AVL();
     }
     catch (const std::runtime_error& e) {
         std::cerr << "Erro: " << e.what() << std::endl;
