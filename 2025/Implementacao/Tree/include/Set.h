@@ -7,7 +7,7 @@ using namespace Perikan::TREE;
 
 class Set {
 private:
-    AVLTree* _tree;
+    AVLTree<int>* _tree;
     std::string _name ;
 
 public:

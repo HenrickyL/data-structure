@@ -3,7 +3,7 @@
 #include <iostream>
     
 Set::Set(std::string name) {
-    _tree = new AVLTree();
+    _tree = new AVLTree<int>();
     _name = name;
     std::cout << "Set constroy\n";
 }
@@ -15,7 +15,7 @@ Set::~Set() {
 }
 
 void Set::insert(int value) {
-    this->_tree->add(value);
+    this->_tree->add(value,1);
 }
 
 
@@ -33,7 +33,7 @@ void Set::clear() {
 }
 
 void Set::swap(Set& other) {
-    AVLTree* aux = _tree;
+    AVLTree<int>* aux = _tree;
     _tree = other._tree;
     other._tree = aux;
 }
