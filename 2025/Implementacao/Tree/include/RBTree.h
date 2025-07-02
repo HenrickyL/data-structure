@@ -14,6 +14,19 @@ private:
 public:
 	RBTree();
 	~RBTree();
+protected:
+	using NodeBase = Node<VALUE, KEY>;
+	using NodeType = RBNode<VALUE, KEY>;
+
+
+	bool _isNull(const NodeBase* node) const override;
+	//NodeBase* _add(const KEY& key, const VALUE& value, NodeBase* node) override;
+	//NodeBase* _remove(const KEY& key, NodeBase* node) override;
+	//NodeBase* _createNode(const KEY& key, const VALUE& value) override;
+	NodeType* _createNode(const KEY& key, const VALUE& value, NodeType* father) const;
+
+
+	int _blackHeight(const NodeType* node) const;
 };
 
 }}
