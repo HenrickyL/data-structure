@@ -3,6 +3,8 @@
 
 #include "../include/BinarySearchTree.h"
 #include "../include/AVLTree.h"
+#include "../include/RBTree.h"
+
 
 #include<iostream>
 #include<string>
@@ -18,6 +20,9 @@ public:
 
         AVLNode<int> avlNode(1, 1);
         std::cout << "> AVLNode sizeof: " << sizeof(avlNode) << std::endl;
+
+        RBNode<int> rbNode(1, 1);
+        std::cout << "> rbNode sizeof: " << sizeof(rbNode) << std::endl;
         std::cout << "----------------\n\n";
     }
 
@@ -152,6 +157,15 @@ public:
         t.clear();
         std::cout << "Count: " << t.size() << std::endl;
         std::cout << "----------------\n\n";
+    }
+
+    static void RB() {
+        RBTree<int> t;
+        std::cout << "sizeof( RBTree<int> ): " << sizeof(RBTree<int>) << std::endl;
+        std::cout << "sizeof( RBTree<string> ): " << sizeof(RBTree<std::string>) << std::endl;
+
+        std::cout << "----------------\n\n";
+
     }
 
 

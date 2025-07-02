@@ -2,19 +2,22 @@
 #define RBTREE_H
 
 #include "../include/BinarySearchTree.h"
+#include "../include/RBNode.h"
+
 namespace Perikan {namespace TREE {
 
-struct Node;
 
-class RBTree : public BinarySearchTree {
+template <typename VALUE, typename KEY = int>
+class RBTree : public BinarySearchTree<VALUE,KEY> {
 private:
-	Node* _nill;
+	RBNode<VALUE,KEY>* _nill;
 public:
 	RBTree();
 	~RBTree();
-
 };
 
 }}
+
+#include "../src/RBTree.impl.h"
 
 #endif

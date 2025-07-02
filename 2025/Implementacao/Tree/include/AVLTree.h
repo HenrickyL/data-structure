@@ -2,6 +2,7 @@
 #define QXD_AVL
 
 #include"../include/BinarySearchTree.h"
+#include "../include/AVLNode.h"
 
 namespace Perikan {namespace TREE {
 
