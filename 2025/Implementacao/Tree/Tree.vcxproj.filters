@@ -72,5 +72,11 @@
     <ClInclude Include="develop\TestHash.h">
       <Filter>Develop</Filter>
     </ClInclude>
+    <ClInclude Include="include\OpenAddressHashTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OpenAddressHashTable.impl.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

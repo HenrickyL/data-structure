@@ -12,6 +12,8 @@ int main() {
         TestTree::RB();*/
 
         TestHash::ChainedHash();
+        TestHash::OpenAddressHash();
+
     }
     catch (const std::runtime_error& e) {
         std::cerr << "Erro: " << e.what() << std::endl;
