@@ -138,6 +138,7 @@
     <ClInclude Include="include\AVLNode.h" />
     <ClInclude Include="include\AVLTree.h" />
     <ClInclude Include="include\BinarySearchTree.h" />
+    <ClInclude Include="include\ChainedHashTable.h" />
     <ClInclude Include="include\Node.h" />
     <ClInclude Include="include\RBNode.h" />
     <ClInclude Include="include\RBTree.h" />

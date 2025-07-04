@@ -63,5 +63,8 @@
     <ClInclude Include="include\AVLNode.h">
       <Filter>Header Files\Node</Filter>
     </ClInclude>
+    <ClInclude Include="include\ChainedHashTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
