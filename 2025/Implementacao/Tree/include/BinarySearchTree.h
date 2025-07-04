@@ -15,8 +15,8 @@ public:
     BinarySearchTree();
     virtual ~BinarySearchTree();
 
-    void add(const KEY& key, const VALUE& value);
-    void remove(int key);
+    virtual void add(const KEY& key, const VALUE& value);
+    virtual void remove(const KEY& key);
 
     void clear();
     bool isEmpty() const;
@@ -27,7 +27,7 @@ public:
     void removeLeafs();
     void print() const;
     
-    bool contain(int key) const;
+    bool contains(const KEY& key) const;
     //T find(int key) const;
     //int findByValue(T value) const;
 
@@ -46,8 +46,8 @@ public:
     int keyMinimum() const;
     int keyMaximum() const;
 
-    int keySuccessor(int key) const;
-    int keyPredecessor(int key) const;
+    KEY keySuccessor(const KEY& key) const;
+    KEY keyPredecessor(const KEY& key) const;
 
 
     std::vector<int> getKeys() const;
@@ -56,19 +56,20 @@ protected:
     virtual Node<VALUE, KEY>* _add(const KEY& key, const VALUE& value, Node<VALUE, KEY>* node);
     virtual Node<VALUE, KEY>* _remove(const KEY& key, Node<VALUE, KEY>* node);
     virtual bool _isNull(const Node<VALUE, KEY>*) const;
+    virtual Node<VALUE, KEY>* _getNull() const;
+
     virtual Node<VALUE, KEY>* _createNode(const KEY& key, const VALUE& value);
     virtual int _height(const Node<VALUE, KEY>* node)const;
-    virtual Node<VALUE, KEY>* _getRoot()const;
     virtual void _setRoot(Node<VALUE, KEY>* root);
+    virtual void _print(const Node<VALUE, KEY>* node) const;
 
 
-    Node<VALUE, KEY>* _clear(Node<VALUE, KEY>* node);
+    virtual Node<VALUE, KEY>* _clear(Node<VALUE, KEY>* node);
     std::string _to_string(Node<VALUE, KEY>* node) const;
     int _size(Node<VALUE, KEY>* node) const;
     int _countLeafs(const Node<VALUE, KEY>* node) const;
     Node<VALUE, KEY>* _removeLeafs(Node<VALUE, KEY>* node);
-    void _print(const Node<VALUE, KEY>* node) const;
-    const Node<VALUE, KEY>* _find(int key, const Node<VALUE, KEY>* node) const;
+    const Node<VALUE, KEY>* _find(const KEY& key, const Node<VALUE, KEY>* node) const;
     //const Node<VALUE, KEY>* _findByValue(T value, const Node<VALUE, KEY>* node) const;
     int _countInterNodes(Node<VALUE, KEY>* node) const;
     Node<VALUE, KEY>* _max(Node<VALUE, KEY>* node) const;
@@ -83,8 +84,8 @@ protected:
     const Node<VALUE, KEY>* _minimum(const Node<VALUE, KEY>* node) const;
     const Node<VALUE, KEY>* _maximum(const Node<VALUE, KEY>* node) const;
     
-    const Node<VALUE, KEY>* _successor(int key, const Node<VALUE, KEY>* node, const Node<VALUE, KEY>* parent) const;
-    const Node<VALUE, KEY>* _predecessor(int key, const Node<VALUE, KEY>* node, const Node<VALUE, KEY>* parent) const;
+    const Node<VALUE, KEY>* _successor(const KEY& key, const Node<VALUE, KEY>* node, const Node<VALUE, KEY>* parent) const;
+    const Node<VALUE, KEY>* _predecessor(const KEY& key, const Node<VALUE, KEY>* node, const Node<VALUE, KEY>* parent) const;
 
 
 private:
