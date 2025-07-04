@@ -13,8 +13,8 @@ struct Node {
     Node<VALUE, KEY>* right;
     
 
-    Node(const KEY& k, const VALUE& v, const Node<VALUE, KEY>* l = nullptr, const Node<VALUE, KEY>* r = nullptr)
-        : key(k), value(v), left(nullptr), right(nullptr) {
+    Node(const KEY& k, const VALUE& v, Node<VALUE, KEY>* l = nullptr, Node<VALUE, KEY>* r = nullptr)
+        : key(k), value(v), left(l), right(r) {
     }
 
     std::string to_string() const {

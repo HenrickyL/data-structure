@@ -43,14 +43,13 @@ bool BinarySearchTree<VALUE, KEY>::_isNull(const Node<VALUE,KEY>* node) const {
 
 template <typename VALUE, typename KEY>
 Node<VALUE,KEY>* BinarySearchTree<VALUE, KEY>::_clear(Node<VALUE,KEY>* node) {
-    if (node == nullptr) return nullptr;
+    if (_isNull(node)) return nullptr;
     else {
         node->left = _clear(node->left);
         node->right = _clear(node->right);
         delete node;
         return nullptr;
     }
-
 }
 
 template <typename VALUE, typename KEY>

@@ -164,8 +164,13 @@ public:
         std::cout << "sizeof( RBTree<int> ): " << sizeof(RBTree<int>) << std::endl;
         std::cout << "sizeof( RBTree<string> ): " << sizeof(RBTree<std::string>) << std::endl;
 
-        std::cout << "----------------\n\n";
+        int values[] = {10, 20, 30, 15, 25, 5, 1, 6, 12, 18, 17, 19};
+        for (int value : values) {
+            t.add(value, 1);
+        }
+        t.print();
 
+        std::cout << "----------------\n\n";
     }
 
 

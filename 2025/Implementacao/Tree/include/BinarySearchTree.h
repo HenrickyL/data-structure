@@ -15,10 +15,10 @@ public:
     BinarySearchTree();
     virtual ~BinarySearchTree();
 
-    void add(const KEY& key, const VALUE& value);
+    virtual void add(const KEY& key, const VALUE& value);
     void remove(int key);
 
-    void clear();
+    virtual void clear();
     bool isEmpty() const;
     std::string to_string() const;
     int size() const;
@@ -60,6 +60,7 @@ protected:
     virtual int _height(const Node<VALUE, KEY>* node)const;
     virtual Node<VALUE, KEY>* _getRoot()const;
     virtual void _setRoot(Node<VALUE, KEY>* root);
+    virtual void _print(const Node<VALUE, KEY>* node) const;
 
 
     Node<VALUE, KEY>* _clear(Node<VALUE, KEY>* node);
@@ -67,7 +68,6 @@ protected:
     int _size(Node<VALUE, KEY>* node) const;
     int _countLeafs(const Node<VALUE, KEY>* node) const;
     Node<VALUE, KEY>* _removeLeafs(Node<VALUE, KEY>* node);
-    void _print(const Node<VALUE, KEY>* node) const;
     const Node<VALUE, KEY>* _find(int key, const Node<VALUE, KEY>* node) const;
     //const Node<VALUE, KEY>* _findByValue(T value, const Node<VALUE, KEY>* node) const;
     int _countInterNodes(Node<VALUE, KEY>* node) const;
