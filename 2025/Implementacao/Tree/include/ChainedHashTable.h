@@ -1,6 +1,6 @@
 /**
  * @file HashTable.h
- * @author [Codigo base atílio luiz]
+ * @author [Codigo base atílio luiz | Refactor: henricky Monteiro]
  * @brief Uma tabela hash com tratamento de colisao por encadeamento exterior
  * Estrutura de dados avancada - 2025.1
  * @version 0.1
@@ -12,13 +12,14 @@
 #ifndef CHAINED_HASHTABLE_HPP
 #define CHAINED_HASHTABLE_HPP
 
-#include <iostream>
-#include <cmath>
-#include <string>
-#include <list>
-#include <vector>
-#include <utility>
-#include <functional>
+#include <vector>      // std::vector
+#include <list>        // std::list
+#include <utility>     // std::pair
+#include <cstddef>     // std::size_t
+#include <stdexcept>   // std::out_of_range
+#include <functional>  // std::hash (usado por default no template)
+
+namespace Perikan { namespace Hash {
 
 /**
  * @brief Classe que implementa uma tabela hash com tratamento de
@@ -33,7 +34,7 @@
  * @tparam Value value type
  * @tparam Hash hash function type
  */
-template <typename Key, typename Value, typename Hash = std::hash<Key>>
+template <typename Key, typename Value, typename Hash = std::hash<Key> >
 class ChainedHashTable {
 private:
     // quantidade de pares (chave,valor)
@@ -56,79 +57,27 @@ private:
     Hash m_hashing;
 
 
-
-    /**
-     * @brief Retorna o menor numero primo que eh maior que ou igual
-     * a x e maior que 2.
-     * 
-     * @param x := um numero nao negativo
-     * @return size_t := um numero primo
-     */
-    size_t get_next_prime(size_t x) {
-        if(x <= 2) return 3;
-        x = (x % 2 == 0) ? x + 1 : x;
-        bool not_prime = true;
-        while(not_prime) {
-            not_prime = false;
-            for(int i = 3; i <= sqrt(x); i+=2) {
-                if(x % i == 0) {
-                    not_prime = true;
-                    break;
-                }
-            }
-            x += 2;
-        }
-        return x - 2;
-    }
-
-    /**
-     * @brief Retorna um inteiro no intervalo [0 ... m_table_size-1].
-     * Esta funcao recebe uma chave k e faz o seguinte:
-     * (1) computa o codigo hash h(k) usando a 
-     *     funcao no atributo privado m_hashing
-     * (2) computa um indice no intervalo [0 ... m_table_size-1] 
-     *     aplicando o metodo da divisao: h(k) % m_table_size
-     * 
-     * @param k := um valor de chave do tipo Key
-     * @return size_t := um inteiro no intervalo [0 ... m_table_size-1]
-     */
-    size_t hash_code(const Key& k) const {
-        return m_hashing(k) % m_table_size;
-    }
-
-
 public:
     /**
      * @brief Construtor: cria uma tabela hash com um numero primo de slots.
      * 
      * @param tableSize := o numero de slots da tabela. 
      */
-    ChainedHashTable(size_t tableSize = 19, float load_factor = 1.0) {
-        m_number_of_elements = 0;
-        m_table_size = get_next_prime(tableSize);
-        m_table.resize(m_table_size);
-        if(load_factor <= 0) {
-            m_max_load_factor = 1.0;
-        } else {
-            m_max_load_factor = load_factor;
-        }
-    }
-
-
+    ChainedHashTable(size_t tableSize = 19, float load_factor = 1.0);
+    /**
+    * @brief Destroy the Hash Table object
+    */
+    virtual ~ChainedHashTable() = default;
     /**
      * @brief Retorna o numero de elementos na tabela hash
      */
-    size_t size() const {
-        return m_number_of_elements;
-    }
+    size_t size() const;
 
 
     /**
      * @brief Retorna um booleano indicando se a tabela esta vazia
      */
-    bool empty() const {
-        return m_number_of_elements == 0;
-    }
+    bool empty() const;
 
 
     /**
@@ -140,10 +89,7 @@ public:
      * 
      * @return size_t := o numero de slots
      */
-    size_t bucket_count() const {
-        return m_table_size;
-    }
-
+    size_t bucket_count() const;
 
     /**
      * @brief Retorna o numero de elementos armazenados no slot n da tabela.
@@ -152,13 +98,7 @@ public:
      * @param n := numero do slot
      * @return size_t := numero de elementos no slot n
      */
-    size_t bucket_size(size_t n) const {
-        if(n >= m_table_size) {
-            throw std::out_of_range("invalid index");
-        }
-        return m_table[n].size();
-    }
-
+    size_t bucket_size(size_t n) const;
 
     /**
      * @brief Retorna o numero do slot onde a chave k estaria localizada.
@@ -166,23 +106,17 @@ public:
      * @param k := chave  
      * @return size_t := numero do slot
      */
-    size_t bucket(const Key& k) const {
-        return hash_code(k);
-    }
+    size_t bucket(const Key& k) const;
 
     /**
      * @brief retorna o valor do fator de carga atual
      */
-    float load_factor() const {
-        return static_cast<float>(m_number_of_elements) / m_table_size;
-    }
+    float load_factor() const;
 
     /**
      * @brief retorna o maior valor que o fator de carga pode ter
      */
-    float max_load_factor() const {
-        return m_max_load_factor;
-    }
+    float max_load_factor() const;
 
 
     /**
@@ -191,18 +125,10 @@ public:
      * e eles sao removidos da estrutura de dados, 
      * deixando-o com zero pares na tabela (size() == 0).
      */
-    void clear() {
-        for(size_t i = 0; i < m_table_size; ++i) {
-            m_table[i].clear();
-        }
-        m_number_of_elements = 0;
-    }
+    void clear();
 
 
-    /**
-     * @brief Destroy the Hash Table object
-     */
-    //~ChainedHashTable() = default;
+   
 
 
     /**
@@ -218,21 +144,7 @@ public:
      * @param k := chave
      * @param v := valor 
      */
-    bool add(const Key& k, const Value& v) {
-        if(load_factor() >= m_max_load_factor) {
-            rehash(2 * m_table_size);
-        }
-        size_t slot = hash_code(k);
-        for(auto p : m_table[slot]) {
-            if(p.first == k) {
-                return false;
-            }
-        }
-        m_table[slot].push_back(std::make_pair(k, v));
-        m_number_of_elements++;
-        return true;
-    }
-
+    bool add(const Key& k, const Value& v);
 
     /**
      * @brief Recebe como entrada uma chave k e retorna true 
@@ -240,20 +152,7 @@ public:
      * 
      * @param k := chave a ser pesquisada
      */
-    bool contains(const Key& k) {
-        size_t slot = hash_code(k);
-
-        for(auto& p : m_table[slot]) {
-            if(p.first == k) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-
-
+    bool contains(const Key& k);
 
     /**
      * @brief Retorna uma referencia para o valor associado a chave k.
@@ -263,27 +162,9 @@ public:
      * @param k := chave
      * @return V& := valor associado a chave
      */
-    Value& at(const Key& k) {
-        size_t slot = hash_code(k);
+    Value& at(const Key& k);
 
-        for(auto& p : m_table[slot]) {
-            if(p.first == k) {
-                return p.second;
-            }
-        }
-        throw std::out_of_range("key is not in the table");
-    }
-
-    const Value& at(const Key& k) const {
-        size_t slot = hash_code(k);
-
-        for(auto& p : m_table[slot]) {
-            if(p.first == k) {
-                return p.second;
-            }
-        }
-        throw std::out_of_range("key is not in the table");
-    }
+    const Value& at(const Key& k) const;
 
 
     /**
@@ -300,23 +181,7 @@ public:
      * 
      * @param m := o novo tamanho da tabela hash
      */
-    void rehash(size_t m) {
-        size_t new_table_size = get_next_prime(m);
-        if(new_table_size > m_table_size) {
-            std::vector<std::list<std::pair<Key,Value>>> old_vec;
-            old_vec = m_table; // copia as chaves para uma nova tabela
-            m_table.clear(); // apaga todas as chaves da tabela atual e deixa ela vazia
-            m_table.resize(new_table_size); // tabela redimensionada com novo primo
-            m_number_of_elements = 0;
-            m_table_size = new_table_size;
-            for(size_t i = 0; i < old_vec.size(); ++i) {
-                for(auto& par : old_vec[i]) {
-                    add(par.first, par.second);
-                }
-                old_vec[i].clear(); // opcional
-            }            
-        }
-    }
+    void rehash(size_t m);
 
 
     /**
@@ -326,17 +191,7 @@ public:
      * 
      * @param k := chave a ser removida
      */
-    bool remove(const Key& k) {
-        size_t slot = hash_code(k); // calcula o slot em que estaria a chave
-        for(auto it = m_table[slot].begin(); it != m_table[slot].end(); ++it) {
-            if(it->first == k) {
-                m_table[slot].erase(it); // se encontrar, deleta
-                m_number_of_elements--;
-                return true;
-            }
-        }
-        return false; // se não encontrar, retorna falso
-    }
+    bool remove(const Key& k);
 
 
     /**
@@ -350,11 +205,7 @@ public:
      * 
      * @param n := numero de elementos 
      */
-    void reserve(size_t n) {
-        if(n > m_table_size * m_max_load_factor) {
-            rehash( n / m_max_load_factor );
-        }
-    }
+    void reserve(size_t n);
 
 
     /**
@@ -369,14 +220,7 @@ public:
      * 
      * @param lf := novo fator de carga
      */
-    void set_max_load_factor(float lf) {
-        if(lf <= 0) {
-            throw std::out_of_range("invalid load factor");
-        }
-        // se lf > 0, entao ok, ajusta o max_load_factor e chama reserve()
-        m_max_load_factor = lf;
-        reserve(m_number_of_elements);
-    }
+    void set_max_load_factor(float lf);
 
 
     /**
@@ -392,20 +236,7 @@ public:
      * @param k := chave
      * @return Value& := valor associado a chave
      */
-    Value& operator[](const Key& k) {
-        if(load_factor() >= m_max_load_factor) {
-            rehash(2 * m_table_size);
-        }
-        size_t slot = hash_code(k);
-        for(auto& par : m_table[slot]) {
-            if(par.first == k) {
-                return par.second;
-            }
-        }
-        m_table[slot].push_back({k, Value()});
-        m_number_of_elements++;
-        return m_table[slot].back().second;
-    }
+    Value& operator[](const Key& k);
 
 
     /**
@@ -418,11 +249,34 @@ public:
      * @param k := chave
      * @return Value& := valor associado a chave
      */
-    const Value& operator[](const Key& k) const {
-        return at(k);
-    }
+    const Value& operator[](const Key& k) const;
+
+private:
+    /**
+     * @brief Retorna o menor numero primo que eh maior que ou igual
+     * a x e maior que 2.
+     *
+     * @param x := um numero nao negativo
+     * @return size_t := um numero primo
+     */
+    size_t _get_next_prime(size_t x);
+
+    /**
+     * @brief Retorna um inteiro no intervalo [0 ... m_table_size-1].
+     * Esta funcao recebe uma chave k e faz o seguinte:
+     * (1) computa o codigo hash h(k) usando a
+     *     funcao no atributo privado m_hashing
+     * (2) computa um indice no intervalo [0 ... m_table_size-1]
+     *     aplicando o metodo da divisao: h(k) % m_table_size
+     *
+     * @param k := um valor de chave do tipo Key
+     * @return size_t := um inteiro no intervalo [0 ... m_table_size-1]
+     */
+    size_t _hash_code(const Key& k) const;
 
 };
 
+}}
 
+#include "../src/ChainedHashTable.impl.h"
 #endif // END of CHAINED_HASHTABLE_HPP

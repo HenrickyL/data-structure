@@ -134,6 +134,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="develop\SetDisplay.h" />
+    <ClInclude Include="develop\TestHash.h" />
     <ClInclude Include="develop\TestTree.h" />
     <ClInclude Include="include\AVLNode.h" />
     <ClInclude Include="include\AVLTree.h" />
@@ -143,6 +144,7 @@
     <ClInclude Include="include\RBNode.h" />
     <ClInclude Include="include\RBTree.h" />
     <ClInclude Include="include\Set.h" />
+    <ClInclude Include="src\ChainedHashTable.impl.h" />
     <ClInclude Include="src\RBTree.impl.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
