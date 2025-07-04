@@ -25,7 +25,7 @@ void Set::erase(int value) {
 
 
 bool Set::contains(int value) const {
-    return _tree->contain(value);
+    return _tree->contains(value);
 }
 
 void Set::clear() {

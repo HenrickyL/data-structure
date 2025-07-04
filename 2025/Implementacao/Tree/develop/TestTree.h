@@ -78,7 +78,7 @@ public:
         std::cout << "Finding key [" << key << "] ..." << std::endl;
         //int findKey = t.findByValue(11);
         //std::cout << "Finding value in key [" << findKey << "] ..." << std::endl;
-        bool exist = t.contain(key);
+        bool exist = t.contains(key);
         std::cout << "Node: " << exist << std::endl;
 
 
@@ -146,7 +146,7 @@ public:
         std::cout << "Finding key [" << key << "] ..." << std::endl;
         //int findKey = t.findByValue(11);
         //std::cout << "Finding value in key [" << findKey << "] ..." << std::endl;
-        bool exist = t.contain(key);
+        bool exist = t.contains(key);
         std::cout << "Node: " << exist << std::endl;
 
 
@@ -166,9 +166,21 @@ public:
 
         int values[] = {10, 20, 30, 15, 25, 5, 1, 6, 12, 18, 17, 19};
         for (int value : values) {
+            std::cout << "ADD:" << value<<"\n";
             t.add(value, 1);
         }
         t.print();
+
+        t.remove(30);
+        t.remove(17);
+        t.print();
+
+        bool contain = t.contains(15);
+        std::cout << "contains(15): " << (contain ? "Y" : "N") << "\n";
+        contain = t.contains(30);
+        std::cout << "contains(30): " << (contain ? "Y" : "N") << "\n";
+
+
 
         std::cout << "----------------\n\n";
     }

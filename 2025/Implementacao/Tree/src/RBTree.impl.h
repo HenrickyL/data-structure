@@ -19,16 +19,20 @@ RBTree<VALUE,KEY>::RBTree() : BinarySearchTree<VALUE,KEY>() {
 
 template <typename VALUE, typename KEY>
 RBTree<VALUE, KEY>::~RBTree() {
-	clear();
+	this->clear();
 	delete this->_nill;
+    this->_root = nullptr;
+}
+
+template <typename VALUE, typename KEY>
+Node<VALUE, KEY>* RBTree<VALUE, KEY>::_getNull() const {
+    return static_cast<Node<VALUE, KEY>*>(this->_nill);
 }
 
 
-
 template <typename VALUE, typename KEY>
-void RBTree<VALUE, KEY>::clear() {
-   Node<VALUE,KEY>* node = this->_root;
-    if (node == this->_nill) return;
+Node<VALUE, KEY>* RBTree<VALUE, KEY>::_clear(Node<VALUE, KEY>* node) {
+    if (node == this->_nill) return node;
     std::queue<Node<VALUE, KEY>*> q;
     q.push(node);
     while (!q.empty()) {
@@ -36,12 +40,13 @@ void RBTree<VALUE, KEY>::clear() {
         q.pop();
         if (current->left != this->_nill)
             q.push(current->left);
-        if (current->right != this->_nill) 
+        if (current->right != this->_nill)
             q.push(current->right);
         delete current;
     }
-    this->_root = nullptr;
+    return static_cast<Node<VALUE, KEY>*>(this->_nill);
 }
+
 
 
 template <typename VALUE, typename KEY>
@@ -65,29 +70,7 @@ int RBTree<VALUE, KEY>::_blackHeight(const NodeType* node) const {
 }
 
 template <typename VALUE, typename KEY>
-void RBTree<VALUE, KEY>::_rightRotation(NodeType* x) {
-    NodeType* y = x->Right();
-    x->right = y->left;
-
-    if (y->left != _nill)
-        y->Left()->parent = x;
-
-    y->parent = x->parent;
-
-    if (x->parent == _nill)
-        this->_root = y;
-    else if (x == x->parent->left)
-        x->parent->left = y;
-    else
-        x->parent->right = y;
-
-    y->left = x;
-    x->parent = y;
-}
-
-
-template <typename VALUE, typename KEY>
-void RBTree<VALUE, KEY>::_leftRotation(NodeType* y) {
+void RBTree<VALUE, KEY>::_rightRotation(NodeType* y) {
     NodeType* x = y->Left();
     y->left = x->right;
 
@@ -98,13 +81,35 @@ void RBTree<VALUE, KEY>::_leftRotation(NodeType* y) {
 
     if (y->parent == _nill)
         this->_root = x;
-    else if (y == y->parent->right)
+    else if (y == y->parent->Right())
         y->parent->right = x;
     else
         y->parent->left = x;
 
     x->right = y;
     y->parent = x;
+}
+
+
+template <typename VALUE, typename KEY>
+void RBTree<VALUE, KEY>::_leftRotation(NodeType* x) {
+    NodeType* y = x->Right();
+    x->right = y->Left();
+
+    if (y->left != _nill)
+        y->Left()->parent = x;
+
+    y->parent = x->parent;
+
+    if (x->parent == _nill)
+        this->_root = y;
+    else if (x == x->parent->Left())
+        x->parent->left = y;
+    else
+        x->parent->right = y;
+
+    y->left = x;
+    x->parent = y;
 }
 
 template <typename VALUE, typename KEY>
@@ -209,6 +214,158 @@ void RBTree<VALUE, KEY>::_print(const Node<VALUE, KEY>* n) const {
         std::cout << " #";
     }
 }
+
+template <typename VALUE, typename KEY>
+void RBTree<VALUE, KEY>::_remove(NodeType* z) {
+    NodeType* y = z;
+    NodeType* x;
+    bool yOriginalColor = y->color;
+
+    if (z->left == this->_nill) {
+        x = z->Right();
+        _transplant(z, z->Right());
+    }
+    else if (z->right == this->_nill) {
+        x = z->Left();
+        _transplant(z, z->Left());
+    }
+    else {
+        y = _minimum(z->Right());
+        yOriginalColor = y->color;
+        x = y->Right();
+
+        if (y->parent == z)
+            x->parent = y;
+        else {
+            _transplant(y, y->Right());
+            y->right = z->Right();
+            y->Right()->parent = y;
+        }
+
+        _transplant(z, y);
+        y->left = z->Left();
+        y->Left()->parent = y;
+        y->color = z->color;
+    }
+
+    delete z;
+
+    if (yOriginalColor == BLACK)
+        _removeFixup(x);
+}
+
+template <typename VALUE, typename KEY>
+void RBTree<VALUE, KEY>::_removeFixup(NodeType* x) {
+    while (x != this->_root && x->color == BLACK) {
+        if (x == x->parent->left) {
+            NodeType* w = x->parent->Right(); // irmão
+
+            // Caso 1: irmão vermelho
+            if (w->color == RED) {
+                w->color = BLACK;
+                x->parent->color = RED;
+                _leftRotation(x->parent);
+                w = x->parent->Right();
+            }
+
+            // Caso 2: irmão e filhos pretos
+            if (w->Left()->color == BLACK && w->Right()->color == BLACK) {
+                w->color = RED;
+                x = x->parent;
+            }
+            else {
+                // Caso 3: irmão preto, filho esquerdo vermelho, direito preto
+                if (w->Right()->color == BLACK) {
+                    w->Left()->color = BLACK;
+                    w->color = RED;
+                    _rightRotation(w);
+                    w = x->parent->Right();
+                }
+
+                // Caso 4: irmão preto, filho direito vermelho
+                w->color = x->parent->color;
+                x->parent->color = BLACK;
+                w->Right()->color = BLACK;
+                _leftRotation(x->parent);
+                x = static_cast<NodeType*>(this->_root);
+            }
+        }
+        else {
+            // Espelhamento
+            NodeType* w =x->parent->Left();
+
+            if (w->color == RED) {
+                w->color = BLACK;
+                x->parent->color = RED;
+                _rightRotation(x->parent);
+                w = x->parent->Left();
+            }
+
+            if (w->Right()->color == BLACK && w->Left()->color == BLACK) {
+                w->color = RED;
+                x = x->parent;
+            }
+            else {
+                if (w->Left()->color == BLACK) {
+                    w->Right()->color = BLACK;
+                    w->color = RED;
+                    _leftRotation(w);
+                    w = static_cast<NodeType*>(x->parent->left);
+                }
+
+                w->color = x->parent->color;
+                x->parent->color = BLACK;
+                w->Left()->color = BLACK;
+                _rightRotation(x->parent);
+                x = static_cast<NodeType*>(this->_root);
+            }
+        }
+    }
+
+    x->color = BLACK;
+}
+
+template <typename VALUE, typename KEY>
+void RBTree<VALUE, KEY>::_transplant(NodeType* u, NodeType* v) {
+    if (u->parent == this->_nill)
+        this->_root = v;
+    else if (u == u->parent->left)
+        u->parent->left = v;
+    else
+        u->parent->right = v;
+
+    v->parent = u->parent;
+}
+
+template <typename VALUE, typename KEY>
+typename RBTree<VALUE, KEY>::NodeType*
+RBTree<VALUE, KEY>::_minimum(NodeType* node) const {
+    while (node->left != this->_nill) {
+        node = node->Left();
+    }
+    return node;
+}
+
+template <typename VALUE, typename KEY>
+void RBTree<VALUE, KEY>::remove(const KEY& key) {
+    NodeType* z = static_cast<NodeType*>(this->_root);
+
+    while (z != this->_nill) {
+        if (key == z->key)
+            break;
+        else if (key < z->key)
+            z = z->Left();
+        else
+            z = z->Right();
+    }
+
+    if (z == this->_nill)
+        return; // Nó não encontrado
+
+    _remove(z);
+}
+
+
 
 
 }}
