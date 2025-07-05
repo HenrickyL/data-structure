@@ -8,12 +8,17 @@ namespace Perikan {namespace TREE {
 
 template <typename VALUE, typename KEY = int>
 class AVLTree : public BinarySearchTree<VALUE,KEY> {
+private:
+    int _rotationCount = 0;
+
 public:
 	AVLTree();
 	~AVLTree();
 
 
     int balance() const;
+    int rotationCount() const;
+    void resetMetric();
 
 protected:
     using NodeBase = Node<VALUE, KEY>;
@@ -29,7 +34,7 @@ protected:
     int _balance(const NodeType* node) const;
     NodeType* _rightRotation(NodeType* node);
     NodeType* _leftRotation(NodeType* node);
-    NodeType* _fixup_node(NodeType* node, int key);
+    NodeType* _fixup_node(NodeType* node, const KEY& key);
     NodeType* _fixup_deletion(NodeType* node);
     NodeType* _remove_successor(NodeBase* root, NodeBase* node);
 };

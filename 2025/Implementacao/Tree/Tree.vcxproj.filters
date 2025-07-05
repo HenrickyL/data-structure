@@ -19,6 +19,9 @@
     <Filter Include="Header Files\Node">
       <UniqueIdentifier>{04fe9d8e-cd85-469c-a875-ddec624962ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Dictionary">
+      <UniqueIdentifier>{06315054-90e0-4ab6-ab97-dca021bb1301}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -29,6 +32,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Set.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FrequencyCounter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AVLDictionary.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -77,6 +86,18 @@
     </ClInclude>
     <ClInclude Include="src\OpenAddressHashTable.impl.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\IDictionary.h">
+      <Filter>Header Files\Dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="include\FrequencyCounter.h">
+      <Filter>Header Files\Dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AVLDictionary.h">
+      <Filter>Header Files\Dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="develop\TestDictionary.h">
+      <Filter>Develop</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

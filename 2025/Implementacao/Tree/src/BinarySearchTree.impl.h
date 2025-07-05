@@ -209,6 +209,14 @@ const Node<VALUE,KEY>* BinarySearchTree<VALUE, KEY>::_find(const KEY& key, const
     }
 }
 
+template <typename VALUE, typename KEY>
+const VALUE BinarySearchTree<VALUE, KEY>::find(const KEY& key) const {
+    const Node<VALUE, KEY>* node = _find(key, _root);
+    if (_isNull(node)) throw std::runtime_error("Not find key:" + key);
+    return node->value;
+}
+
+
 
 /*const Node<VALUE,KEY>* BinarySearchTree<VALUE, KEY>::_findByValue(T value, const Node<VALUE,KEY>* node) const {
     if (_isNull(node)) return nullptr;
@@ -524,6 +532,13 @@ void BinarySearchTree<VALUE, KEY>::_auxGetKeys(const Node<VALUE,KEY>* node, std:
         ls.push_back(node->key);
         _auxGetKeys(node->right, ls);
     }
+}
+template <typename VALUE, typename KEY>
+void BinarySearchTree<VALUE, KEY>::setValue(const KEY& key, const VALUE& value) {
+    Node<VALUE, KEY>* node = _find(key, _root);
+    if(_isNull(node)) throw std::runtime_error("Not found with key: " << key);
+    node->value = value;
+
 }
 
 

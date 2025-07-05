@@ -128,18 +128,24 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\AVLDictionary.cpp" />
     <ClCompile Include="src\AVLTree.impl.h" />
     <ClCompile Include="src\BinarySearchTree.impl.h" />
+    <ClCompile Include="src\FrequencyCounter.cpp" />
     <ClCompile Include="src\Set.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="develop\SetDisplay.h" />
+    <ClInclude Include="develop\TestDictionary.h" />
     <ClInclude Include="develop\TestHash.h" />
     <ClInclude Include="develop\TestTree.h" />
+    <ClInclude Include="include\AVLDictionary.h" />
     <ClInclude Include="include\AVLNode.h" />
     <ClInclude Include="include\AVLTree.h" />
     <ClInclude Include="include\BinarySearchTree.h" />
     <ClInclude Include="include\ChainedHashTable.h" />
+    <ClInclude Include="include\FrequencyCounter.h" />
+    <ClInclude Include="include\IDictionary.h" />
     <ClInclude Include="include\Node.h" />
     <ClInclude Include="include\OpenAddressHashTable.h" />
     <ClInclude Include="include\RBNode.h" />

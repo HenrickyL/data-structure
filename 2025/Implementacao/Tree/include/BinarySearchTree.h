@@ -8,7 +8,7 @@
 namespace Perikan{namespace TREE{
 
 template <typename VALUE, typename KEY=int>
-class BinarySearchTree{
+class BinarySearchTree {
 protected:
     Node<VALUE,KEY>* _root;
 public:
@@ -18,6 +18,7 @@ public:
     virtual void add(const KEY& key, const VALUE& value);
     virtual void remove(const KEY& key);
 
+    const VALUE find(const KEY& key)const;
     void clear();
     bool isEmpty() const;
     std::string to_string() const;
@@ -26,6 +27,7 @@ public:
     int countLeafs() const;
     void removeLeafs();
     void print() const;
+    void setValue(const KEY& key, const VALUE& Value);
     
     bool contains(const KEY& key) const;
     //T find(int key) const;

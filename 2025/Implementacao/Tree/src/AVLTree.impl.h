@@ -44,6 +44,16 @@ int AVLTree<VALUE,KEY>::_balance(const NodeType* node) const {
     }
     return _height(node->right) - _height(node->left);
 }
+template <typename VALUE, typename KEY>
+int AVLTree<VALUE, KEY>::rotationCount() const {
+    return _rotationCount;
+}
+template <typename VALUE, typename KEY>
+void AVLTree<VALUE, KEY>::resetMetric() {
+    this->_rotationCount = 0;
+}
+
+
 
 template <typename VALUE, typename KEY>
 typename AVLTree<VALUE, KEY>::NodeType* AVLTree<VALUE,KEY>::_rightRotation(NodeType* node) {
@@ -53,6 +63,8 @@ typename AVLTree<VALUE, KEY>::NodeType* AVLTree<VALUE,KEY>::_rightRotation(NodeT
     //fix
     node->height = 1 + std::max(_height(node->left), _height(node->right));
     aux->height = 1 + std::max(_height(aux->left), _height(aux->right));
+
+    this->_rotationCount++;
     return aux;
 }
 
@@ -64,11 +76,13 @@ typename AVLTree<VALUE, KEY>::NodeType* AVLTree<VALUE,KEY>::_leftRotation(NodeTy
     //fix
     node->height = 1 + std::max(_height(node->left), _height(node->right));
     aux->height = 1 + std::max(_height(aux->left), _height(aux->right));
+    
+    this->_rotationCount++;
     return aux;
 }
 
 template <typename VALUE, typename KEY>
-typename AVLTree<VALUE, KEY>::NodeType* AVLTree<VALUE,KEY>::_fixup_node(NodeType* node, int key) {
+typename AVLTree<VALUE, KEY>::NodeType* AVLTree<VALUE,KEY>::_fixup_node(NodeType* node, const KEY& key) {
     // Obtém balanço de p
     int bal = _balance(node);
 

@@ -2,6 +2,7 @@
 #include "include/BinarySearchTree.h"
 #include "develop/TestTree.h"
 #include "develop/TestHash.h"
+#include "develop/TestDictionary.h"
 
 
 int main() {
@@ -11,8 +12,10 @@ int main() {
         TestTree::AVL();
         TestTree::RB();*/
 
-        TestHash::ChainedHash();
-        TestHash::OpenAddressHash();
+        /*TestHash::ChainedHash();
+        TestHash::OpenAddressHash();*/
+
+        TestDictionary::test1();
 
     }
     catch (const std::runtime_error& e) {
