@@ -63,5 +63,20 @@
     <ClInclude Include="include\AVLNode.h">
       <Filter>Header Files\Node</Filter>
     </ClInclude>
+    <ClInclude Include="include\ChainedHashTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ChainedHashTable.impl.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="develop\TestHash.h">
+      <Filter>Develop</Filter>
+    </ClInclude>
+    <ClInclude Include="include\OpenAddressHashTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OpenAddressHashTable.impl.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
