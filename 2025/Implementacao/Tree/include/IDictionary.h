@@ -15,6 +15,9 @@ public:
     virtual int count(const std::string& key) const = 0;
     virtual void reset_metrics() = 0;
     virtual void print_summary(std::ostream& out) const = 0;
+    //operator
+    virtual int& operator[](const std::string key) = 0;
+    virtual const int& operator[](const std::string key) const = 0;
 };
 
 

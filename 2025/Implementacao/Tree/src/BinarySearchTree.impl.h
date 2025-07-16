@@ -188,7 +188,7 @@ void BinarySearchTree<VALUE, KEY>::_print(const Node<VALUE,KEY>* node) const {
 template <typename VALUE, typename KEY>
 bool BinarySearchTree<VALUE, KEY>::contains(const KEY& key) const {
     const Node<VALUE,KEY>* node = _find(key, this->_root);
-    return !_isNull(node);
+    return node != nullptr;
 }
 
 
@@ -201,7 +201,7 @@ bool BinarySearchTree<VALUE, KEY>::contains(const KEY& key) const {
 
 template <typename VALUE, typename KEY>
 const Node<VALUE,KEY>* BinarySearchTree<VALUE, KEY>::_find(const KEY& key, const Node<VALUE,KEY>* node) const {
-    if (_isNull(node)) return _getNull();
+    if (_isNull(node)) return nullptr;
     else if (node->key == key) return node;
     else {
         if (key < node->key) return _find(key, node->left);
@@ -210,8 +210,25 @@ const Node<VALUE,KEY>* BinarySearchTree<VALUE, KEY>::_find(const KEY& key, const
 }
 
 template <typename VALUE, typename KEY>
+Node<VALUE, KEY>* BinarySearchTree<VALUE, KEY>::_find(const KEY& key, Node<VALUE, KEY>* node) {
+    if (_isNull(node)) return _getNull();
+    else if (node->key == key) return node;
+    else {
+        if (key < node->key) return _find(key, node->left);
+        else return _find(key, node->right);
+    }
+}
+
+
+template <typename VALUE, typename KEY>
 const VALUE BinarySearchTree<VALUE, KEY>::find(const KEY& key) const {
     const Node<VALUE, KEY>* node = _find(key, _root);
+    if (_isNull(node)) throw std::runtime_error("Not find key:" + key);
+    return node->value;
+}
+template <typename VALUE, typename KEY>
+VALUE& BinarySearchTree<VALUE, KEY>::find(const KEY& key) {
+    Node<VALUE, KEY>* node = _find(key, _root);
     if (_isNull(node)) throw std::runtime_error("Not find key:" + key);
     return node->value;
 }

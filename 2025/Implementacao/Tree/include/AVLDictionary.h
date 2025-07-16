@@ -22,6 +22,9 @@ public:
     int size() const override;
     int count(const std::string& key) const override;
 
+    int& operator[](const std::string key) override;
+    const int& operator[](const std::string key) const override;
+
     void reset_metrics() override;
     void print_summary(std::ostream& out) const override;
 };

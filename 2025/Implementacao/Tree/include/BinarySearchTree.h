@@ -19,6 +19,8 @@ public:
     virtual void remove(const KEY& key);
 
     const VALUE find(const KEY& key)const;
+    VALUE& find(const KEY& key);
+
     void clear();
     bool isEmpty() const;
     std::string to_string() const;
@@ -30,8 +32,6 @@ public:
     void setValue(const KEY& key, const VALUE& Value);
     
     bool contains(const KEY& key) const;
-    //T find(int key) const;
-    //int findByValue(T value) const;
 
     int countInterNodes() const;
     int max() const;
@@ -72,7 +72,8 @@ protected:
     int _countLeafs(const Node<VALUE, KEY>* node) const;
     Node<VALUE, KEY>* _removeLeafs(Node<VALUE, KEY>* node);
     const Node<VALUE, KEY>* _find(const KEY& key, const Node<VALUE, KEY>* node) const;
-    //const Node<VALUE, KEY>* _findByValue(T value, const Node<VALUE, KEY>* node) const;
+    Node<VALUE, KEY>* _find(const KEY& key, Node<VALUE, KEY>* node);
+
     int _countInterNodes(Node<VALUE, KEY>* node) const;
     Node<VALUE, KEY>* _max(Node<VALUE, KEY>* node) const;
     bool _isLeaf(const Node<VALUE, KEY>* node) const;

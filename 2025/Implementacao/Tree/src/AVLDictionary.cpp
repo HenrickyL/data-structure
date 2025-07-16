@@ -47,3 +47,18 @@ void AVLDictionary::print_summary(std::ostream& out) const {
     out << "Rotações (aprox.): " << 0 << "\n"; // ou real, se rastrear
     out << "Número total de palavras: " << size() << "\n";
 }
+
+
+
+int& AVLDictionary::operator[](const std::string key) {
+    if (!_tree->contains(key)) {
+        _tree->add(key, 0);
+    }
+    return _tree->find(key);
+}
+const int& AVLDictionary::operator[](const std::string key) const {
+    if (!_tree->contains(key)) {
+        _tree->add(key, 0);
+    }
+    return _tree->find(key);
+}
