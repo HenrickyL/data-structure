@@ -51,7 +51,7 @@ private:
     float m_max_load_factor;
 
     // tabela                               
-    std::vector<std::list<std::pair<Key,Value>>> m_table;
+    std::vector<std::vector<std::pair<Key,Value>>> m_table;
 
     // referencia para a funcao de codificacao
     Hash m_hashing;
@@ -63,7 +63,7 @@ public:
      * 
      * @param tableSize := o numero de slots da tabela. 
      */
-    ChainedHashTable(size_t tableSize = 19, float load_factor = 1.0);
+    ChainedHashTable(size_t tableSize = 19, float load_factor = 0.7);
     /**
     * @brief Destroy the Hash Table object
     */

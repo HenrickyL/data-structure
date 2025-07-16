@@ -137,7 +137,7 @@ template <typename Key, typename Value, typename Hash>
 void ChainedHashTable<Key, Value, Hash>::rehash(size_t m) {
     size_t new_table_size = _get_next_prime(m);
     if (new_table_size > m_table_size) {
-        std::vector<std::list<std::pair<Key, Value>>> old_vec;
+        std::vector<std::vector<std::pair<Key, Value>>> old_vec;
         old_vec = m_table; // copia as chaves para uma nova tabela
         m_table.clear(); // apaga todas as chaves da tabela atual e deixa ela vazia
         m_table.resize(new_table_size); // tabela redimensionada com novo primo
