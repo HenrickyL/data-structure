@@ -11,12 +11,12 @@ AVLDictionary::~AVLDictionary() {
 
 
 void AVLDictionary::add(const std::string& word) {
-    if (constains(word)) {
-        int value = count(word);
-        _tree->remove(word);         // atualiza
-        _tree->add(word, value + 1);
+    try {
+        int& value = _tree->find(word);
+        value += 1;
     }
-    else {
+    catch (const std::runtime_error& e) {
+        // Se operator[] não criar a chave, fazemos add direto
         _tree->add(word, 1);
     }
 }
@@ -37,18 +37,6 @@ int AVLDictionary::count(const std::string& key) const {
     return this->_tree->find(key);
 }
 
-void AVLDictionary::reset_metrics() {
-    _tree->resetMetric();
-}
-
-void AVLDictionary::print_summary(std::ostream& out) const {
-    out << "[AVL Summary]\n";
-    out << "Comparações de chave: " << 0 << "\n";
-    out << "Rotações (aprox.): " << 0 << "\n"; // ou real, se rastrear
-    out << "Número total de palavras: " << size() << "\n";
-}
-
-
 
 int& AVLDictionary::operator[](const std::string key) {
     if (!_tree->contains(key)) {
@@ -61,4 +49,23 @@ const int& AVLDictionary::operator[](const std::string key) const {
         _tree->add(key, 0);
     }
     return _tree->find(key);
+}
+
+
+int AVLDictionary::getComparisonCount() const { return _tree->getComparisonCount(); }
+int AVLDictionary::getInsertionCount() const { return _tree->getInsertionCount(); }
+int AVLDictionary::getSearchCount() const { return _tree->getSearchCount();; }
+
+void AVLDictionary::resetMetrics() {
+
+    _tree->resetMetrics();
+}
+
+void AVLDictionary::printMetrics() const {
+    std::cout << "AVL Dictionary Metrics:\n";
+    std::cout << "  Insertions: " << getInsertionCount() << "\n";
+    std::cout << "  Searches: " << getSearchCount() << "\n";
+    std::cout << "  Comparisons: " << getComparisonCount() << "\n";
+    std::cout << "  Rotations: " << _tree->rotationCount() << "\n";
+    std::cout << "  Height: " << _tree->height() << "\n";
 }

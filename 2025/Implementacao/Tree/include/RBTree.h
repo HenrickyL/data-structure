@@ -11,6 +11,7 @@ template <typename VALUE, typename KEY = int>
 class RBTree : public BinarySearchTree<VALUE,KEY> {
 private:
 	RBNode<VALUE,KEY>* _nill;
+	int _rotationCount=0;
 public:
 	RBTree();
 	~RBTree();
@@ -18,6 +19,9 @@ public:
 
 	void add(const KEY& key, const VALUE& value) override;
 	void remove(const KEY& key) override;
+
+	inline int getRotationCount() const { return _rotationCount; }
+	void resetMetrics() override;
 
 protected:
 	using NodeBase = Node<VALUE, KEY>;

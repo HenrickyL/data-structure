@@ -2,14 +2,26 @@
 #define TEST_DICTIONARY_H
 
 #include "../include/AVLDictionary.h"
+#include "../include/RBDictionary.h"
+
 #include <iostream>
 
 class TestDictionary {
 public:
 
-	static void test1() {
+	static void testAVL() {
 		AVLDictionary dict;
+		std::cout << "AVL Dictionary" << std::endl;
+		test_basic(dict);
+	}
 
+	static void testRB() {
+		RBDictionary dict;
+		std::cout << "RB Dictionary" << std::endl;
+		test_basic(dict);
+	}
+private:
+	static void test_basic(IDictionary& dict) {
 		dict.add("sapo");
 		dict.add("sapo");
 		dict.add("sapo");
@@ -18,12 +30,12 @@ public:
 		dict.add("gato");
 
 		std::string t1 = "sapo";
-		std::cout<< "constains `"<< t1 <<"`:" << (dict.constains(t1) ? "Y" : "N") << std::endl;
+		std::cout << "constains `" << t1 << "`:" << (dict.constains(t1) ? "Y" : "N") << std::endl;
 		std::string t2 = "henricky";
 		std::cout << "constains `" << t2 << "`:" << (dict.constains(t2) ? "Y" : "N") << std::endl;
 
 		std::cout << "Size: " << dict.size() << std::endl;
-		std::cout << "count("<<t1<<"): " << dict.count(t1) << std::endl;
+		std::cout << "count(" << t1 << "): " << dict.count(t1) << std::endl;
 
 
 		std::cout << "OPERATORS" << std::endl;
@@ -50,7 +62,9 @@ public:
 
 		std::cout << "count(" << t1 << "): " << dict.count(t1) << std::endl;
 
+		dict.printMetrics();
 	}
+
 
 
 };

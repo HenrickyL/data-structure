@@ -1,20 +1,23 @@
-#ifndef AVL_DICTIONARY_H
-#define AVL_DICTIONARY_H
+#ifndef RB_DICTIONARY_H
+#define RB_DICTIONARY_H
 
 #include "IDictionary.h"
-#include "AVLTree.h"
+#include "RBTree.h"
 #include <string>
 #include <iostream>
 
 using namespace Perikan::TREE;
 
-class AVLDictionary : public IDictionary {
+class RBDictionary : public IDictionary {
 private:
-    AVLTree<int, std::string>* _tree;
+    RBTree<int, std::string>* _tree;
+    int _comparisonCount;
+    int _insertionCount;
+    int _searchCount;
 
 public:
-    AVLDictionary();
-    ~AVLDictionary();
+    RBDictionary();
+    ~RBDictionary();
 
     void add(const std::string& word) override;
     void remove(const std::string& word) override;
@@ -24,8 +27,7 @@ public:
 
     int& operator[](const std::string key) override;
     const int& operator[](const std::string key) const override;
-
-
+    //metrics
     int getComparisonCount() const override;
     int getInsertionCount() const override;
     int getSearchCount() const override;

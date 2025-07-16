@@ -71,6 +71,7 @@ int RBTree<VALUE, KEY>::_blackHeight(const NodeType* node) const {
 
 template <typename VALUE, typename KEY>
 void RBTree<VALUE, KEY>::_rightRotation(NodeType* y) {
+    _rotationCount++;
     NodeType* x = y->Left();
     y->left = x->right;
 
@@ -93,6 +94,7 @@ void RBTree<VALUE, KEY>::_rightRotation(NodeType* y) {
 
 template <typename VALUE, typename KEY>
 void RBTree<VALUE, KEY>::_leftRotation(NodeType* x) {
+    _rotationCount++;
     NodeType* y = x->Right();
     x->right = y->Left();
 
@@ -114,12 +116,14 @@ void RBTree<VALUE, KEY>::_leftRotation(NodeType* x) {
 
 template <typename VALUE, typename KEY>
 void RBTree<VALUE, KEY>::_add(const KEY& key, const VALUE& value) {
+    this->_insertionCount++;
     NodeType* z = new RBNode<VALUE, KEY>(key, value, RED, nullptr, this->_nill, this->_nill);
     NodeType* y = _nill;
     NodeType* x = static_cast<NodeType*>(this->_root);
 
     while (x != _nill) {
         y = x;
+        this->_comparisonCount++;
         if (z->key < x->key)
             x = x->Left();
         else
@@ -127,6 +131,7 @@ void RBTree<VALUE, KEY>::_add(const KEY& key, const VALUE& value) {
     }
 
     z->parent = y;
+    this->_comparisonCount++;
     if (y == _nill)
         this->_root = z;
     else if (z->key < y->key)
@@ -365,7 +370,11 @@ void RBTree<VALUE, KEY>::remove(const KEY& key) {
     _remove(z);
 }
 
-
+template <typename VALUE, typename KEY>
+void RBTree<VALUE, KEY>::resetMetrics() {
+    BinarySearchTree<VALUE, KEY>::resetMetrics();
+    _rotationCount = 0;
+}
 
 
 }}

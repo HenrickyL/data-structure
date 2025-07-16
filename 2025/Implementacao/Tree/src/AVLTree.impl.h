@@ -48,15 +48,10 @@ template <typename VALUE, typename KEY>
 int AVLTree<VALUE, KEY>::rotationCount() const {
     return _rotationCount;
 }
-template <typename VALUE, typename KEY>
-void AVLTree<VALUE, KEY>::resetMetric() {
-    this->_rotationCount = 0;
-}
-
-
 
 template <typename VALUE, typename KEY>
 typename AVLTree<VALUE, KEY>::NodeType* AVLTree<VALUE,KEY>::_rightRotation(NodeType* node) {
+    _rotationCount++;
     NodeType* aux = static_cast<NodeType*>(node->left);
     node->left = aux->right;
     aux->right = node;
@@ -70,6 +65,7 @@ typename AVLTree<VALUE, KEY>::NodeType* AVLTree<VALUE,KEY>::_rightRotation(NodeT
 
 template <typename VALUE, typename KEY>
 typename AVLTree<VALUE, KEY>::NodeType* AVLTree<VALUE,KEY>::_leftRotation(NodeType* node) {
+    _rotationCount++;
     NodeType* aux =node->Right();
     node->right = aux->left;
     aux->left = node;
@@ -155,11 +151,13 @@ template <typename VALUE, typename KEY>
 typename AVLTree<VALUE, KEY>::NodeBase*
 AVLTree<VALUE, KEY>::_add(const KEY& key, const VALUE& value, NodeBase* node) {
     NodeType* casted = static_cast<NodeType*>(node);
-
+    this->_comparisonCount++;
     if (casted == nullptr) {
+        this->_insertionCount++;
         return _createNode(key, value);
     }
     else {
+        this->_comparisonCount++;
         if (key == casted->key) return casted;
         else if (key < casted->key) {
             casted->left = _add(key, value, casted->left);  // continua usando NodeBase*
@@ -225,6 +223,13 @@ typename AVLTree<VALUE, KEY>::NodeType* AVLTree<VALUE,KEY>::_remove_successor(No
 template <typename VALUE, typename KEY>
 int AVLTree<VALUE, KEY>::_height(const NodeBase* node) const {
     return node == nullptr ? 0 : static_cast<const NodeType*>(node)->height;
+}
+
+
+template <typename VALUE, typename KEY>
+void AVLTree<VALUE, KEY>::resetMetrics() {
+    BinarySearchTree<VALUE, KEY>::resetMetrics();
+    _rotationCount = 0;
 }
 
 

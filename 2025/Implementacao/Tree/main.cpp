@@ -15,7 +15,9 @@ int main() {
         /*TestHash::ChainedHash();
         TestHash::OpenAddressHash();*/
 
-        TestDictionary::test1();
+        TestDictionary::testAVL();
+        TestDictionary::testRB();
+
 
     }
     catch (const std::runtime_error& e) {

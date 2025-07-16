@@ -11,6 +11,10 @@ template <typename VALUE, typename KEY=int>
 class BinarySearchTree {
 protected:
     Node<VALUE,KEY>* _root;
+    // Métricas
+    mutable int _comparisonCount;
+    mutable int _searchCount;
+    int _insertionCount;
 public:
     BinarySearchTree();
     virtual ~BinarySearchTree();
@@ -53,6 +57,13 @@ public:
 
 
     std::vector<int> getKeys() const;
+
+
+    // Metodos para metricas
+    inline int getComparisonCount() const { return _comparisonCount; }
+    inline int getInsertionCount() const { return _insertionCount; }
+    inline int getSearchCount() const { return _searchCount; }
+    virtual void resetMetrics();
 
 protected:
     virtual Node<VALUE, KEY>* _add(const KEY& key, const VALUE& value, Node<VALUE, KEY>* node);

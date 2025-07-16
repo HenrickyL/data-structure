@@ -18,7 +18,9 @@ public:
 
     int balance() const;
     int rotationCount() const;
-    void resetMetric();
+
+    inline int getRotationCount() const { return _rotationCount; }
+    void resetMetrics() override;
 
 protected:
     using NodeBase = Node<VALUE, KEY>;

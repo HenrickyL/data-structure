@@ -132,6 +132,7 @@
     <ClCompile Include="src\AVLTree.impl.h" />
     <ClCompile Include="src\BinarySearchTree.impl.h" />
     <ClCompile Include="src\FrequencyCounter.cpp" />
+    <ClCompile Include="src\RBDictionary.cpp" />
     <ClCompile Include="src\Set.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -148,6 +149,7 @@
     <ClInclude Include="include\IDictionary.h" />
     <ClInclude Include="include\Node.h" />
     <ClInclude Include="include\OpenAddressHashTable.h" />
+    <ClInclude Include="include\RBDictionary.h" />
     <ClInclude Include="include\RBNode.h" />
     <ClInclude Include="include\RBTree.h" />
     <ClInclude Include="include\Set.h" />
