@@ -2,47 +2,91 @@
 #define FREQUENCY_COUNTER_H
 
 #include"../include/IDictionary.h"
-#include <chrono> // time
+#include"../include/AVLDictionary.h"
+#include"../include/RBDictionary.h"
+
+#include <chrono> //timer
+#include <fstream> //archive
+#include <vector>
+#include <memory>
+#include <algorithm>
 #include <iostream>
 
 class FrequencyCounter {
-private:
-    IDictionary* dictionary;
-    std::chrono::duration<double> last_execution_time;
-
 public:
-    FrequencyCounter(IDictionary* dict) : dictionary(dict) {}
+    struct Metrics {
+        std::string structureName;
+        std::string bookName;
+        long time_ms;
+        int comparisons;
+        int insertions;
+        int rotations;
+        int collisions;
+        int rehashes;
+        float load_factor;
+    };
 
-    void process(std::istream& in) {
-        dictionary->reset_metrics();
+    static void RunAll(const std::string& bookPath, const std::string& outputDir) {
+        std::vector<std::unique_ptr<IDictionary>> dictionaries;
+        dictionaries.emplace_back(new AVLDictionary());
+        dictionaries.emplace_back(new RBDictionary());
+        //dictionaries.emplace_back(new ChainedHashDictionary());
+        //dictionaries.emplace_back(new OpenAddressDictionary());
+
+        for (auto& dict : dictionaries) {
+            Metrics m = RunSingle(*dict, bookPath);
+            SaveMetrics(m, outputDir);
+        }
+    }
+
+private:
+    static Metrics RunSingle(IDictionary& dict, const std::string& bookPath) {
+        dict.resetMetrics();
+
+        std::ifstream book(bookPath);
+        std::string word;
+
         auto start = std::chrono::high_resolution_clock::now();
 
-        std::string word;
-        while (in >> word) { // ainda ver vem uma linha ou palavra, deve ser linha vou ter que fazer o split
-            word = sanitize(word);
-            if (word.empty()) continue;
-            if (dictionary->constains(word)) {
-                int c = dictionary->count(word);
-                dictionary->remove(word);
-                dictionary->add(word);  // com c + 1
-            }
-            else {
-                dictionary->add(word); // com 1
+        while (book >> word) {
+            std::string sanitized = SanitizeWord(word);
+            if (!sanitized.empty()) {
+                dict.add(sanitized); // Ou operator[] dependendo da interface
             }
         }
 
         auto end = std::chrono::high_resolution_clock::now();
-        last_execution_time = end - start;
+
+        Metrics m;
+        m.time_ms = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+        m.comparisons = dict.getComparisonCount();
+        // ... preencher outras métricas
+
+        return m;
     }
 
-    void print_summary(std::ostream& out) const {
-        out << "Tempo de execução: " << last_execution_time.count() << " segundos\n";
-        dictionary->print_summary(out);
+    static std::string SanitizeWord(const std::string& word) {
+        std::string result;
+        std::copy_if(word.begin(), word.end(), std::back_inserter(result),
+            [](char c) { return std::isalpha(c); });
+        std::transform(result.begin(), result.end(), result.begin(), ::tolower);
+        return result.empty() ? "" : result;
     }
 
-    static std::string sanitize(const std::string& word) {
-        //verificar acentos e caracteres especiais
-        return word;
+    static void SaveMetrics(const Metrics& m, const std::string& outputDir) {
+        std::string filename = outputDir + "/" + m.structureName + "_" + m.bookName + "_metrics.csv";
+        std::ofstream out(filename);
+
+        out << "structure;book;time_ms;comparisons;insertions;rotations;collisions;rehashes;load_factor\n";
+        out << m.structureName << ";"
+            << m.bookName << ";"
+            << m.time_ms << ";"
+            << m.comparisons << ";"
+            << m.insertions << ";"
+            << m.rotations << ";"
+            << m.collisions << ";"
+            << m.rehashes << ";"
+            << m.load_factor << "\n";
     }
 };
 
