@@ -10,10 +10,9 @@ public:
     // Process file and return list of normalized words
     std::vector<std::string> processFile(const std::string& filename);
 
+private:
     // Normalize a single word
     std::string normalizeWord(const std::string& word);
-
-private:
     bool isValidChar(char32_t c) const;
     bool isWordChar(char32_t c) const;
 };
