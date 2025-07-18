@@ -81,16 +81,11 @@ void ChainedHashTable<Key, Value, Hash>::clear() {
 
 
 template <typename Key, typename Value, typename Hash>
-bool ChainedHashTable<Key, Value, Hash>::add(const Key& k, const Value& v) {
+bool ChainedHashTable<Key, Value, Hash>::add(const Key& k, const Value& v, bool count_metrics) {
     if (load_factor() >= m_max_load_factor) {
         rehash(2 * m_table_size);
     }
     size_t slot = _hash_code(k);
-
-    // Verifica se ja existe elemento no slot (potencial colisao)
-    if (!m_table[slot].empty()) {
-        m_collision_count++;
-    }
     
     for (auto p : m_table[slot]) {
         m_comparison_count++;
@@ -98,9 +93,14 @@ bool ChainedHashTable<Key, Value, Hash>::add(const Key& k, const Value& v) {
             return false;
         }
     }
+
+    // Conta colisao apenas se o slot não estiver vazio
+    if (!m_table[slot].empty()) {
+        m_collision_count++;
+    }
     m_table[slot].push_back(std::make_pair(k, v));
     m_number_of_elements++;
-    m_insertion_count++;
+    if (count_metrics) m_insertion_count++;
     return true;
 }
 
@@ -165,7 +165,7 @@ void ChainedHashTable<Key, Value, Hash>::rehash(size_t m) {
         m_table_size = new_table_size;
         for (size_t i = 0; i < old_vec.size(); ++i) {
             for (auto& par : old_vec[i]) {
-                add(par.first, par.second);
+                add(par.first, par.second, false);
             }
             old_vec[i].clear(); // opcional
         }

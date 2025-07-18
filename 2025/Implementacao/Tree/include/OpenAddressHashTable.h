@@ -34,7 +34,7 @@ public:
     OpenAddressHashTable(size_t tableSize = 19, float load_factor = 0.7);
     ~OpenAddressHashTable() = default;
 
-    bool add(const Key& key, const Value& value);
+    bool add(const Key& key, const Value& value, bool count_metrics = true);
     bool contains(const Key& key) const;
     Value& at(const Key& key);
     const Value& at(const Key& key) const;

@@ -150,7 +150,7 @@ public:
      * @param k := chave
      * @param v := valor 
      */
-    bool add(const Key& k, const Value& v);
+    bool add(const Key& k, const Value& v, bool count_metrics = true);
 
     /**
      * @brief Recebe como entrada uma chave k e retorna true 

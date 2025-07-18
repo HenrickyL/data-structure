@@ -49,7 +49,7 @@ size_t OpenAddressHashTable<Key, Value, Hash>::_hash_code(const Key& key, size_t
 
 // Inserção
 template<typename Key, typename Value, typename Hash>
-bool OpenAddressHashTable<Key, Value, Hash>::add(const Key& key, const Value& value) {
+bool OpenAddressHashTable<Key, Value, Hash>::add(const Key& key, const Value& value, bool count_metrics) {
     if (load_factor() >= m_max_load_factor) {
         rehash(2 * m_table_size);
     }
@@ -64,7 +64,7 @@ bool OpenAddressHashTable<Key, Value, Hash>::add(const Key& key, const Value& va
             m_table[idx] = std::make_pair(key, value);
             m_state[idx] = OCCUPIED;
             ++m_number_of_elements;
-            m_insertion_count++;
+            if (count_metrics) m_insertion_count++;
             return true;
         }
         else if (m_state[idx] == OCCUPIED && m_table[idx].first == key) {
@@ -203,7 +203,7 @@ void OpenAddressHashTable<Key, Value, Hash>::rehash(size_t new_size) {
 
     for (size_t i = 0; i < old_table.size(); ++i) {
         if (old_state[i] == OCCUPIED) {
-            add(old_table[i].first, old_table[i].second);
+            add(old_table[i].first, old_table[i].second, false);
         }
     }
 }
