@@ -23,11 +23,12 @@ int main(/* int argc, char* argv[]*/) {
         };
         
         
-        TestDictionary::Run(argc, const_cast<char**>(argv));
+        //TestDictionary::Run(argc, const_cast<char**>(argv));
         //TestDictionary::Run(argc, argv);
 
-        //TestDictionary::testRB();
-
+        TestDictionary::testRB();
+        TestDictionary::testAVL();
+        TestDictionary::testOAHT();
 
     }
     catch (const std::runtime_error& e) {

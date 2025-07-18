@@ -24,6 +24,12 @@ private:
 
     Hash m_hashing;
 
+    //metrics
+    mutable size_t m_comparison_count, m_search_count;
+    size_t m_insertion_count;
+    size_t m_collision_count;
+    size_t m_rehash_count;
+
 public:
     OpenAddressHashTable(size_t tableSize = 19, float load_factor = 0.7);
     ~OpenAddressHashTable() = default;
@@ -47,6 +53,14 @@ public:
     size_t capacity() const;
     float load_factor() const;
     float max_load_factor() const;
+
+    //metrics
+    size_t getComparisonCount() const;   // Total de comparacoes
+    size_t getInsertionCount() const;    // Total de insercoes
+    size_t getSearchCount() const;       // Total de buscas
+    size_t getCollisionCount() const;    // Total de colisoes
+    size_t getRehashCount() const;       // Total de rehashes
+    void resetMetrics();                 // Reinicia todas as metricas
 
 private:
     size_t _hash_code(const Key& key, size_t i = 0) const;

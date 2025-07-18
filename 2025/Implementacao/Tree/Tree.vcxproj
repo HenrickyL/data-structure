@@ -133,6 +133,8 @@
     <ClCompile Include="src\BenchmarkController.cpp" />
     <ClCompile Include="src\BinarySearchTree.impl.h" />
     <ClCompile Include="src\Benchmark.cpp" />
+    <ClCompile Include="src\CHTDictionary.cpp" />
+    <ClCompile Include="src\OAHTDictionary.cpp" />
     <ClCompile Include="src\RBDictionary.cpp" />
     <ClCompile Include="src\Set.cpp" />
     <ClCompile Include="src\TextProcessor.cpp" />
@@ -149,8 +151,10 @@
     <ClInclude Include="include\BinarySearchTree.h" />
     <ClInclude Include="include\ChainedHashTable.h" />
     <ClInclude Include="include\Benchmark.h" />
+    <ClInclude Include="include\CHTDictionary.h" />
     <ClInclude Include="include\IDictionary.h" />
     <ClInclude Include="include\Node.h" />
+    <ClInclude Include="include\OAHTDictionary.h" />
     <ClInclude Include="include\OpenAddressHashTable.h" />
     <ClInclude Include="include\RBDictionary.h" />
     <ClInclude Include="include\RBNode.h" />

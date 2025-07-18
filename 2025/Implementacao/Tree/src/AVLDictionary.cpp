@@ -39,8 +39,8 @@ int AVLDictionary::count(const std::string& key) const {
 
 
 int& AVLDictionary::operator[](const std::string key) {
-    if (!_tree->contains(key)) {
-        _tree->add(key, 0);
+    if (!_tree->contains(key)) {    // se n contem
+        _tree->add(key, 0);         // adiciono com valor 0
     }
     return _tree->find(key);
 }

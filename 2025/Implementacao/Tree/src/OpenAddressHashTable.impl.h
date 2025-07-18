@@ -13,7 +13,12 @@ OpenAddressHashTable<Key, Value, Hash>::OpenAddressHashTable(size_t tableSize, f
     m_table_size(_get_next_prime(tableSize)),
     m_table(m_table_size),
     m_state(m_table_size, EMPTY),
-    m_hashing(Hash())
+    m_hashing(Hash()),
+    m_comparison_count(0),
+    m_insertion_count(0),
+    m_search_count(0),
+    m_collision_count(0),
+    m_rehash_count(0)
 {
 }
 
@@ -48,17 +53,25 @@ bool OpenAddressHashTable<Key, Value, Hash>::add(const Key& key, const Value& va
     if (load_factor() >= m_max_load_factor) {
         rehash(2 * m_table_size);
     }
+    bool has_collided = false;
     for (size_t i = 0; i < m_table_size; ++i) {
         size_t idx = _hash_code(key, i);
+        m_comparison_count++;
         if (m_state[idx] == EMPTY || m_state[idx] == DELETED) {
+            if (has_collided) {
+                m_collision_count++; // Conta como colisao se houve tentativa anterior
+            }
             m_table[idx] = std::make_pair(key, value);
             m_state[idx] = OCCUPIED;
             ++m_number_of_elements;
+            m_insertion_count++;
             return true;
         }
         else if (m_state[idx] == OCCUPIED && m_table[idx].first == key) {
-            return false; // chave já existe
+            return false; // chave ja existe
         }
+        // Marca que houve colisão para proximas iteracoes
+        has_collided = true;
     }
     return false; // tabela cheia
 }
@@ -66,8 +79,10 @@ bool OpenAddressHashTable<Key, Value, Hash>::add(const Key& key, const Value& va
 // Busca
 template<typename Key, typename Value, typename Hash>
 bool OpenAddressHashTable<Key, Value, Hash>::contains(const Key& key) const {
+    m_search_count++;
     for (size_t i = 0; i < m_table_size; ++i) {
         size_t idx = _hash_code(key, i);
+        m_comparison_count++;
         if (m_state[idx] == EMPTY) return false;
         if (m_state[idx] == OCCUPIED && m_table[idx].first == key) return true;
     }
@@ -172,6 +187,7 @@ void OpenAddressHashTable<Key, Value, Hash>::set_max_load_factor(float lf) {
 // rehash
 template<typename Key, typename Value, typename Hash>
 void OpenAddressHashTable<Key, Value, Hash>::rehash(size_t new_size) {
+    m_rehash_count++;
     size_t new_table_size = _get_next_prime(new_size);
     std::vector<std::pair<Key, Value>> old_table = std::move(m_table);
     std::vector<SlotState> old_state = std::move(m_state);
@@ -224,6 +240,41 @@ template<typename Key, typename Value, typename Hash>
 float OpenAddressHashTable<Key, Value, Hash>::load_factor() const {
     if (m_table_size == 0) return 0.0f;
     return static_cast<float>(m_number_of_elements) / m_table_size;
+}
+
+// Métodos para obter métricas
+template<typename Key, typename Value, typename Hash>
+size_t OpenAddressHashTable<Key, Value, Hash>::getComparisonCount() const {
+    return m_comparison_count;
+}
+
+template<typename Key, typename Value, typename Hash>
+size_t OpenAddressHashTable<Key, Value, Hash>::getInsertionCount() const {
+    return m_insertion_count;
+}
+
+template<typename Key, typename Value, typename Hash>
+size_t OpenAddressHashTable<Key, Value, Hash>::getSearchCount() const {
+    return m_search_count;
+}
+
+template<typename Key, typename Value, typename Hash>
+size_t OpenAddressHashTable<Key, Value, Hash>::getCollisionCount() const {
+    return m_collision_count;
+}
+
+template<typename Key, typename Value, typename Hash>
+size_t OpenAddressHashTable<Key, Value, Hash>::getRehashCount() const {
+    return m_rehash_count;
+}
+
+template<typename Key, typename Value, typename Hash>
+void OpenAddressHashTable<Key, Value, Hash>::resetMetrics() {
+    m_comparison_count = 0;
+    m_insertion_count = 0;
+    m_search_count = 0;
+    m_collision_count = 0;
+    m_rehash_count = 0;
 }
 
 }} // namespace

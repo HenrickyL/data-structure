@@ -49,6 +49,12 @@
     <ClCompile Include="src\TextProcessor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\CHTDictionary.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OAHTDictionary.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\BinarySearchTree.h">
@@ -115,6 +121,12 @@
       <Filter>Header Files\Dictionary</Filter>
     </ClInclude>
     <ClInclude Include="include\TextProcessor.h">
+      <Filter>Header Files\Dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CHTDictionary.h">
+      <Filter>Header Files\Dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="include\OAHTDictionary.h">
       <Filter>Header Files\Dictionary</Filter>
     </ClInclude>
   </ItemGroup>

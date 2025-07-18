@@ -3,6 +3,8 @@
 
 #include "../include/AVLDictionary.h"
 #include "../include/RBDictionary.h"
+#include "../include/OAHTDictionary.h"
+
 #include "../include/BenchmarkController.h"
 #include <iostream>
 
@@ -22,6 +24,12 @@ public:
 	static void testAVL() {
 		AVLDictionary dict;
 		std::cout << "AVL Dictionary" << std::endl;
+		test_basic(dict);
+	}
+
+	static void testOAHT() {
+		OAHTDictionary dict;
+		std::cout << "OAHT Dictionary" << std::endl;
 		test_basic(dict);
 	}
 
