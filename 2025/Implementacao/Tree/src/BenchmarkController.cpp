@@ -1,8 +1,8 @@
 #include "../include/BenchmarkController.h"
 #include "../include/AVLDictionary.h"
 #include "../include/RBDictionary.h"
-//#include "../include/ChainedHashDictionary.h"
-//#include "../include/OpenHashDictionary.h"
+#include "../include/CHTDictionary.h"
+#include "../include/OAHTDictionary.h"
 #include <iostream>
 #include <fstream>
 #include <iomanip>
@@ -81,9 +81,9 @@ std::unique_ptr<IDictionary> BenchmarkController::createDictionary(DictionaryTyp
     case DictionaryType::RED_BLACK:
         return std::make_unique<RBDictionary>();
     case DictionaryType::CHAINED_HASH:
-    //    return std::make_unique<ChainedHashDictionary>();
-    //case DictionaryType::OPEN_HASH:
-    //    return std::make_unique<OpenHashDictionary>();
+        return std::make_unique<CHTDictionary>();
+    case DictionaryType::OPEN_HASH:
+        return std::make_unique<OAHTDictionary>();
     default:
         throw std::invalid_argument("Unknown dictionary type");
     }
@@ -113,8 +113,8 @@ void BenchmarkController::runAllBenchmarks(const RunConfig& config) {
     const std::vector<DictionaryType> allTypes = {
         DictionaryType::AVL,
         DictionaryType::RED_BLACK,
-        // DictionaryType::CHAINED_HASH,
-        // DictionaryType::OPEN_HASH
+         DictionaryType::CHAINED_HASH,
+         DictionaryType::OPEN_HASH
     };
 
     // Processa o arquivo apenas uma vez para todos os dicionários
@@ -201,7 +201,7 @@ void BenchmarkController::saveBenchmarkResults(const Benchmark::Metrics& metrics
     }
 
     // Cabeçalho CSV
-    out << "estrutura,arquivo,tempo_ms,comparacoes,insercoes,rotacoes,colisoes,rehashes,fator_carga,palavras_totais,palavras_unicas\n";
+    out << "estrutura,arquivo,tempo_ms,comparacoes,insercoes,rotacoes,altura,colisoes,rehashes,fator_carga,palavras_totais,palavras_unicas\n";
 
     // Dados
     out << metrics.structureName << ","
@@ -210,6 +210,7 @@ void BenchmarkController::saveBenchmarkResults(const Benchmark::Metrics& metrics
         << metrics.comparisons << ","
         << metrics.insertions << ","
         << metrics.rotations << ","
+        << metrics.height << ","
         << metrics.collisions << ","
         << metrics.rehashes << ","
         << std::fixed << std::setprecision(2) << metrics.load_factor << ","
@@ -223,6 +224,7 @@ void BenchmarkController::printBenchmarkResults(const Benchmark::Metrics& metric
         << "* Comparacoes: " << metrics.comparisons << "\n"
         << "* Insercoes: " << metrics.insertions << "\n"
         << "* Rotacoes: " << metrics.rotations << "\n"
+        << "* Altura: " << metrics.height << "\n"
         << "* Colisoes: " << metrics.collisions << "\n"
         << "* Rehashes: " << metrics.rehashes << "\n"
         << "* Fator Carga: " << std::fixed << std::setprecision(2) << metrics.load_factor << "\n"

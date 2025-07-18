@@ -16,6 +16,7 @@ public:
         int comparisons;
         int insertions;
         int rotations;
+        int height;
         int collisions;
         int rehashes;
         float load_factor;

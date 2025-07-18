@@ -27,6 +27,7 @@ Benchmark::Metrics Benchmark::run(IDictionary& dict, const std::vector<std::stri
     metrics.comparisons = dict.getComparisonCount();
     metrics.insertions = dict.getInsertionCount();
     metrics.rotations = dict.getRotationCount();
+    metrics.height = dict.getHeight();
     metrics.collisions = dict.getCollisionCount();
     metrics.rehashes = dict.getRehashCount();
     metrics.load_factor = dict.getLoadFactor();
@@ -68,7 +69,7 @@ void Benchmark::saveResults(const Metrics& metrics, const std::string& filename)
     }
 
     // CSV header
-    out << "structure,book,time_ms,comparisons,insertions,rotations,collisions,rehashes,load_factor,total_words,unique_words\n";
+    out << "structure,book,time_ms,comparisons,insertions,rotations,height,collisions,rehashes,load_factor,total_words,unique_words\n";
 
     // Data
     out << metrics.structureName << ","
@@ -77,6 +78,7 @@ void Benchmark::saveResults(const Metrics& metrics, const std::string& filename)
         << metrics.comparisons << ","
         << metrics.insertions << ","
         << metrics.rotations << ","
+        << metrics.height << ","
         << metrics.collisions << ","
         << metrics.rehashes << ","
         << std::fixed << std::setprecision(2) << metrics.load_factor << ","

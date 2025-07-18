@@ -11,8 +11,6 @@
 
 class TestDictionary {
 public:
-
-
 	static void Run(int argc, char* argv[]) {
 		try {
 			BenchmarkController controller;
