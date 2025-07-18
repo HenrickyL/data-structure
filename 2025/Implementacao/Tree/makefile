@@ -1,61 +1,55 @@
-# Configurações para Windows
-CXX := g++
-CXXFLAGS := -std=c++17 -Wall -Wextra -Iincludes
-EXTENSION := .exe
-OBJ_EXT := .o
+# Detectar sistema operacional
+ifeq ($(OS),Windows_NT)
+    PLATFORM := windows
+else
+    PLATFORM := linux
+endif
 
-# Diretórios
 SRC_DIR := src
 INC_DIR := includes
-BUILD_DIR := build
-OBJ_DIR := $(BUILD_DIR)/obj
-BIN_DIR := $(BUILD_DIR)/bin
-LIB_DIR := lib
+OBJ_DIR := build/obj
+BIN_DIR := build/bin
 
-# Nome do executável
-TARGET := $(BIN_DIR)/seu_programa$(EXTENSION)
-
-# Fontes e objetos
 SRCS := $(wildcard $(SRC_DIR)/*.cpp)
-OBJS := $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%$(OBJ_EXT),$(SRCS))
-DEPS := $(wildcard $(INC_DIR)/*.h)
+OBJS := $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SRCS))
 
-# Se tiver main.cpp na raiz
-ifneq ("$(wildcard main.cpp)","")
-	OBJS += $(OBJ_DIR)/main$(OBJ_EXT)
+ifeq ($(PLATFORM),windows)
+    TARGET := $(BIN_DIR)/programa.exe
+else
+    TARGET := $(BIN_DIR)/programa
 endif
 
-# Regras principais
+CXX := g++
+CXXFLAGS := -std=c++17 -Wall -Wextra
+
+ifeq ($(PLATFORM),windows)
+    VCPKG_INCLUDE := -IC:/vcpkg/installed/x64-windows/include
+    VCPKG_LIB := -LC:/vcpkg/installed/x64-windows/lib
+    ICU_LIBS := -licuuc -licuin -licudt -lstdc++fs
+    MKDIR_P = if not exist "$(subst /,\,$1)" mkdir "$(subst /,\,$1)"
+    LDFLAGS := -mconsole
+else
+    VCPKG_INCLUDE :=
+    VCPKG_LIB :=
+    ICU_LIBS := -licuuc -licui18n -licudata
+    MKDIR_P = mkdir -p $1
+    LDFLAGS :=
+endif
+
+INCLUDES := -I$(INC_DIR) $(VCPKG_INCLUDE)
+LIBS := $(VCPKG_LIB) $(ICU_LIBS)
+
+.PHONY: all clean
+
 all: $(TARGET)
 
-$(TARGET): $(OBJS) | $(BIN_DIR)
-	$(CXX) $(CXXFLAGS) $^ -o $@
+$(TARGET): $(OBJS)
+	$(call MKDIR_P,$(BIN_DIR))
+	$(CXX) -o $@ $^ $(LIBS) $(LDFLAGS)
 
-# Regra para arquivos em src/
-$(OBJ_DIR)/%$(OBJ_EXT): $(SRC_DIR)/%.cpp $(DEPS) | $(OBJ_DIR)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+	$(call MKDIR_P,$(OBJ_DIR))
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
 
-# Regra para main.cpp se existir
-ifneq ("$(wildcard main.cpp)","")
-$(OBJ_DIR)/main$(OBJ_EXT): main.cpp $(DEPS) | $(OBJ_DIR)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
-endif
-
-# Cria diretórios
-$(BIN_DIR) $(OBJ_DIR) $(LIB_DIR):
-	@if not exist "$@" mkdir "$@"
-
-# Empacota os objetos para compartilhar (cria um zip)
-package_objs:
-	@if not exist "$(LIB_DIR)" mkdir "$(LIB_DIR)"
-	powershell Compress-Archive -Path "$(OBJ_DIR)\*" -DestinationPath "$(LIB_DIR)\objs.zip" -Force
-
-# Limpeza
 clean:
-	rmdir /s /q "$(BUILD_DIR)"
-	if exist "$(LIB_DIR)\objs.zip" del "$(LIB_DIR)\objs.zip"
-
-run: $(TARGET)
-	$(TARGET)
-
-.PHONY: all clean run package_objs
+	rm -rf $(OBJ_DIR) $(BIN_DIR)
