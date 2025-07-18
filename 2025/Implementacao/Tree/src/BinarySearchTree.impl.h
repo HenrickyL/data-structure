@@ -570,7 +570,20 @@ void BinarySearchTree<VALUE, KEY>::resetMetrics(){
     _comparisonCount = _insertionCount =_searchCount = 0; 
 }
 
+template<typename VALUE, typename KEY>
+std::vector<std::pair<KEY, VALUE>> BinarySearchTree<VALUE, KEY>::getSortedEntries() const {
+    std::vector<std::pair<KEY, VALUE>> entries;
+    _inOrderCollect(this->_root, entries);
+    return entries;
+}
 
+template<typename VALUE, typename KEY>
+void BinarySearchTree<VALUE, KEY>::_inOrderCollect(const Node<VALUE, KEY>* node, std::vector<std::pair<KEY, VALUE>>& entries) const {
+    if (_isNull(node)) return;
+    _inOrderCollect(node->left, entries);
+    entries.emplace_back(node->key, node->value);
+    _inOrderCollect(node->right, entries);
+}
     ////////////////////////////
 
 }}

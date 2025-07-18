@@ -3,7 +3,7 @@
 #include <iostream>
 
 OAHTDictionary::OAHTDictionary()
-    : _ht(new OpenAddressHashTable<int, int>()) {
+    : _ht(new OpenAddressHashTable<std::string, int>()) {
 }
 
 OAHTDictionary::~OAHTDictionary() {
@@ -11,17 +11,17 @@ OAHTDictionary::~OAHTDictionary() {
 }
 
 void OAHTDictionary::add(const std::string& word) {
-    int key = std::hash<std::string>{}(word);
-    _ht->add(key, 1);
+    //int key = std::hash<std::string>{}(word);
+    _ht->add(word, 1);
 }
 
 void OAHTDictionary::remove(const std::string& word) {
-    int key = std::hash<std::string>{}(word);
-    _ht->remove(key);
+    //int key = std::hash<std::string>{}(word);
+    _ht->remove(word);
 }
 
 bool OAHTDictionary::constains(const std::string& key) const {
-    return _ht->contains(std::hash<std::string>{}(key));
+    return _ht->contains(key);
 }
 
 int OAHTDictionary::size() const {
@@ -29,23 +29,23 @@ int OAHTDictionary::size() const {
 }
 
 int OAHTDictionary::count(const std::string& key) const {
-    return _ht->contains(std::hash<std::string>{}(key)) ? 1 : 0;
+    return _ht->contains(key) ? 1 : 0;
 }
 
 int& OAHTDictionary::operator[](const std::string key) {
-    int hashed_key = std::hash<std::string>{}(key);
-    if (!_ht->contains(hashed_key)) {
-        _ht->add(hashed_key, 0);
+    //int hashed_key = std::hash<std::string>{}(key);
+    if (!_ht->contains(key)) {
+        _ht->add(key, 0);
     }
-    return _ht->at(hashed_key);
+    return _ht->at(key);
 }
 
 const int& OAHTDictionary::operator[](const std::string key) const {
-    int hashed_key = std::hash<std::string>{}(key);
-    if (!_ht->contains(hashed_key)) {
-        _ht->add(hashed_key, 0);
+    //int hashed_key = std::hash<std::string>{}(key);
+    if (!_ht->contains(key)) {
+        _ht->add(key, 0);
     }
-    return _ht->at(hashed_key);
+    return _ht->at(key);
 }
 
 int OAHTDictionary::getComparisonCount() const {
@@ -74,5 +74,7 @@ void OAHTDictionary::printMetrics() const {
     std::cout << " - Load Factor: " << getLoadFactor() << "\n";
 }
 
-// Métodos inline definidos no header:
-// getRotationCount(), getCollisionCount(), getRehashCount(), getLoadFactor(), getName()
+
+std::vector<std::pair<std::string, int>> OAHTDictionary::getSortedEntries() const {
+    return _ht->getSortedEntries();
+}

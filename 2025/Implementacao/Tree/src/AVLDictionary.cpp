@@ -69,3 +69,8 @@ void AVLDictionary::printMetrics() const {
     std::cout << "  Rotations: " << _tree->rotationCount() << "\n";
     std::cout << "  Height: " << getHeight() << "\n";
 }
+
+
+std::vector<std::pair<std::string, int>> AVLDictionary::getSortedEntries() const {
+    return _tree->getSortedEntries();
+}

@@ -5,6 +5,7 @@
 #include <cmath>       // sqrt (para primo)
 #include <iostream>    // std::cout, std::endl (se usar para debug ou impressão)
 #include "../include/ChainedHashTable.h"
+#include <algorithm> // sort
 
 namespace Perikan {namespace Hash {
 
@@ -228,11 +229,6 @@ const Value& ChainedHashTable<Key, Value, Hash>::operator[](const Key& k) const 
     return at(k);
 }
 
-
-
-
-
-
 template <typename Key, typename Value, typename Hash>
 size_t ChainedHashTable<Key, Value, Hash>::_get_next_prime(size_t x) {
     if (x <= 2) return 3;
@@ -292,7 +288,19 @@ void ChainedHashTable<Key, Value, Hash>::resetMetrics() {
     m_rehash_count = 0;
 }
 
-
+template <typename Key, typename Value, typename Hash>
+std::vector<std::pair<Key, Value>> ChainedHashTable<Key, Value, Hash>::getSortedEntries() const {
+    std::vector<std::pair<std::string, int>> entries;
+    for (const auto& bucket : m_table) {
+        for (const auto& b : bucket) {
+            const std::string& key = b.first;
+            int value = b.second;
+            entries.emplace_back(key, value);
+        }
+    }
+    std::sort(entries.begin(), entries.end()); // ordena por chave (palavra)
+    return entries;
+}
 
 }}
 

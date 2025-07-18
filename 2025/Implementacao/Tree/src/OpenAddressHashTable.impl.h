@@ -3,6 +3,8 @@
 
 #include "../include/OpenAddressHashTable.h"
 #include <cmath>
+#include <algorithm> // sort
+
 
 namespace Perikan {namespace Hash {
 
@@ -279,6 +281,19 @@ void OpenAddressHashTable<Key, Value, Hash>::resetMetrics() {
     m_search_count = 0;
     m_collision_count = 0;
     m_rehash_count = 0;
+}
+
+
+template<typename Key, typename Value, typename Hash>
+std::vector<std::pair<Key, Value>> OpenAddressHashTable<Key, Value, Hash>::getSortedEntries() const {
+    std::vector<std::pair<std::string, int>> entries;
+    for (size_t i = 0; i < m_table_size; ++i) {
+        if (m_state[i] == OCCUPIED) {
+            entries.push_back(m_table[i]);
+        }
+    }
+    std::sort(entries.begin(), entries.end());
+    return entries;
 }
 
 }} // namespace

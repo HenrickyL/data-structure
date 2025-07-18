@@ -3,12 +3,12 @@
 
 #include "IDictionary.h"
 #include "ChainedHashTable.h"
-
+#include <string>
 using namespace Perikan::Hash;
 
 class CHTDictionary : public IDictionary {
 private:
-    ChainedHashTable<int, int>* _ht;
+    ChainedHashTable<std::string, int>* _ht;
 
 
 public:
@@ -38,6 +38,9 @@ public:
     inline int getRehashCount() const { return _ht->getRehashCount(); }       // Total de rehash
     inline int getLoadFactor() const { return _ht->load_factor(); }       // Total de load_factor
     inline std::string getName() const { return "ChainedHashTable Dictionary"; };
+
+    std::vector<std::pair<std::string, int>> getSortedEntries() const override;
+
 };
 
 

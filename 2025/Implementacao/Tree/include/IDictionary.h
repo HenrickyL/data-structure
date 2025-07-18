@@ -3,6 +3,8 @@
 
 //Interface
 #include<string>
+#include <vector>
+#include <utility>     // std::pair
 
 class IDictionary {
 public:
@@ -34,7 +36,7 @@ public:
 
     virtual int getLoadFactor() const = 0;       // Total de load_factor
 
-    //virtual std::vector<std::pair<std::string, int>> getSortedEntries() const = 0;
+    virtual std::vector<std::pair<std::string, int>> getSortedEntries() const = 0;
 };
 
 #endif

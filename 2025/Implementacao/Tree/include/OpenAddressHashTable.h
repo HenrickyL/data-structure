@@ -62,6 +62,9 @@ public:
     size_t getRehashCount() const;       // Total de rehashes
     void resetMetrics();                 // Reinicia todas as metricas
 
+    std::vector<std::pair<Key, Value>> getSortedEntries() const;
+
+
 private:
     size_t _hash_code(const Key& key, size_t i = 0) const;
     size_t _get_next_prime(size_t x);

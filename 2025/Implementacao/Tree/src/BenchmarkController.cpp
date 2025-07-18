@@ -155,9 +155,10 @@ void BenchmarkController::saveDictionaryResults(const IDictionary& dict, const s
     std::ofstream fileStream;
 
     if (!filename.empty()) {
-        fileStream.open(filename);
+        std::string fullPath = "result/" + filename;
+        fileStream.open(fullPath);
         if (!fileStream.is_open()) {
-            throw std::runtime_error("Failed to open output file: " + filename);
+            throw std::runtime_error("Failed to open output file: " + fullPath);
         }
         out = &fileStream;
     }
@@ -166,17 +167,19 @@ void BenchmarkController::saveDictionaryResults(const IDictionary& dict, const s
     *out << "Word Frequency Results (" << dict.getName() << ")\n";
     *out << "=================================\n";
 
-    //// Obtém e ordena as entradas
-    //auto entries = dict.getSortedEntries();
+    // Obtém e ordena as entradas
+    auto entries = dict.getSortedEntries();
 
-    //// Formata a saída
-    //for (const auto& [word, count] : entries) {
-    //    *out << "| " << std::setw(25) << std::left << word
-    //        << " | " << std::setw(5) << std::right << count << " |\n";
-    //}
+    // Formata a saída
+    for (const auto& entry : entries) {
+        const std::string& word = entry.first;
+        int count = entry.second;
+        *out << "| " << std::setw(50) << std::left << word
+            << " | " << std::setw(6) << std::right << count << " |\n";
+    }
 
-    //*out << "=================================\n";
-    //*out << "Total unique words: " << entries.size() << "\n";
+    *out << "=================================\n";
+    *out << "Total unique words: " << entries.size() << "\n";
 }
 
 std::string BenchmarkController::getDictionaryName(DictionaryType type) const {

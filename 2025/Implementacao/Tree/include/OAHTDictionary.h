@@ -3,12 +3,12 @@
 
 #include "IDictionary.h"
 #include "OpenAddressHashTable.h"
-
+#include <string>
 using namespace Perikan::Hash;
 
 class OAHTDictionary : public IDictionary{
 private:
-    OpenAddressHashTable<int, int>* _ht;
+    OpenAddressHashTable<std::string, int>* _ht;
 
 
 public:
@@ -38,6 +38,8 @@ public:
     inline int getRehashCount() const { return _ht->getRehashCount(); }       // Total de rehash
     inline int getLoadFactor() const { return _ht->load_factor(); }       // Total de load_factor
     inline std::string getName() const { return "OpenAddressHashTable Dictionary"; };
+
+    std::vector<std::pair<std::string, int>> getSortedEntries() const override;
 };
 
 

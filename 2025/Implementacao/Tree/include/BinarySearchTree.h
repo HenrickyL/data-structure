@@ -4,6 +4,8 @@
 #include<string>
 #include<vector>
 #include "Node.h"
+#include <utility>     // std::pair
+
 
 namespace Perikan{namespace TREE{
 
@@ -65,6 +67,8 @@ public:
     inline int getSearchCount() const { return _searchCount; }
     virtual void resetMetrics();
 
+    std::vector<std::pair<KEY, VALUE>> getSortedEntries() const;
+
 protected:
     virtual Node<VALUE, KEY>* _add(const KEY& key, const VALUE& value, Node<VALUE, KEY>* node);
     virtual Node<VALUE, KEY>* _remove(const KEY& key, Node<VALUE, KEY>* node);
@@ -105,6 +109,9 @@ protected:
 private:
     Node<VALUE, KEY>* _removeRoot(Node<VALUE, KEY>* node);
     void _auxGetKeys(const Node<VALUE, KEY>* node, std::vector<int>& ls) const;
+
+    void _inOrderCollect(const Node<VALUE, KEY>* node, std::vector<std::pair<KEY, VALUE>>& entries) const;
+
 
 };
 

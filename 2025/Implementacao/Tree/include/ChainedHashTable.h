@@ -265,6 +265,9 @@ public:
     size_t getRehashCount() const;
     void resetMetrics();
 
+    std::vector<std::pair<Key, Value>> getSortedEntries() const;
+
+
 private:
     /**
      * @brief Retorna o menor numero primo que eh maior que ou igual

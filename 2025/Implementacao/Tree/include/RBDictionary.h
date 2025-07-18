@@ -41,6 +41,9 @@ public:
     inline int getRehashCount() const { return -1; } 
     inline int getLoadFactor() const { return -1; }
     inline std::string getName() const { return "RB Dictionary"; };
+
+    std::vector<std::pair<std::string, int>> getSortedEntries() const override;
+
 };
 
 #endif

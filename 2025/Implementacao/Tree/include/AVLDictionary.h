@@ -39,6 +39,8 @@ public:
     inline int getRehashCount() const { return -1; }       // Total de rehash
     inline int getLoadFactor() const { return -1; }       // Total de load_factor
     inline std::string getName() const { return "AVL Dictionary"; };
+
+    std::vector<std::pair<std::string, int>> getSortedEntries() const override;
 };
 
 #endif
