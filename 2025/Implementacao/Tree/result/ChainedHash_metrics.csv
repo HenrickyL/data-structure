@@ -1,2 +1,2 @@
 estrutura,arquivo,tempo_ms,comparacoes,insercoes,rotacoes,altura,colisoes,rehashes,fator_carga,palavras_totais,palavras_unicas
-AVL Dictionary,dom-casmurro,418,6033548,9705,14052,16,-1,-1,-1.00,72462,9705
+ChainedHashTable Dictionary,dom-casmurro,252,350682,9705,-1,-1,6075,10,0.00,72462,9705

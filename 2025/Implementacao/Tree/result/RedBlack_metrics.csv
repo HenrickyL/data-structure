@@ -1,2 +1,2 @@
-estrutura,arquivo,tempo_ms,comparacoes,insercoes,rotacoes,colisoes,rehashes,fator_carga,palavras_totais,palavras_unicas
-RB Dictionary,dom-casmurro,420,6088548,9941,6099,-1,-1,-1.00,74288,9941
+estrutura,arquivo,tempo_ms,comparacoes,insercoes,rotacoes,altura,colisoes,rehashes,fator_carga,palavras_totais,palavras_unicas
+RB Dictionary,dom-casmurro,397,5930778,9705,5917,16,-1,-1,-1.00,72462,9705
