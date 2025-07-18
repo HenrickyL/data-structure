@@ -37,7 +37,7 @@ public:
     inline int getHeight() const { return _tree->height(); };
     inline int getCollisionCount() const { return -1; }       // Total de colisoes
     inline int getRehashCount() const { return -1; }       // Total de rehash
-    inline int getLoadFactor() const { return -1; }       // Total de load_factor
+    inline float getLoadFactor() const { return -1.0f; }       // Total de load_factor
     inline std::string getName() const { return "AVL Dictionary"; };
 
     std::vector<std::pair<std::string, int>> getSortedEntries() const override;

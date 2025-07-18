@@ -36,7 +36,7 @@ public:
     inline int getRotationCount() const { return -1; }       // Total de rotacoes
     inline int getCollisionCount() const { return _ht->getCollisionCount(); }       // Total de colisoes
     inline int getRehashCount() const { return _ht->getRehashCount(); }       // Total de rehash
-    inline int getLoadFactor() const { return _ht->load_factor(); }       // Total de load_factor
+    inline float getLoadFactor() const { return _ht->load_factor(); }       // Total de load_factor
     inline std::string getName() const { return "ChainedHashTable Dictionary"; };
 
     std::vector<std::pair<std::string, int>> getSortedEntries() const override;

@@ -34,7 +34,7 @@ public:
     virtual int getCollisionCount() const = 0;       // Total de colisoes
     virtual int getRehashCount() const = 0;       // Total de rehash
 
-    virtual int getLoadFactor() const = 0;       // Total de load_factor
+    virtual float getLoadFactor() const = 0;       // Total de load_factor
 
     virtual std::vector<std::pair<std::string, int>> getSortedEntries() const = 0;
 };

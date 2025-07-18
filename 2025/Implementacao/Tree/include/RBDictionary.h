@@ -39,7 +39,7 @@ public:
     inline int getHeight() const { return _tree->height(); };
     inline int getCollisionCount() const { return -1; }
     inline int getRehashCount() const { return -1; } 
-    inline int getLoadFactor() const { return -1; }
+    inline float getLoadFactor() const { return -1.0f; }
     inline std::string getName() const { return "RB Dictionary"; };
 
     std::vector<std::pair<std::string, int>> getSortedEntries() const override;
