@@ -34,6 +34,12 @@ public:
 
     void resetMetrics() override;
     void printMetrics() const override;
+
+    inline int getRotationCount() const { return _tree->getRotationCount(); }
+    inline int getCollisionCount() const { return -1; }
+    inline int getRehashCount() const { return -1; } 
+    inline int getLoadFactor() const { return -1; }
+    inline std::string getName() const { return "RB Dictionary"; };
 };
 
 #endif

@@ -32,6 +32,12 @@ public:
 
     void resetMetrics() override;
     void printMetrics() const override;
+
+    inline int getRotationCount() const { return _tree->getRotationCount(); }       // Total de rotacoes
+    inline int getCollisionCount() const { return -1; }       // Total de colisoes
+    inline int getRehashCount() const { return -1; }       // Total de rehash
+    inline int getLoadFactor() const { return -1; }       // Total de load_factor
+    inline std::string getName() const { return "AVL Dictionary"; };
 };
 
 #endif

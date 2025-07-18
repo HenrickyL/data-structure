@@ -34,13 +34,19 @@
     <ClCompile Include="src\Set.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\FrequencyCounter.cpp">
+    <ClCompile Include="src\Benchmark.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\AVLDictionary.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\RBDictionary.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BenchmarkController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextProcessor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -93,7 +99,7 @@
     <ClInclude Include="include\IDictionary.h">
       <Filter>Header Files\Dictionary</Filter>
     </ClInclude>
-    <ClInclude Include="include\FrequencyCounter.h">
+    <ClInclude Include="include\Benchmark.h">
       <Filter>Header Files\Dictionary</Filter>
     </ClInclude>
     <ClInclude Include="include\AVLDictionary.h">
@@ -103,6 +109,12 @@
       <Filter>Develop</Filter>
     </ClInclude>
     <ClInclude Include="include\RBDictionary.h">
+      <Filter>Header Files\Dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="include\BenchmarkController.h">
+      <Filter>Header Files\Dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TextProcessor.h">
       <Filter>Header Files\Dictionary</Filter>
     </ClInclude>
   </ItemGroup>

@@ -5,7 +5,7 @@
 #include "develop/TestDictionary.h"
 
 
-int main() {
+int main(/* int argc, char* argv[]*/) {
     try {
         /*TestTree::Node_();
         TestTree::BST();
@@ -14,9 +14,19 @@ int main() {
 
         /*TestHash::ChainedHash();
         TestHash::OpenAddressHash();*/
+        int argc = 4;
+        const char* argv[] = {  // Adicione 'const' aqui
+            "program.exe",
+            "all",
+            "books/dom-casmurro.txt",
+            "--benchmark"
+        };
+        
+        
+        TestDictionary::Run(argc, const_cast<char**>(argv));
+        //TestDictionary::Run(argc, argv);
 
-        TestDictionary::testAVL();
-        TestDictionary::testRB();
+        //TestDictionary::testRB();
 
 
     }

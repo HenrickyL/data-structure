@@ -1,0 +1,2 @@
+estrutura,arquivo,tempo_ms,comparacoes,insercoes,rotacoes,colisoes,rehashes,fator_carga,palavras_totais,palavras_unicas
+AVL Dictionary,dom-casmurro,485,6434306,9941,14794,-1,-1,-1.00,74288,9941

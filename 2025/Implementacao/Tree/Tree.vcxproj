@@ -130,10 +130,12 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\AVLDictionary.cpp" />
     <ClCompile Include="src\AVLTree.impl.h" />
+    <ClCompile Include="src\BenchmarkController.cpp" />
     <ClCompile Include="src\BinarySearchTree.impl.h" />
-    <ClCompile Include="src\FrequencyCounter.cpp" />
+    <ClCompile Include="src\Benchmark.cpp" />
     <ClCompile Include="src\RBDictionary.cpp" />
     <ClCompile Include="src\Set.cpp" />
+    <ClCompile Include="src\TextProcessor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="develop\SetDisplay.h" />
@@ -143,9 +145,10 @@
     <ClInclude Include="include\AVLDictionary.h" />
     <ClInclude Include="include\AVLNode.h" />
     <ClInclude Include="include\AVLTree.h" />
+    <ClInclude Include="include\BenchmarkController.h" />
     <ClInclude Include="include\BinarySearchTree.h" />
     <ClInclude Include="include\ChainedHashTable.h" />
-    <ClInclude Include="include\FrequencyCounter.h" />
+    <ClInclude Include="include\Benchmark.h" />
     <ClInclude Include="include\IDictionary.h" />
     <ClInclude Include="include\Node.h" />
     <ClInclude Include="include\OpenAddressHashTable.h" />
@@ -153,6 +156,7 @@
     <ClInclude Include="include\RBNode.h" />
     <ClInclude Include="include\RBTree.h" />
     <ClInclude Include="include\Set.h" />
+    <ClInclude Include="include\TextProcessor.h" />
     <ClInclude Include="src\ChainedHashTable.impl.h" />
     <ClInclude Include="src\OpenAddressHashTable.impl.h" />
     <ClInclude Include="src\RBTree.impl.h" />

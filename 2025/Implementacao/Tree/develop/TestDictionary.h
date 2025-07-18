@@ -3,12 +3,22 @@
 
 #include "../include/AVLDictionary.h"
 #include "../include/RBDictionary.h"
-
+#include "../include/BenchmarkController.h"
 #include <iostream>
 
 class TestDictionary {
 public:
 
+
+	static void Run(int argc, char* argv[]) {
+		try {
+			BenchmarkController controller;
+			controller.execute(argc, argv);
+		}
+		catch (const std::exception& e) {
+			std::cerr << "\n[ERROR] " << e.what() << std::endl;
+		}
+	}
 	static void testAVL() {
 		AVLDictionary dict;
 		std::cout << "AVL Dictionary" << std::endl;
