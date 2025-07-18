@@ -36,6 +36,7 @@ public:
     void printMetrics() const override;
 
     inline int getRotationCount() const { return _tree->getRotationCount(); }
+    inline int getHeight() const { return _tree->height(); };
     inline int getCollisionCount() const { return -1; }
     inline int getRehashCount() const { return -1; } 
     inline int getLoadFactor() const { return -1; }

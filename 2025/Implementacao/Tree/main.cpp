@@ -29,7 +29,7 @@ int main(/* int argc, char* argv[]*/) {
         TestDictionary::testRB();
         TestDictionary::testAVL();
         TestDictionary::testOAHT();
-
+        TestDictionary::testCHT();
     }
     catch (const std::runtime_error& e) {
         std::cerr << "Erro: " << e.what() << std::endl;

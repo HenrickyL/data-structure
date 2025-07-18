@@ -67,5 +67,5 @@ void AVLDictionary::printMetrics() const {
     std::cout << "  Searches: " << getSearchCount() << "\n";
     std::cout << "  Comparisons: " << getComparisonCount() << "\n";
     std::cout << "  Rotations: " << _tree->rotationCount() << "\n";
-    std::cout << "  Height: " << _tree->height() << "\n";
+    std::cout << "  Height: " << getHeight() << "\n";
 }

@@ -27,8 +27,11 @@ public:
     virtual void printMetrics() const = 0;       // Exibir metricas
 
     virtual int getRotationCount() const = 0;       // Total de rotacoes
+    virtual int getHeight() const = 0;       // altura da arvore
+
     virtual int getCollisionCount() const = 0;       // Total de colisoes
     virtual int getRehashCount() const = 0;       // Total de rehash
+
     virtual int getLoadFactor() const = 0;       // Total de load_factor
 
     //virtual std::vector<std::pair<std::string, int>> getSortedEntries() const = 0;

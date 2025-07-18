@@ -107,8 +107,10 @@ bool OpenAddressHashTable<Key, Value, Hash>::remove(const Key& key) {
 // Acesso com exceção
 template<typename Key, typename Value, typename Hash>
 Value& OpenAddressHashTable<Key, Value, Hash>::at(const Key& key) {
+    m_search_count++;
     for (size_t i = 0; i < m_table_size; ++i) {
         size_t idx = _hash_code(key, i);
+        m_comparison_count++;
         if (m_state[idx] == EMPTY) break;
         if (m_state[idx] == OCCUPIED && m_table[idx].first == key) {
             return m_table[idx].second;
@@ -120,8 +122,10 @@ Value& OpenAddressHashTable<Key, Value, Hash>::at(const Key& key) {
 // Versão const de at
 template<typename Key, typename Value, typename Hash>
 const Value& OpenAddressHashTable<Key, Value, Hash>::at(const Key& key) const {
+    m_search_count++;
     for (size_t i = 0; i < m_table_size; ++i) {
         size_t idx = _hash_code(key, i);
+        m_comparison_count++;
         if (m_state[idx] == EMPTY) break;
         if (m_state[idx] == OCCUPIED && m_table[idx].first == key) {
             return m_table[idx].second;

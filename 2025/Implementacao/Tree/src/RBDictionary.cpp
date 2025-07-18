@@ -50,7 +50,6 @@ const int& RBDictionary::operator[](const std::string key) const {
     }
     return _tree->find(key);
 }
-
 int RBDictionary::getComparisonCount() const { return _tree->getComparisonCount(); }
 int RBDictionary::getInsertionCount() const { return _tree->getInsertionCount(); }
 int RBDictionary::getSearchCount() const { return _tree->getSearchCount();; }
@@ -66,5 +65,5 @@ void RBDictionary::printMetrics() const {
     std::cout << "  Searches: " << getSearchCount() << "\n";
     std::cout << "  Comparisons: " << getComparisonCount() << "\n";
     std::cout << "  Rotations: " << _tree->getRotationCount() << "\n";
-    std::cout << "  Height: " << _tree->height() << "\n";
+    std::cout << "  Height: " << getHeight() << "\n";
 }

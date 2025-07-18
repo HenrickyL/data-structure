@@ -1,19 +1,19 @@
-#ifndef OAHT_DICTIONARY_H
-#define OAHT_DICTIONARY_H
+#ifndef CHT_DICTIONARY_H
+#define CHT_DICTIONARY_H
 
 #include "IDictionary.h"
-#include "OpenAddressHashTable.h"
+#include "ChainedHashTable.h"
 
 using namespace Perikan::Hash;
 
-class OAHTDictionary : public IDictionary{
+class CHTDictionary : public IDictionary {
 private:
-    OpenAddressHashTable<int, int>* _ht;
+    ChainedHashTable<int, int>* _ht;
 
 
 public:
-    OAHTDictionary();
-    ~OAHTDictionary();
+    CHTDictionary();
+    ~CHTDictionary();
 
     void add(const std::string& word) override;
     void remove(const std::string& word) override;
@@ -37,7 +37,7 @@ public:
     inline int getCollisionCount() const { return _ht->getCollisionCount(); }       // Total de colisoes
     inline int getRehashCount() const { return _ht->getRehashCount(); }       // Total de rehash
     inline int getLoadFactor() const { return _ht->load_factor(); }       // Total de load_factor
-    inline std::string getName() const { return "OpenAddressHashTable Dictionary"; };
+    inline std::string getName() const { return "ChainedHashTable Dictionary"; };
 };
 
 

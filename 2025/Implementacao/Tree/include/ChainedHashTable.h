@@ -56,6 +56,12 @@ private:
     // referencia para a funcao de codificacao
     Hash m_hashing;
 
+    //metrics
+    mutable size_t m_comparison_count, m_search_count;
+    size_t m_collision_count;
+    size_t m_insertion_count;
+    size_t m_rehash_count;
+
 
 public:
     /**
@@ -251,6 +257,14 @@ public:
      */
     const Value& operator[](const Key& k) const;
 
+    // Métricos para estatísticas
+    size_t getComparisonCount() const;
+    size_t getCollisionCount() const;
+    size_t getInsertionCount() const;
+    size_t getSearchCount() const;
+    size_t getRehashCount() const;
+    void resetMetrics();
+
 private:
     /**
      * @brief Retorna o menor numero primo que eh maior que ou igual
@@ -273,7 +287,6 @@ private:
      * @return size_t := um inteiro no intervalo [0 ... m_table_size-1]
      */
     size_t _hash_code(const Key& k) const;
-
 };
 
 }}
