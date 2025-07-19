@@ -34,6 +34,9 @@
 - **GCC/G++** (MinGW no Windows) ou **Clang**.  
 - **Make**
 
+
+### 3. Pelo executável pre compilado
+
 ---
 * **Autor**: [Henricky Monteiro](https://www.linkedin.com/in/henrickyl/)
 
