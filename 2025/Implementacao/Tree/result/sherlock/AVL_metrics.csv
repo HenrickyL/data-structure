@@ -1,0 +1,2 @@
+estrutura,arquivo,tempo_ms,comparacoes,insercoes,rotacoes,altura,colisoes,rehashes,fator_carga,palavras_totais,palavras_unicas
+AVL Dictionary,sherlock_holmes,46,8305280,8356,12104,16,-1,-1,-1.00,108169,8356

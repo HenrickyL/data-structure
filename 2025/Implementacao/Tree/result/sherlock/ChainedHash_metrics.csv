@@ -1,0 +1,2 @@
+estrutura,arquivo,tempo_ms,comparacoes,insercoes,rotacoes,altura,colisoes,rehashes,fator_carga,palavras_totais,palavras_unicas
+ChainedHashTable Dictionary,sherlock_holmes,13,527984,8356,-1,-1,5672,10,0.38,108169,8356

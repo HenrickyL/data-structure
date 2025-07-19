@@ -12,7 +12,8 @@
 namespace Perikan { namespace TREE {
 
 template <typename VALUE, typename KEY>
-BinarySearchTree<VALUE, KEY>::BinarySearchTree(): _root(nullptr){}
+BinarySearchTree<VALUE, KEY>::BinarySearchTree(): 
+    _root(nullptr), _comparisonCount(0),_searchCount(0),_insertionCount(0) {}
 
 template <typename VALUE, typename KEY>
 BinarySearchTree<VALUE, KEY>::~BinarySearchTree(){
@@ -83,7 +84,12 @@ void BinarySearchTree<VALUE, KEY>::add(const KEY& key, const VALUE& value) {
 
 template <typename VALUE, typename KEY>
 Node<VALUE,KEY>* BinarySearchTree<VALUE, KEY>::_add(const KEY& key, const VALUE& value, Node<VALUE,KEY>* node) {
-    if (_isNull(node)) return _createNode(key, value);
+    _comparisonCount++;
+    if (_isNull(node)) {
+        _insertionCount++;
+        return _createNode(key, value); 
+    }
+    _comparisonCount++;
     if (key < node->key) {
         node->left = _add(key, value, node->left);
     }
@@ -188,7 +194,7 @@ void BinarySearchTree<VALUE, KEY>::_print(const Node<VALUE,KEY>* node) const {
 template <typename VALUE, typename KEY>
 bool BinarySearchTree<VALUE, KEY>::contains(const KEY& key) const {
     const Node<VALUE,KEY>* node = _find(key, this->_root);
-    return !_isNull(node);
+    return node != nullptr;
 }
 
 
@@ -201,13 +207,40 @@ bool BinarySearchTree<VALUE, KEY>::contains(const KEY& key) const {
 
 template <typename VALUE, typename KEY>
 const Node<VALUE,KEY>* BinarySearchTree<VALUE, KEY>::_find(const KEY& key, const Node<VALUE,KEY>* node) const {
-    if (_isNull(node)) return _getNull();
-    else if (node->key == key) return node;
-    else {
-        if (key < node->key) return _find(key, node->left);
-        else return _find(key, node->right);
-    }
+    _searchCount++;
+    if (_isNull(node)) return nullptr;
+    _comparisonCount++;
+    if (node->key == key) return node;
+    _comparisonCount++;
+    if (key < node->key) return _find(key, node->left);
+    return _find(key, node->right);
 }
+
+template <typename VALUE, typename KEY>
+Node<VALUE, KEY>* BinarySearchTree<VALUE, KEY>::_find(const KEY& key, Node<VALUE, KEY>* node) {
+    _searchCount++;
+    if (_isNull(node)) return nullptr;
+    _comparisonCount++;
+    if (node->key == key) return node;
+    _comparisonCount++;
+    if (key < node->key) return _find(key, node->left);
+    return _find(key, node->right);
+}
+
+
+template <typename VALUE, typename KEY>
+const VALUE BinarySearchTree<VALUE, KEY>::find(const KEY& key) const {
+    const Node<VALUE, KEY>* node = _find(key, _root);
+    if (node==nullptr) throw std::runtime_error("Not find key:" + key);
+    return node->value;
+}
+template <typename VALUE, typename KEY>
+VALUE& BinarySearchTree<VALUE, KEY>::find(const KEY& key) {
+    Node<VALUE, KEY>* node = _find(key, _root);
+    if (node == nullptr) throw std::runtime_error("Not find key:" + key);
+    return node->value;
+}
+
 
 
 /*const Node<VALUE,KEY>* BinarySearchTree<VALUE, KEY>::_findByValue(T value, const Node<VALUE,KEY>* node) const {
@@ -525,8 +558,32 @@ void BinarySearchTree<VALUE, KEY>::_auxGetKeys(const Node<VALUE,KEY>* node, std:
         _auxGetKeys(node->right, ls);
     }
 }
+template <typename VALUE, typename KEY>
+void BinarySearchTree<VALUE, KEY>::setValue(const KEY& key, const VALUE& value) {
+    Node<VALUE, KEY>* node = _find(key, _root);
+    if(_isNull(node)) throw std::runtime_error("Not found with key: " << key);
+    node->value = value;
 
+}
+template <typename VALUE, typename KEY>
+void BinarySearchTree<VALUE, KEY>::resetMetrics(){ 
+    _comparisonCount = _insertionCount =_searchCount = 0; 
+}
 
+template<typename VALUE, typename KEY>
+std::vector<std::pair<KEY, VALUE>> BinarySearchTree<VALUE, KEY>::getSortedEntries() const {
+    std::vector<std::pair<KEY, VALUE>> entries;
+    _inOrderCollect(this->_root, entries);
+    return entries;
+}
+
+template<typename VALUE, typename KEY>
+void BinarySearchTree<VALUE, KEY>::_inOrderCollect(const Node<VALUE, KEY>* node, std::vector<std::pair<KEY, VALUE>>& entries) const {
+    if (_isNull(node)) return;
+    _inOrderCollect(node->left, entries);
+    entries.emplace_back(node->key, node->value);
+    _inOrderCollect(node->right, entries);
+}
     ////////////////////////////
 
 }}

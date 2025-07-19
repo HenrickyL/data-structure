@@ -1,0 +1,2 @@
+estrutura,arquivo,tempo_ms,comparacoes,insercoes,rotacoes,altura,colisoes,rehashes,fator_carga,palavras_totais,palavras_unicas
+ChainedHashTable Dictionary,dom-casmurro,8,350682,9705,-1,-1,6075,10,0.44,72462,9705

@@ -1,0 +1,2 @@
+estrutura,arquivo,tempo_ms,comparacoes,insercoes,rotacoes,altura,colisoes,rehashes,fator_carga,palavras_totais,palavras_unicas
+AVL Dictionary,the-secret-garden,34,6439284,5315,8002,15,-1,-1,-1.00,85891,5315

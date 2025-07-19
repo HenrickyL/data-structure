@@ -1,0 +1,2 @@
+estrutura,arquivo,tempo_ms,comparacoes,insercoes,rotacoes,altura,colisoes,rehashes,fator_carga,palavras_totais,palavras_unicas
+RB Dictionary,sherlock_holmes,45,8229790,8356,5059,16,-1,-1,-1.00,108169,8356

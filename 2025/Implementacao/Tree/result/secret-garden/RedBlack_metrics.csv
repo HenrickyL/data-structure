@@ -1,0 +1,2 @@
+estrutura,arquivo,tempo_ms,comparacoes,insercoes,rotacoes,altura,colisoes,rehashes,fator_carga,palavras_totais,palavras_unicas
+RB Dictionary,the-secret-garden,32,6115847,5315,3232,15,-1,-1,-1.00,85891,5315

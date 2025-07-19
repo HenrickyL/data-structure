@@ -1,0 +1,2 @@
+estrutura,arquivo,tempo_ms,comparacoes,insercoes,rotacoes,altura,colisoes,rehashes,fator_carga,palavras_totais,palavras_unicas
+OpenAddressHashTable Dictionary,dom-casmurro,7,474466,9705,-1,-1,7391,10,0.44,72462,9705

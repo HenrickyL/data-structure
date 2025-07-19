@@ -19,6 +19,9 @@
     <Filter Include="Header Files\Node">
       <UniqueIdentifier>{04fe9d8e-cd85-469c-a875-ddec624962ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Dictionary">
+      <UniqueIdentifier>{06315054-90e0-4ab6-ab97-dca021bb1301}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -29,6 +32,27 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Set.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Benchmark.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AVLDictionary.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RBDictionary.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BenchmarkController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextProcessor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CHTDictionary.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OAHTDictionary.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -77,6 +101,33 @@
     </ClInclude>
     <ClInclude Include="src\OpenAddressHashTable.impl.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\IDictionary.h">
+      <Filter>Header Files\Dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Benchmark.h">
+      <Filter>Header Files\Dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AVLDictionary.h">
+      <Filter>Header Files\Dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="develop\TestDictionary.h">
+      <Filter>Develop</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RBDictionary.h">
+      <Filter>Header Files\Dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="include\BenchmarkController.h">
+      <Filter>Header Files\Dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TextProcessor.h">
+      <Filter>Header Files\Dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CHTDictionary.h">
+      <Filter>Header Files\Dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="include\OAHTDictionary.h">
+      <Filter>Header Files\Dictionary</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

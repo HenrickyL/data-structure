@@ -1,0 +1,2 @@
+estrutura,arquivo,tempo_ms,comparacoes,insercoes,rotacoes,altura,colisoes,rehashes,fator_carga,palavras_totais,palavras_unicas
+AVL Dictionary,kjv-bible,310,60813212,12578,19034,16,-1,-1,-1.00,823800,12578

@@ -4,19 +4,28 @@
 #include<string>
 #include<vector>
 #include "Node.h"
+#include <utility>     // std::pair
+
 
 namespace Perikan{namespace TREE{
 
 template <typename VALUE, typename KEY=int>
-class BinarySearchTree{
+class BinarySearchTree {
 protected:
     Node<VALUE,KEY>* _root;
+    // Métricas
+    mutable int _comparisonCount;
+    mutable int _searchCount;
+    int _insertionCount;
 public:
     BinarySearchTree();
     virtual ~BinarySearchTree();
 
     virtual void add(const KEY& key, const VALUE& value);
     virtual void remove(const KEY& key);
+
+    const VALUE find(const KEY& key)const;
+    VALUE& find(const KEY& key);
 
     void clear();
     bool isEmpty() const;
@@ -26,10 +35,9 @@ public:
     int countLeafs() const;
     void removeLeafs();
     void print() const;
+    void setValue(const KEY& key, const VALUE& Value);
     
     bool contains(const KEY& key) const;
-    //T find(int key) const;
-    //int findByValue(T value) const;
 
     int countInterNodes() const;
     int max() const;
@@ -52,6 +60,15 @@ public:
 
     std::vector<int> getKeys() const;
 
+
+    // Metodos para metricas
+    inline int getComparisonCount() const { return _comparisonCount; }
+    inline int getInsertionCount() const { return _insertionCount; }
+    inline int getSearchCount() const { return _searchCount; }
+    virtual void resetMetrics();
+
+    std::vector<std::pair<KEY, VALUE>> getSortedEntries() const;
+
 protected:
     virtual Node<VALUE, KEY>* _add(const KEY& key, const VALUE& value, Node<VALUE, KEY>* node);
     virtual Node<VALUE, KEY>* _remove(const KEY& key, Node<VALUE, KEY>* node);
@@ -70,7 +87,8 @@ protected:
     int _countLeafs(const Node<VALUE, KEY>* node) const;
     Node<VALUE, KEY>* _removeLeafs(Node<VALUE, KEY>* node);
     const Node<VALUE, KEY>* _find(const KEY& key, const Node<VALUE, KEY>* node) const;
-    //const Node<VALUE, KEY>* _findByValue(T value, const Node<VALUE, KEY>* node) const;
+    Node<VALUE, KEY>* _find(const KEY& key, Node<VALUE, KEY>* node);
+
     int _countInterNodes(Node<VALUE, KEY>* node) const;
     Node<VALUE, KEY>* _max(Node<VALUE, KEY>* node) const;
     bool _isLeaf(const Node<VALUE, KEY>* node) const;
@@ -91,6 +109,9 @@ protected:
 private:
     Node<VALUE, KEY>* _removeRoot(Node<VALUE, KEY>* node);
     void _auxGetKeys(const Node<VALUE, KEY>* node, std::vector<int>& ls) const;
+
+    void _inOrderCollect(const Node<VALUE, KEY>* node, std::vector<std::pair<KEY, VALUE>>& entries) const;
+
 
 };
 

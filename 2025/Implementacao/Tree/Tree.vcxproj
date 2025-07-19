@@ -70,6 +70,9 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)\bin\$(Configuration)\</OutDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -128,23 +131,39 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\AVLDictionary.cpp" />
     <ClCompile Include="src\AVLTree.impl.h" />
+    <ClCompile Include="src\BenchmarkController.cpp" />
     <ClCompile Include="src\BinarySearchTree.impl.h" />
+    <ClCompile Include="src\Benchmark.cpp" />
+    <ClCompile Include="src\CHTDictionary.cpp" />
+    <ClCompile Include="src\OAHTDictionary.cpp" />
+    <ClCompile Include="src\RBDictionary.cpp" />
     <ClCompile Include="src\Set.cpp" />
+    <ClCompile Include="src\TextProcessor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="develop\SetDisplay.h" />
+    <ClInclude Include="develop\TestDictionary.h" />
     <ClInclude Include="develop\TestHash.h" />
     <ClInclude Include="develop\TestTree.h" />
+    <ClInclude Include="include\AVLDictionary.h" />
     <ClInclude Include="include\AVLNode.h" />
     <ClInclude Include="include\AVLTree.h" />
+    <ClInclude Include="include\BenchmarkController.h" />
     <ClInclude Include="include\BinarySearchTree.h" />
     <ClInclude Include="include\ChainedHashTable.h" />
+    <ClInclude Include="include\Benchmark.h" />
+    <ClInclude Include="include\CHTDictionary.h" />
+    <ClInclude Include="include\IDictionary.h" />
     <ClInclude Include="include\Node.h" />
+    <ClInclude Include="include\OAHTDictionary.h" />
     <ClInclude Include="include\OpenAddressHashTable.h" />
+    <ClInclude Include="include\RBDictionary.h" />
     <ClInclude Include="include\RBNode.h" />
     <ClInclude Include="include\RBTree.h" />
     <ClInclude Include="include\Set.h" />
+    <ClInclude Include="include\TextProcessor.h" />
     <ClInclude Include="src\ChainedHashTable.impl.h" />
     <ClInclude Include="src\OpenAddressHashTable.impl.h" />
     <ClInclude Include="src\RBTree.impl.h" />

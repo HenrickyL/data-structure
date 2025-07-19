@@ -51,10 +51,16 @@ private:
     float m_max_load_factor;
 
     // tabela                               
-    std::vector<std::list<std::pair<Key,Value>>> m_table;
+    std::vector<std::vector<std::pair<Key,Value>>> m_table;
 
     // referencia para a funcao de codificacao
     Hash m_hashing;
+
+    //metrics
+    mutable size_t m_comparison_count, m_search_count;
+    size_t m_collision_count;
+    size_t m_insertion_count;
+    size_t m_rehash_count;
 
 
 public:
@@ -63,7 +69,7 @@ public:
      * 
      * @param tableSize := o numero de slots da tabela. 
      */
-    ChainedHashTable(size_t tableSize = 19, float load_factor = 1.0);
+    ChainedHashTable(size_t tableSize = 19, float load_factor = 0.7);
     /**
     * @brief Destroy the Hash Table object
     */
@@ -144,7 +150,7 @@ public:
      * @param k := chave
      * @param v := valor 
      */
-    bool add(const Key& k, const Value& v);
+    bool add(const Key& k, const Value& v, bool count_metrics = true);
 
     /**
      * @brief Recebe como entrada uma chave k e retorna true 
@@ -251,6 +257,17 @@ public:
      */
     const Value& operator[](const Key& k) const;
 
+    // Métricos para estatísticas
+    size_t getComparisonCount() const;
+    size_t getCollisionCount() const;
+    size_t getInsertionCount() const;
+    size_t getSearchCount() const;
+    size_t getRehashCount() const;
+    void resetMetrics();
+
+    std::vector<std::pair<Key, Value>> getSortedEntries() const;
+
+
 private:
     /**
      * @brief Retorna o menor numero primo que eh maior que ou igual
@@ -273,7 +290,6 @@ private:
      * @return size_t := um inteiro no intervalo [0 ... m_table_size-1]
      */
     size_t _hash_code(const Key& k) const;
-
 };
 
 }}

@@ -5,6 +5,7 @@
 #include <cmath>       // sqrt (para primo)
 #include <iostream>    // std::cout, std::endl (se usar para debug ou impressão)
 #include "../include/ChainedHashTable.h"
+#include <algorithm> // sort
 
 namespace Perikan {namespace Hash {
 
@@ -13,6 +14,11 @@ ChainedHashTable<Key, Value, Hash>::ChainedHashTable(size_t tableSize, float loa
     m_number_of_elements = 0;
     m_table_size = _get_next_prime(tableSize);
     m_table.resize(m_table_size);
+    m_comparison_count = 0;
+    m_collision_count = 0;
+    m_insertion_count = 0;
+    m_search_count = 0;
+    m_rehash_count = 0;
     if (load_factor <= 0) {
         m_max_load_factor = 1.0;
     }
@@ -76,27 +82,37 @@ void ChainedHashTable<Key, Value, Hash>::clear() {
 
 
 template <typename Key, typename Value, typename Hash>
-bool ChainedHashTable<Key, Value, Hash>::add(const Key& k, const Value& v) {
+bool ChainedHashTable<Key, Value, Hash>::add(const Key& k, const Value& v, bool count_metrics) {
     if (load_factor() >= m_max_load_factor) {
         rehash(2 * m_table_size);
     }
     size_t slot = _hash_code(k);
+    
     for (auto p : m_table[slot]) {
+        m_comparison_count++;
         if (p.first == k) {
             return false;
         }
     }
+
+    // Conta colisao apenas se o slot não estiver vazio
+    if (!m_table[slot].empty()) {
+        m_collision_count++;
+    }
     m_table[slot].push_back(std::make_pair(k, v));
     m_number_of_elements++;
+    if (count_metrics) m_insertion_count++;
     return true;
 }
 
 
 template <typename Key, typename Value, typename Hash>
 bool ChainedHashTable<Key, Value, Hash>::contains(const Key& k) {
+    m_search_count++;
     size_t slot = _hash_code(k);
 
     for (auto& p : m_table[slot]) {
+        m_comparison_count++;
         if (p.first == k) {
             return true;
         }
@@ -110,9 +126,11 @@ bool ChainedHashTable<Key, Value, Hash>::contains(const Key& k) {
 
 template <typename Key, typename Value, typename Hash>
 Value& ChainedHashTable<Key, Value, Hash>::at(const Key& k) {
+    m_search_count++;
     size_t slot = _hash_code(k);
 
     for (auto& p : m_table[slot]) {
+        m_comparison_count++;
         if (p.first == k) {
             return p.second;
         }
@@ -122,9 +140,11 @@ Value& ChainedHashTable<Key, Value, Hash>::at(const Key& k) {
 
 template <typename Key, typename Value, typename Hash>
 const Value& ChainedHashTable<Key, Value, Hash>::at(const Key& k) const {
+    m_search_count++;
     size_t slot = _hash_code(k);
 
     for (auto& p : m_table[slot]) {
+        m_comparison_count++;
         if (p.first == k) {
             return p.second;
         }
@@ -135,9 +155,10 @@ const Value& ChainedHashTable<Key, Value, Hash>::at(const Key& k) const {
 
 template <typename Key, typename Value, typename Hash>
 void ChainedHashTable<Key, Value, Hash>::rehash(size_t m) {
+    m_rehash_count++;
     size_t new_table_size = _get_next_prime(m);
     if (new_table_size > m_table_size) {
-        std::vector<std::list<std::pair<Key, Value>>> old_vec;
+        std::vector<std::vector<std::pair<Key, Value>>> old_vec;
         old_vec = m_table; // copia as chaves para uma nova tabela
         m_table.clear(); // apaga todas as chaves da tabela atual e deixa ela vazia
         m_table.resize(new_table_size); // tabela redimensionada com novo primo
@@ -145,7 +166,7 @@ void ChainedHashTable<Key, Value, Hash>::rehash(size_t m) {
         m_table_size = new_table_size;
         for (size_t i = 0; i < old_vec.size(); ++i) {
             for (auto& par : old_vec[i]) {
-                add(par.first, par.second);
+                add(par.first, par.second, false);
             }
             old_vec[i].clear(); // opcional
         }
@@ -208,11 +229,6 @@ const Value& ChainedHashTable<Key, Value, Hash>::operator[](const Key& k) const 
     return at(k);
 }
 
-
-
-
-
-
 template <typename Key, typename Value, typename Hash>
 size_t ChainedHashTable<Key, Value, Hash>::_get_next_prime(size_t x) {
     if (x <= 2) return 3;
@@ -237,7 +253,56 @@ size_t ChainedHashTable<Key, Value, Hash>::_hash_code(const Key& k) const {
     return m_hashing(k) % m_table_size;
 }
 
+// Implemente os novos métodos
+template <typename Key, typename Value, typename Hash>
+size_t ChainedHashTable<Key, Value, Hash>::getComparisonCount() const {
+    return m_comparison_count;
+}
+
+template <typename Key, typename Value, typename Hash>
+size_t ChainedHashTable<Key, Value, Hash>::getCollisionCount() const {
+    return m_collision_count;
+}
+
+template <typename Key, typename Value, typename Hash>
+size_t ChainedHashTable<Key, Value, Hash>::getInsertionCount() const {
+    return m_insertion_count;
+}
+
+template <typename Key, typename Value, typename Hash>
+size_t ChainedHashTable<Key, Value, Hash>::getSearchCount() const {
+    return m_search_count;
+}
+
+template <typename Key, typename Value, typename Hash>
+size_t ChainedHashTable<Key, Value, Hash>::getRehashCount() const {
+    return m_rehash_count;
+}
+
+template <typename Key, typename Value, typename Hash>
+void ChainedHashTable<Key, Value, Hash>::resetMetrics() {
+    m_comparison_count = 0;
+    m_collision_count = 0;
+    m_insertion_count = 0;
+    m_search_count = 0;
+    m_rehash_count = 0;
+}
+
+template <typename Key, typename Value, typename Hash>
+std::vector<std::pair<Key, Value>> ChainedHashTable<Key, Value, Hash>::getSortedEntries() const {
+    std::vector<std::pair<std::string, int>> entries;
+    for (const auto& bucket : m_table) {
+        for (const auto& b : bucket) {
+            const std::string& key = b.first;
+            int value = b.second;
+            entries.emplace_back(key, value);
+        }
+    }
+    std::sort(entries.begin(), entries.end()); // ordena por chave (palavra)
+    return entries;
+}
 
 }}
+
 
 #endif
