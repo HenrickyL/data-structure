@@ -35,8 +35,11 @@
 - **Make**
 
 
-### 3. Pelo executável pre compilado
+### **3. Pelo executável pre compilado**
+
 [`pre_compiled`](./pre_compiled/readme.md)
+
+
 ---
 * **Autor**: [Henricky Monteiro](https://www.linkedin.com/in/henrickyl/)
 
