@@ -1,0 +1,2 @@
+estrutura,arquivo,tempo_ms,comparacoes,insercoes,rotacoes,altura,colisoes,rehashes,fator_carga,palavras_totais,palavras_unicas
+ChainedHashTable Dictionary,kjv-bible,61,4085738,12578,-1,-1,7303,10,0.57,823800,12578

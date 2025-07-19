@@ -1,0 +1,2 @@
+estrutura,arquivo,tempo_ms,comparacoes,insercoes,rotacoes,altura,colisoes,rehashes,fator_carga,palavras_totais,palavras_unicas
+OpenAddressHashTable Dictionary,o_manifesto_comunista_english,1,105690,2630,-1,-1,1932,8,0.48,14516,2630

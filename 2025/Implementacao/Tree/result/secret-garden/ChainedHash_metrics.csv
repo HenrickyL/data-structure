@@ -1,0 +1,2 @@
+estrutura,arquivo,tempo_ms,comparacoes,insercoes,rotacoes,altura,colisoes,rehashes,fator_carga,palavras_totais,palavras_unicas
+ChainedHashTable Dictionary,the-secret-garden,8,408572,5315,-1,-1,3271,9,0.49,85891,5315

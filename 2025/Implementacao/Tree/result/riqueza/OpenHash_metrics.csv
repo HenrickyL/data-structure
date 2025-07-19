@@ -1,0 +1,2 @@
+estrutura,arquivo,tempo_ms,comparacoes,insercoes,rotacoes,altura,colisoes,rehashes,fator_carga,palavras_totais,palavras_unicas
+OpenAddressHashTable Dictionary,a_riqueza_das nacoes_english,33,2173481,10050,-1,-1,7579,10,0.46,381823,10050
