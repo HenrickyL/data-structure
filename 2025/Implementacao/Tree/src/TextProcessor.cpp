@@ -7,7 +7,7 @@
 #include <locale>
 
 // Remove acentos e normaliza caracteres latinos
-std::string removeAccents(const std::string& input) {
+std::string TextProcessor::removeAccents(const std::string & input) const {
     std::string output;
     for (unsigned char c : input) {
         switch (c) {

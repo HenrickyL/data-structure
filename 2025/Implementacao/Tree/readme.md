@@ -18,6 +18,10 @@ este projeto foi feito no windows 11.
 | `make clean` | Limpa os arquivos gerados |
 | `make package_objs` | Empacota os objetos |
 
+> Este makefile não está preparado para rodar no linux e pra rodar projetos que usam a biblioteca `unicode`.
+
 ### Via Visual Studio
 [visual studio](../readme.md)
+
+
 

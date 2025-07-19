@@ -15,6 +15,8 @@ private:
     std::string normalizeWord(const std::string& word);
     bool isValidChar(char32_t c) const;
     bool isWordChar(char32_t c) const;
+    // remove caracteres latinos 'ç'->'c' 
+    std::string removeAccents(const std::string& input)const;
 };
 
 #endif
