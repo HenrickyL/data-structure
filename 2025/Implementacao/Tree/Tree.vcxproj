@@ -146,6 +146,7 @@
     <ClInclude Include="develop\SetDisplay.h" />
     <ClInclude Include="develop\TestDictionary.h" />
     <ClInclude Include="develop\TestHash.h" />
+    <ClInclude Include="develop\TestPriorityQueue.h" />
     <ClInclude Include="develop\TestTree.h" />
     <ClInclude Include="include\AVLDictionary.h" />
     <ClInclude Include="include\AVLNode.h" />
@@ -159,6 +160,7 @@
     <ClInclude Include="include\Node.h" />
     <ClInclude Include="include\OAHTDictionary.h" />
     <ClInclude Include="include\OpenAddressHashTable.h" />
+    <ClInclude Include="include\PriorityQueue.h" />
     <ClInclude Include="include\RBDictionary.h" />
     <ClInclude Include="include\RBNode.h" />
     <ClInclude Include="include\RBTree.h" />
@@ -166,6 +168,7 @@
     <ClInclude Include="include\TextProcessor.h" />
     <ClInclude Include="src\ChainedHashTable.impl.h" />
     <ClInclude Include="src\OpenAddressHashTable.impl.h" />
+    <ClInclude Include="src\PriorityQueue.impl.h" />
     <ClInclude Include="src\RBTree.impl.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

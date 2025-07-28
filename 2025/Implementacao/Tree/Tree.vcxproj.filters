@@ -129,5 +129,14 @@
     <ClInclude Include="include\OAHTDictionary.h">
       <Filter>Header Files\Dictionary</Filter>
     </ClInclude>
+    <ClInclude Include="include\PriorityQueue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PriorityQueue.impl.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="develop\TestPriorityQueue.h">
+      <Filter>Develop</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
